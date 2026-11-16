@@ -1,0 +1,26 @@
+var _vec2_8h =
+[
+    [ "tgx::Vec2< T >", "structtgx_1_1_vec2.html", "structtgx_1_1_vec2" ],
+    [ "iVec2", "_vec2_8h.html#a37eab41759a1a4093ac2fbde648b4c0f", null ],
+    [ "fVec2", "_vec2_8h.html#a21109f9665da891178228a1fb80b90b6", null ],
+    [ "dVec2", "_vec2_8h.html#ac1183a193de24cdecb32d46915941f9a", null ],
+    [ "normalize", "_vec2_8h.html#a3021cf064fa227c633d798545ad1ff5c", null ],
+    [ "normalize_fast", "_vec2_8h.html#a88109ddd32e0162932cd2baee43ed253", null ],
+    [ "dist2", "_vec2_8h.html#a2b502e53bb2b746fb18c03cd09de5955", null ],
+    [ "dist", "_vec2_8h.html#a1f310b5609de6cc2aeb6f43b7c812a07", null ],
+    [ "dist_fast", "_vec2_8h.html#ab3ccebfc5cbe1df7f93fd7dd15bbddcc", null ],
+    [ "operator+", "_vec2_8h.html#a23fc68f972e31591d6d696bbe8bec766", null ],
+    [ "operator-", "_vec2_8h.html#a706f76872d59772c69b9b08b1ad46750", null ],
+    [ "operator*", "_vec2_8h.html#a14c3ec5388e30aaa03b89eb3b0ef4b8e", null ],
+    [ "operator/", "_vec2_8h.html#aaf948f2248036969aaee732103322eda", null ],
+    [ "operator+", "_vec2_8h.html#a4a059921bb7c630d3a616b34c47d46da", null ],
+    [ "operator+", "_vec2_8h.html#a3d35c6cc0f8621fc1d737d9ddf683c2e", null ],
+    [ "operator-", "_vec2_8h.html#a4ca01c1ccf83b1a44ce148ab285827b2", null ],
+    [ "operator*", "_vec2_8h.html#a54c56adcb3f678da1c54570eac9c701b", null ],
+    [ "operator*", "_vec2_8h.html#a522da6d8a9e3c2a3b9e091621ababed3", null ],
+    [ "operator/", "_vec2_8h.html#a1031a726e482b6131779f00d328a1402", null ],
+    [ "dotProduct", "_vec2_8h.html#a7d085cecabe1d8aa482c25c2f8fb19fb", null ],
+    [ "dotProduct", "_vec2_8h.html#a243041e2d6d3f40ec400b3e32aca03ed", null ],
+    [ "crossProduct", "_vec2_8h.html#ad5af65f8b01b0583718227200876b583", null ],
+    [ "lerp", "_vec2_8h.html#ab8bd9d75eba12516e7404ae95c5d949b", null ]
+];

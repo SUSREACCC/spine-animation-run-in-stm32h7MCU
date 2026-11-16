@@ -1,0 +1,20 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/raster_test.cpp(199): error: no matching function for call to 'raster_triangle'
+    raster_triangle(&s_surf, &s_tex565, &a, &b, &c, RASTER_BLEND_NORMAL, 255);
+    ^~~~~~~~~~~~~~~
+../../Middlewares\./RASTER/raster2d.h(76): note: candidate function not viable: no known conversion from 'uint16_t (*)[4096]' to 'const raster_texture_t *' for 2nd argument
+void raster_triangle(const raster_surface_t *s, const raster_texture_t *t,
+     ^
+../../User/raster_test.cpp(200): error: no matching function for call to 'raster_triangle'
+    raster_triangle(&s_surf, &s_tex565, &a, &c, &d, RASTER_BLEND_NORMAL, 255);
+    ^~~~~~~~~~~~~~~
+../../Middlewares\./RASTER/raster2d.h(76): note: candidate function not viable: no known conversion from 'uint16_t (*)[4096]' to 'const raster_texture_t *' for 2nd argument
+void raster_triangle(const raster_surface_t *s, const raster_texture_t *t,
+     ^
+2 errors generated.
+compiling raster_test.cpp...
+compiling raster2d.cpp...
+"..\..\Output\STM32H743.axf" - 2 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

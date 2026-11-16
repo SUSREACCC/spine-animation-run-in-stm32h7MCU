@@ -1,0 +1,38 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_test.cpp(999): error: use of undeclared identifier 'dst'
+        ltdc_set_framebuffer(dst);
+                             ^
+../../User/spine_test.cpp(1003): error: use of undeclared identifier 'f0'
+        float ms = (float)(DWT->CYCCNT - f0) / 480000.0f;
+                                         ^
+../../User/spine_test.cpp(1020): error: use of undeclared identifier 'f'
+                   (float)(f + 1) / (float)fps, avg, 1000.0f / avg,
+                           ^
+../../User/spine_test.cpp(1035): error: expected unqualified-id
+    for (int i = 0; i < 3; i++)
+    ^
+../../User/spine_test.cpp(1047): error: unknown type name 'ltdc_set_framebuffer'
+    ltdc_set_framebuffer(bufs[0]);
+    ^
+../../User/spine_test.cpp(1049): error: C++ requires a type specifier for all declarations
+    printf("[SPN] playback done (%d frames)\r\n", total_frames);
+    ^
+../../User/spine_test.cpp(1049): error: use of undeclared identifier 'total_frames'
+    printf("[SPN] playback done (%d frames)\r\n", total_frames);
+                                                  ^
+../../User/spine_test.cpp(1050): error: C++ requires a type specifier for all declarations
+    printf("[SPN] RESULT PASS\r\n");
+    ^
+../../User/spine_test.cpp(1051): error: expected unqualified-id
+    return 0;
+    ^
+../../User/spine_test.cpp(1052): error: extraneous closing brace ('}')
+}
+^
+10 errors generated.
+compiling spine_test.cpp...
+compiling selftest.c...
+"..\..\Output\STM32H743.axf" - 10 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

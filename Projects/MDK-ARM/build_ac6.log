@@ -1,0 +1,328 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+assembling startup_stm32h743xx.s...
+../../Drivers/SYSTEM/delay/delay.c(18): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling delay.c...
+../../Drivers/CMSIS/Device/ST/STM32H7xx/Source/Templates/system_stm32h7xx.c(47): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling system_stm32h7xx.c...
+../../User/cpp_probe.cpp(5): warning: 'constexpr' specifier is incompatible with C++98 [-Wc++98-compat]
+constexpr int probe_size_v = (int)sizeof(T);
+^
+../../User/cpp_probe.cpp(5): warning: variable templates are a C++14 extension [-Wc++14-extensions]
+constexpr int probe_size_v = (int)sizeof(T);
+              ^
+../../User/cpp_probe.cpp(5): warning: use of old-style cast [-Wold-style-cast]
+constexpr int probe_size_v = (int)sizeof(T);
+                             ^    ~~~~~~~~~
+../../User/cpp_probe.cpp(11): warning: constexpr if is a C++1z extension [-Wc++1z-extensions]
+    if constexpr (probe_size_v<int> == 4)
+       ^
+../../User/cpp_probe.cpp(7): warning: no previous prototype for function 'cpp_probe' [-Wmissing-prototypes]
+int cpp_probe(void)
+    ^
+5 warnings generated.
+compiling cpp_probe.cpp...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c(82): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_cortex.c...
+../../User/stm32h7xx_it.c(22): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_it.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c(36): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal.c...
+../../Drivers/SYSTEM/sys/sys.c(14): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling sys.c...
+../../User/main.c(9): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling main.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c(107): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_gpio.c...
+../../Drivers/SYSTEM/usart/usart.c(15): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling usart.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c(95): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_dma.c...
+../../User/selftest.c(10): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling selftest.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr.c(146): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_pwr.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.c(153): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_pwr_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.c(67): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_rcc.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.c(23): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_rcc_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c(162): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_uart.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c(44): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_uart_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart_ex.c(43): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_usart_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c(140): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_usart.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ltdc.c(163): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_ltdc.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ltdc_ex.c(20): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_ltdc_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma2d.c(164): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_dma2d.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sdram.c(115): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_sdram.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sram.c(116): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_sram.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_qspi.c(228): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_qspi.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mdma.c(150): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_mdma.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sd.c(254): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_sd.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sd_ex.c(36): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_sd_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.c(51): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_dma_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.c(187): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_tim.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.c(82): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_hal_tim_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c(58): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_ll_fmc.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_sdmmc.c(154): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(244): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h(27): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h(29): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling stm32h7xx_ll_sdmmc.c...
+../../Drivers/BSP/MPU/mpu.c(14): warning: In file included from...../../Drivers\./BSP/MPU/mpu.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling mpu.c...
+../../Drivers/BSP/SDRAM/sdram.c(14): warning: In file included from...../../Drivers\./BSP/SDRAM/sdram.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling sdram.c...
+../../Drivers/BSP/LCD/lcd.c(15): warning: In file included from...../../Drivers\./BSP/LCD/lcd.h(18): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling lcd.c...
+../../Drivers/BSP/LCD/tft_spi.c(14): warning: In file included from...../../Drivers\./BSP/LCD/tft_spi.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling tft_spi.c...
+../../Drivers/BSP/LCD/ltdc.c(14): warning: In file included from...../../Drivers\./BSP/LCD/ltdc.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling ltdc.c...
+../../Drivers/BSP/QSPI/qspi.c(14): warning: In file included from...../../Drivers\./BSP/QSPI/qspi.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling qspi.c...
+../../Drivers/BSP/NORFLASH/norflash.c(14): warning: In file included from...../../Drivers\./BSP/QSPI/qspi.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling norflash.c...
+../../Drivers/BSP/SDMMC/sdmmc_sdcard.c(15): warning: In file included from...../../Drivers\./SYSTEM/usart/usart.h(19): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling sdmmc_sdcard.c...
+../../Drivers/BSP/LED/led.c(14): warning: In file included from...../../Drivers\./BSP/LED/led.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+compiling led.c...
+../../Middlewares/FATFS/source/ffsystem.c(11): warning: In file included from...../../Middlewares/FATFS/source/ff.h(188): warning: padding struct 'FFOBJID' with 4 bytes to align 'objsize' [-Wpadded]
+        FSIZE_t objsize;                /* Object size (valid when sclust != 0) */
+                ^
+../../Middlewares/FATFS/source/ff.h(182): warning: padding size of 'FFOBJID' with 4 bytes to alignment boundary [-Wpadded]
+typedef struct {
+        ^
+../../Middlewares/FATFS/source/ffsystem.c(20): warning: no previous prototype for function 'ff_memalloc' [-Wmissing-prototypes]
+void *ff_memalloc(UINT size)
+      ^
+../../Middlewares/FATFS/source/ffsystem.c(25): warning: no previous prototype for function 'ff_memfree' [-Wmissing-prototypes]
+void ff_memfree(void *mfbuf)
+     ^
+4 warnings generated.
+compiling ffsystem.c...
+../../Middlewares/FATFS/source/ffunicode.c(26): warning: In file included from...../../Middlewares/FATFS/source/ff.h(188): warning: padding struct 'FFOBJID' with 4 bytes to align 'objsize' [-Wpadded]
+        FSIZE_t objsize;                /* Object size (valid when sclust != 0) */
+                ^
+../../Middlewares/FATFS/source/ff.h(182): warning: padding size of 'FFOBJID' with 4 bytes to alignment boundary [-Wpadded]
+typedef struct {
+        ^
+2 warnings generated.
+compiling ffunicode.c...
+../../Middlewares/FATFS/source/diskio.c(15): warning: In file included from...../../Middlewares/FATFS/source/ff.h(188): warning: padding struct 'FFOBJID' with 4 bytes to align 'objsize' [-Wpadded]
+        FSIZE_t objsize;                /* Object size (valid when sclust != 0) */
+                ^
+../../Middlewares/FATFS/source/ff.h(182): warning: padding size of 'FFOBJID' with 4 bytes to alignment boundary [-Wpadded]
+typedef struct {
+        ^
+../../Middlewares/FATFS/source/diskio.c(17): warning: In file included from...../../Drivers\./BSP/SDMMC/sdmmc_sdcard.h(23): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(125): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h(223): warning: In file included from...../../Drivers/CMSIS/Include\core_cm7.h(162): warning: In file included from...../../Drivers/CMSIS/Include/cmsis_compiler.h(41): error: 'cmsis_armclang_ltm.h' file not found
+  #include "cmsis_armclang_ltm.h"
+           ^~~~~~~~~~~~~~~~~~~~~~
+2 warnings and 1 error generated.
+compiling diskio.c...
+../../Middlewares/FATFS/source/ff.c(23): warning: In file included from...../../Middlewares/FATFS/source/ff.h(188): warning: padding struct 'FFOBJID' with 4 bytes to align 'objsize' [-Wpadded]
+        FSIZE_t objsize;                /* Object size (valid when sclust != 0) */
+                ^
+../../Middlewares/FATFS/source/ff.h(182): warning: padding size of 'FFOBJID' with 4 bytes to alignment boundary [-Wpadded]
+typedef struct {
+        ^
+../../Middlewares/FATFS/source/ff.c(622): warning: implicit conversion loses integer precision: 'int' to 'WORD' (aka 'unsigned short') [-Wconversion]
+        rv = rv << 8 | ptr[0];
+           ~ ~~~~~~~~^~~~~~~~
+../../Middlewares/FATFS/source/ff.c(789): warning: implicit conversion loses integer precision: 'int' to 'WCHAR' (aka 'unsigned short') [-Wconversion]
+                wc = (wc << 8) + b;             /* Make a DBC */
+                   ~ ~~~~~~~~~~^~~
+../../Middlewares/FATFS/source/ff.c(1156): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                        wc |= fs->win[bc % SS(fs)] << 8;        /* Merge 2nd byte of the entry */
+                           ~~ ~~~~~~~~~~~~~~~~~~~~~^~~~
+../../Middlewares/FATFS/source/ff.c(1230): warning: implicit conversion loses integer precision: 'int' to 'BYTE' (aka 'unsigned char') [-Wconversion]
+                        *p = (clst & 1) ? ((*p & 0x0F) | ((BYTE)val << 4)) : (BYTE)val; /* Update 1st byte */
+                           ~               ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+../../Middlewares/FATFS/source/ff.c(1293): warning: implicit conversion loses integer precision: 'int' to 'BYTE' (aka 'unsigned char') [-Wconversion]
+                i = val / 8 % SS(fs); bm = 1 << (val % 8);
+                                         ~ ~~^~~~~~~~~~~~
+../../Middlewares/FATFS/source/ff.c(1332): warning: implicit conversion loses integer precision: 'int' to 'BYTE' (aka 'unsigned char') [-Wconversion]
+        bm = 1 << (clst % 8);                                   /* Bit mask in the byte */
+           ~ ~~^~~~~~~~~~~~~
+../../Middlewares/FATFS/source/ff.c(23): warning: In file included from...../../Middlewares/FATFS/source/ff.h(138): warning: padding struct 'FATFS' with 1 byte to align 'id' [-Wpadded]
+        WORD    id;                             /* Volume mount ID */
+                ^
+../../Middlewares/FATFS/source/ff.c(2034): warning: implicit conversion loses integer precision: 'int' to 'BYTE' (aka 'unsigned char') [-Wconversion]
+                sum = (sum >> 1) + (sum << 7) + *dir++;
+                    ~ ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../../Middlewares/FATFS/source/ff.c(2493): warning: variable 'res' may be uninitialized when used here [-Wconditional-uninitialized]
+                if (res != FR_NO_FILE) return res;      /* Abort if the result is other than 'not collided' */
+                    ^~~
+../../Middlewares/FATFS/source/ff.c(2442): note: variable 'res' is declared here
+        FRESULT res;
+        ^
+../../Middlewares/FATFS/source/ff.c(3424): warning: implicit conversion loses integer precision: 'int' to 'WORD' (aka 'unsigned short') [-Wconversion]
+                fs->csize = 1 << fs->win[BPB_SecPerClusEx];             /* Cluster size */
+                          ~ ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares/FATFS/source/ff.c(23): warning: In file included from...../../Middlewares/FATFS/source/ff.h(209): warning: padding struct 'FIL' with 6 bytes to align 'fptr' [-Wpadded]
+        FSIZE_t fptr;                   /* File read/write pointer (Zeroed on file open) */
+                ^
+../../Middlewares/FATFS/source/ff.h(205): warning: padding size of 'FIL' with 4 bytes to alignment boundary [-Wpadded]
+typedef struct {
+        ^
+../../Middlewares/FATFS/source/ff.h(247): warning: padding size of 'FILINFO' with 6 bytes to alignment boundary [-Wpadded]
+typedef struct {
+        ^
+../../Middlewares/FATFS/source/ff.h(267): warning: padding struct 'MKFS_PARM' with 2 bytes to align 'align' [-Wpadded]
+        UINT align;                     /* Data area alignment (sector) */
+             ^
+../../Middlewares/FATFS/source/ff.c(6849): warning: implicit conversion changes signedness: 'int' to 'UINT' (aka 'unsigned int') [-Wsign-conversion]
+                        w = va_arg(arp, int);
+                          ~ ^~~~~~~~~~~~~~~~
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\stdarg.h(43): note: expanded from macro 'va_arg'
+  #define va_arg(ap, type)    __builtin_va_arg(ap, type)
+                              ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares/FATFS/source/ff.c(6897): warning: implicit conversion changes signedness: 'int' to 'UINT' (aka 'unsigned int') [-Wsign-conversion]
+                        if (prec >= 0 && j > (UINT)prec) j = prec;      /* Limited length of string body */
+                                                           ~ ^~~~
+18 warnings generated.
+compiling ff.c...
+"..\..\Output\STM32H743.axf" - 43 Error(s), 31 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:02

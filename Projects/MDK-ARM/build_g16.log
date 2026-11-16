@@ -1,0 +1,16 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_test.cpp(1739): error: no member named 'getWorldX' in 'spine::Bone'
+                   (double)((probe_bone != nullptr) ? probe_bone->getWorldX() : 0.0f),
+                                                      ~~~~~~~~~~  ^
+../../User/spine_test.cpp(1740): error: no member named 'getWorldY' in 'spine::Bone'
+                   (double)((probe_bone != nullptr) ? probe_bone->getWorldY() : 0.0f),
+                                                      ~~~~~~~~~~  ^
+../../User/spine_test.cpp(1741): error: no member named 'getWorldRotationX' in 'spine::Bone'
+                   (double)((probe_bone != nullptr) ? probe_bone->getWorldRotationX() : 0.0f));
+                                                      ~~~~~~~~~~  ^
+3 errors generated.
+compiling spine_test.cpp...
+"..\..\Output\STM32H743.axf" - 3 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

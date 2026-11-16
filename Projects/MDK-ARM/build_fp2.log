@@ -1,0 +1,25 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../Middlewares/RASTER/raster2d.cpp(256): error: use of undeclared identifier 'ax'
+    float vx[3] = { ax, bx, cx };
+                    ^
+../../Middlewares/RASTER/raster2d.cpp(256): error: use of undeclared identifier 'bx'
+    float vx[3] = { ax, bx, cx };
+                        ^
+../../Middlewares/RASTER/raster2d.cpp(256): error: use of undeclared identifier 'cx'
+    float vx[3] = { ax, bx, cx };
+                            ^
+../../Middlewares/RASTER/raster2d.cpp(257): error: use of undeclared identifier 'ay'
+    float vy[3] = { ay, by, cy };
+                    ^
+../../Middlewares/RASTER/raster2d.cpp(257): error: use of undeclared identifier 'by'
+    float vy[3] = { ay, by, cy };
+                        ^
+../../Middlewares/RASTER/raster2d.cpp(257): error: use of undeclared identifier 'cy'
+    float vy[3] = { ay, by, cy };
+                            ^
+6 errors generated.
+compiling raster2d.cpp...
+"..\..\Output\STM32H743.axf" - 6 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:02

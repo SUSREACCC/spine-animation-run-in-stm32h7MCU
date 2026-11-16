@@ -1,0 +1,17 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/raster_test.cpp(445): error: expected expression
+        printf("[R2D] quad 565 const tint : %d.%02d Mpx/s
+               ^
+../../User/raster_test.cpp(472): error: expected '}'
+}
+ ^
+../../User/raster_test.cpp(377): note: to match this '{'
+{
+^
+2 errors generated.
+compiling raster_test.cpp...
+compiling raster2d.cpp...
+"..\..\Output\STM32H743.axf" - 2 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:09

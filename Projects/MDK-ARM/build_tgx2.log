@@ -1,0 +1,277 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+assembling startup_stm32h743xx.s...
+compiling cpp_probe.cpp...
+compiling sys.c...
+compiling stm32h7xx_it.c...
+compiling main.c...
+compiling system_stm32h7xx.c...
+compiling delay.c...
+compiling usart.c...
+compiling selftest.c...
+compiling stm32h7xx_hal_cortex.c...
+compiling stm32h7xx_hal.c...
+compiling stm32h7xx_hal_gpio.c...
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(25): warning: In file included from...../../Middlewares\./TGX/Image.h(36): warning: In file included from...../../Middlewares\./TGX/Rasterizer.h(141): error: 'auto' not allowed in template parameter until C++1z
+    template<auto shader_function, typename RASTERIZER_PARAMS>
+             ^~~~
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(25): warning: In file included from...../../Middlewares\./TGX/Image.h(37): warning: In file included from...../../Middlewares\./TGX/bseg.h(457): error: call to 'abs' is ambiguous
+                        const int32_t adx = abs(P2.x - P1.x);
+                                            ^~~
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\math.h(663): note: candidate function
+abs(float __lcpp_x) _NOEXCEPT {return ::fabsf(__lcpp_x);}
+^
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\math.h(667): note: candidate function
+abs(double __lcpp_x) _NOEXCEPT {return ::fabs(__lcpp_x);}
+^
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\math.h(671): note: candidate function
+abs(long double __lcpp_x) _NOEXCEPT {return ::fabsl(__lcpp_x);}
+^
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(25): warning: In file included from...../../Middlewares\./TGX/Image.h(37): warning: In file included from...../../Middlewares\./TGX/bseg.h(458): error: call to 'abs' is ambiguous
+                        const int32_t ady = abs(P2.y - P1.y);
+                                            ^~~
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\math.h(663): note: candidate function
+abs(float __lcpp_x) _NOEXCEPT {return ::fabsf(__lcpp_x);}
+^
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\math.h(667): note: candidate function
+abs(double __lcpp_x) _NOEXCEPT {return ::fabs(__lcpp_x);}
+^
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\math.h(671): note: candidate function
+abs(long double __lcpp_x) _NOEXCEPT {return ::fabsl(__lcpp_x);}
+^
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(25): warning: In file included from...../../Middlewares\./TGX/Image.h(3931): warning: In file included from...../../Middlewares\./TGX/Image.inl(2752): error: call to 'abs' is ambiguous
+        const bool swapseg = ((Q1.x - P.x) * abs(Q2.y - P.y) > (Q2.x - P.x) * abs(Q1.y - P.y));
+                                             ^~~
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\math.h(663): note: candidate function
+abs(float __lcpp_x) _NOEXCEPT {return ::fabsf(__lcpp_x);}
+^
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\math.h(667): note: candidate function
+abs(double __lcpp_x) _NOEXCEPT {return ::fabs(__lcpp_x);}
+^
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\math.h(671): note: candidate function
+abs(long double __lcpp_x) _NOEXCEPT {return ::fabsl(__lcpp_x);}
+^
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(25): warning: In file included from...../../Middlewares\./TGX/Image.h(3931): warning: In file included from...../../Middlewares\./TGX/Image.inl(2752): error: call to 'abs' is ambiguous
+        const bool swapseg = ((Q1.x - P.x) * abs(Q2.y - P.y) > (Q2.x - P.x) * abs(Q1.y - P.y));
+                                                                              ^~~
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\math.h(663): note: candidate function
+abs(float __lcpp_x) _NOEXCEPT {return ::fabsf(__lcpp_x);}
+^
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\math.h(667): note: candidate function
+abs(double __lcpp_x) _NOEXCEPT {return ::fabs(__lcpp_x);}
+^
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\math.h(671): note: candidate function
+abs(long double __lcpp_x) _NOEXCEPT {return ::fabsl(__lcpp_x);}
+^
+../../User/tgx_selftest.cpp(160): error: ambiguous conversion for functional-style cast from 'int' to 'tgx::RGB565'
+    s_dst->fillScreenVGradient(RGB565(0x0841), RGB565(0x2104));   /* dark blue -> dark grey */
+                               ^~~~~~~~~~~~~
+../../Middlewares\./TGX/Color.h(321): note: candidate constructor
+        constexpr RGB565(uint16_t c) : val(c) {}
+                  ^
+../../Middlewares\./TGX/Color.inl(77): note: candidate constructor
+constexpr inline RGB565::RGB565(uint32_t val) : RGB565(RGB32(val))
+                         ^
+../../Middlewares\./TGX/Color.inl(82): note: candidate constructor
+constexpr inline RGB565::RGB565(uint64_t val) : RGB565(RGB64(val))
+                         ^
+../../Middlewares\./TGX/Color.h(339): note: candidate constructor
+        constexpr RGB565(const RGB565&) = default;
+                  ^
+../../Middlewares\./TGX/Color.h(369): note: candidate constructor
+        RGB565(const HSV& c);
+        ^
+../../Middlewares\./TGX/Color.inl(37): note: candidate constructor
+constexpr inline RGB565::RGB565(const RGB24& c) :
+                         ^
+../../Middlewares\./TGX/Color.inl(47): note: candidate constructor
+constexpr inline RGB565::RGB565(const RGB32& c) : 
+                         ^
+../../Middlewares\./TGX/Color.inl(57): note: candidate constructor
+constexpr inline RGB565::RGB565(const RGB64& c) : 
+                         ^
+../../Middlewares\./TGX/Color.inl(67): note: candidate constructor
+constexpr inline RGB565::RGB565(const RGBf& c) :
+                         ^
+../../User/tgx_selftest.cpp(160): error: ambiguous conversion for functional-style cast from 'int' to 'tgx::RGB565'
+    s_dst->fillScreenVGradient(RGB565(0x0841), RGB565(0x2104));   /* dark blue -> dark grey */
+                                               ^~~~~~~~~~~~~
+../../Middlewares\./TGX/Color.h(321): note: candidate constructor
+        constexpr RGB565(uint16_t c) : val(c) {}
+                  ^
+../../Middlewares\./TGX/Color.inl(77): note: candidate constructor
+constexpr inline RGB565::RGB565(uint32_t val) : RGB565(RGB32(val))
+                         ^
+../../Middlewares\./TGX/Color.inl(82): note: candidate constructor
+constexpr inline RGB565::RGB565(uint64_t val) : RGB565(RGB64(val))
+                         ^
+../../Middlewares\./TGX/Color.h(339): note: candidate constructor
+        constexpr RGB565(const RGB565&) = default;
+                  ^
+../../Middlewares\./TGX/Color.h(369): note: candidate constructor
+        RGB565(const HSV& c);
+        ^
+../../Middlewares\./TGX/Color.inl(37): note: candidate constructor
+constexpr inline RGB565::RGB565(const RGB24& c) :
+                         ^
+../../Middlewares\./TGX/Color.inl(47): note: candidate constructor
+constexpr inline RGB565::RGB565(const RGB32& c) : 
+                         ^
+../../Middlewares\./TGX/Color.inl(57): note: candidate constructor
+constexpr inline RGB565::RGB565(const RGB64& c) : 
+                         ^
+../../Middlewares\./TGX/Color.inl(67): note: candidate constructor
+constexpr inline RGB565::RGB565(const RGBf& c) :
+                         ^
+../../User/tgx_selftest.cpp(166): error: no matching constructor for initialization of 'iBox2' (aka 'Box2<int>')
+        s_dst->fillRect(iBox2(iVec2(i * 100, 0), iVec2(i * 100 + 99, 40)), RGB565(bars[i]));
+                        ^     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares\./TGX/Box2.h(186): note: candidate constructor not viable: requires single argument 'P', but 2 arguments were provided
+        constexpr Box2(const Vec2<T>& P) : minX(P.x), maxX(P.x), minY(P.y), maxY(P.y)
+                  ^
+../../Middlewares\./TGX/Box2.h(194): note: candidate constructor not viable: requires single argument 'B', but 2 arguments were provided
+        Box2(const Box2<T>& B) = default;
+        ^
+../../Middlewares\./TGX/Box2.h(170): note: candidate constructor not viable: requires 0 arguments, but 2 were provided
+        constexpr Box2()
+                  ^
+../../Middlewares\./TGX/Box2.h(178): note: candidate constructor not viable: requires 4 arguments, but 2 were provided
+        constexpr Box2(const T minx, const T maxx, const T miny, const T maxy) : minX(minx), maxX(maxx), minY(miny), maxY(maxy)
+                  ^
+../../User/tgx_selftest.cpp(177): error: no matching constructor for initialization of 'fBox2' (aka 'Box2<float>')
+    s_dst->drawThickRectAA(fBox2(fBox2(fVec2(60, 60), fVec2(440, 280))), 3.0f, RGB565_White, 1.0f);
+                                 ^     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares\./TGX/Box2.h(186): note: candidate constructor not viable: requires single argument 'P', but 2 arguments were provided
+        constexpr Box2(const Vec2<T>& P) : minX(P.x), maxX(P.x), minY(P.y), maxY(P.y)
+                  ^
+../../Middlewares\./TGX/Box2.h(194): note: candidate constructor not viable: requires single argument 'B', but 2 arguments were provided
+        Box2(const Box2<T>& B) = default;
+        ^
+../../Middlewares\./TGX/Box2.h(170): note: candidate constructor not viable: requires 0 arguments, but 2 were provided
+        constexpr Box2()
+                  ^
+../../Middlewares\./TGX/Box2.h(178): note: candidate constructor not viable: requires 4 arguments, but 2 were provided
+        constexpr Box2(const T minx, const T maxx, const T miny, const T maxy) : minX(minx), maxX(maxx), minY(miny), maxY(maxy)
+                  ^
+../../User/tgx_selftest.cpp(196): error: declaration of 'tgx_selftest' has a different language linkage
+extern "C" uint8_t tgx_selftest(void)
+                   ^
+../../User/tgx_selftest.h(14): note: previous declaration is here
+uint8_t tgx_selftest(void);
+        ^
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(25): warning: In file included from...../../Middlewares\./TGX/Image.h(3931): warning: In file included from...../../Middlewares\./TGX/Image.inl(4113): error: no matching function for call to 'rasterizeTriangle'
+                    tgx::rasterizeTriangle<tgx::shader_2D_texture<true, true, false, color_t, color_t_tex> >(_lx, _ly, V1, V2, V3, 0, 0, rparam);
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares\./TGX/Image.inl(3938): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::_drawTexturedTriangle<tgx::RGB32, false, true, false>' requested here
+            _drawTexturedTriangle<color_t_tex, false, true, false>(src_im, color_t_tex(), srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, color_t_tex(), color_t_tex(), color_t_tex(), opacity);
+            ^
+../../Middlewares\./TGX/Image.inl(4313): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedTriangle<tgx::RGB32>' requested here
+        drawTexturedTriangle(src_im, srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, opacity);
+        ^
+../../User/tgx_selftest.cpp(110): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedQuad<tgx::RGB32>' requested here
+        s_dst->drawTexturedQuad(*s_src, s0, s1, s2, s3, d0, d1, d2, d3, 1.0f);
+               ^
+../../Middlewares\./TGX/Rasterizer.h(142): note: candidate template ignored: invalid explicitly-specified argument for template parameter 'shader_function'
+    TGX_RASTERIZE_TRIANGLE_INLINE inline void rasterizeTriangle(const int LX, const int LY, const RasterizerVec4 & V0, const RasterizerVec4 & V1, const RasterizerVec4 & V2, const int32_t offset_x, const int32_t offset_y, const RASTERIZER_PARAMS & data)
+                                              ^
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(25): warning: In file included from...../../Middlewares\./TGX/Image.h(3931): warning: In file included from...../../Middlewares\./TGX/Image.inl(4113): error: no matching function for call to 'rasterizeTriangle'
+                    tgx::rasterizeTriangle<tgx::shader_2D_texture<true, true, false, color_t, color_t_tex> >(_lx, _ly, V1, V2, V3, 0, 0, rparam);
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares\./TGX/Image.inl(3942): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::_drawTexturedTriangle<tgx::RGB32, false, false, false>' requested here
+            _drawTexturedTriangle<color_t_tex, false, false, false>(src_im, color_t_tex(), srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, color_t_tex(), color_t_tex(), color_t_tex(), 1.0f);
+            ^
+../../Middlewares\./TGX/Image.inl(4313): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedTriangle<tgx::RGB32>' requested here
+        drawTexturedTriangle(src_im, srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, opacity);
+        ^
+../../User/tgx_selftest.cpp(110): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedQuad<tgx::RGB32>' requested here
+        s_dst->drawTexturedQuad(*s_src, s0, s1, s2, s3, d0, d1, d2, d3, 1.0f);
+               ^
+../../Middlewares\./TGX/Rasterizer.h(142): note: candidate template ignored: invalid explicitly-specified argument for template parameter 'shader_function'
+    TGX_RASTERIZE_TRIANGLE_INLINE inline void rasterizeTriangle(const int LX, const int LY, const RasterizerVec4 & V0, const RasterizerVec4 & V1, const RasterizerVec4 & V2, const int32_t offset_x, const int32_t offset_y, const RASTERIZER_PARAMS & data)
+                                              ^
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(25): warning: In file included from...../../Middlewares\./TGX/Image.h(3931): warning: In file included from...../../Middlewares\./TGX/Image.inl(4113): error: no matching function for call to 'rasterizeTriangle'
+                    tgx::rasterizeTriangle<tgx::shader_2D_texture<true, true, false, color_t, color_t_tex> >(_lx, _ly, V1, V2, V3, 0, 0, rparam);
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares\./TGX/Image.inl(3953): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::_drawTexturedTriangle<tgx::RGB32, true, true, false>' requested here
+            _drawTexturedTriangle<color_t_tex, true, true, false>(src_im, color_t_tex(), srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, C1, C2, C3, opacity);
+            ^
+../../User/tgx_selftest.cpp(138): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedGradientTriangle<tgx::RGB32>' requested here
+                s_dst->drawTexturedGradientTriangle(*s_src, t0p, t1p, t2p, p0, p1, p2,
+                       ^
+../../Middlewares\./TGX/Rasterizer.h(142): note: candidate template ignored: invalid explicitly-specified argument for template parameter 'shader_function'
+    TGX_RASTERIZE_TRIANGLE_INLINE inline void rasterizeTriangle(const int LX, const int LY, const RasterizerVec4 & V0, const RasterizerVec4 & V1, const RasterizerVec4 & V2, const int32_t offset_x, const int32_t offset_y, const RASTERIZER_PARAMS & data)
+                                              ^
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(25): warning: In file included from...../../Middlewares\./TGX/Image.h(3931): warning: In file included from...../../Middlewares\./TGX/Image.inl(4113): error: no matching function for call to 'rasterizeTriangle'
+                    tgx::rasterizeTriangle<tgx::shader_2D_texture<true, true, false, color_t, color_t_tex> >(_lx, _ly, V1, V2, V3, 0, 0, rparam);
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares\./TGX/Image.inl(3957): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::_drawTexturedTriangle<tgx::RGB32, true, false, false>' requested here
+            _drawTexturedTriangle<color_t_tex, true, false, false>(src_im, color_t_tex(), srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, C1, C2, C3, 1.0f);
+            ^
+../../User/tgx_selftest.cpp(138): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedGradientTriangle<tgx::RGB32>' requested here
+                s_dst->drawTexturedGradientTriangle(*s_src, t0p, t1p, t2p, p0, p1, p2,
+                       ^
+../../Middlewares\./TGX/Rasterizer.h(142): note: candidate template ignored: invalid explicitly-specified argument for template parameter 'shader_function'
+    TGX_RASTERIZE_TRIANGLE_INLINE inline void rasterizeTriangle(const int LX, const int LY, const RasterizerVec4 & V0, const RasterizerVec4 & V1, const RasterizerVec4 & V2, const int32_t offset_x, const int32_t offset_y, const RASTERIZER_PARAMS & data)
+                                              ^
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(25): warning: In file included from...../../Middlewares\./TGX/Image.h(3931): warning: In file included from...../../Middlewares\./TGX/Image.inl(2752): error: default initialization of an object of const type 'const bool'
+        const bool swapseg = ((Q1.x - P.x) * abs(Q2.y - P.y) > (Q2.x - P.x) * abs(Q1.y - P.y));
+                   ^
+                           = false
+../../Middlewares\./TGX/Image.inl(2718): note: in instantiation of member function 'tgx::Image<tgx::RGB565>::_bseg_fill_interior_angle' requested here
+            _bseg_fill_interior_angle(P3, P1, P2, seg31, seg32, fillcolor, false, opacity);
+            ^
+../../Middlewares\./TGX/Image.inl(2699): note: in instantiation of member function 'tgx::Image<tgx::RGB565>::_bseg_fill_triangle_precomputed_sub' requested here
+        _bseg_fill_triangle_precomputed_sub(*(P[u1]), *(P[u2]), *(P[u3]), *(S[u1][u2]), *(S[u2][u1]), *(S[u2][u3]), *(S[u3][u2]), *(S[u3][u1]), *(S[u1][u3]), fillcolor, opacity);
+        ^
+../../Middlewares\./TGX/Image.inl(3155): note: in instantiation of member function 'tgx::Image<tgx::RGB565>::_bseg_fill_triangle_precomputed' requested here
+            _bseg_fill_triangle_precomputed(P1, PA, PB, seg1A, segA1, segAB, segBA, segB1, seg1B, color, opacity);
+            ^
+../../Middlewares\./TGX/Image.inl(3072): note: in instantiation of member function 'tgx::Image<tgx::RGB565>::drawWedgeLineAA' requested here
+        drawWedgeLineAA(P1, P2, line_width, end_P1, line_width, end_P2, color, opacity);
+        ^
+../../User/tgx_selftest.cpp(175): note: in instantiation of member function 'tgx::Image<tgx::RGB565>::drawThickLineAA' requested here
+    s_dst->drawThickLineAA(fVec2(40, 320), fVec2(460, 420), 6.0f, END_ROUNDED, END_ROUNDED,
+           ^
+15 errors generated.
+compiling tgx_selftest.cpp...
+compiling stm32h7xx_hal_pwr.c...
+compiling stm32h7xx_hal_dma.c...
+compiling stm32h7xx_hal_pwr_ex.c...
+compiling stm32h7xx_hal_rcc.c...
+compiling stm32h7xx_hal_uart_ex.c...
+compiling stm32h7xx_hal_usart_ex.c...
+compiling stm32h7xx_hal_ltdc_ex.c...
+compiling stm32h7xx_hal_rcc_ex.c...
+compiling stm32h7xx_hal_ltdc.c...
+compiling stm32h7xx_hal_dma2d.c...
+compiling stm32h7xx_hal_usart.c...
+compiling stm32h7xx_hal_uart.c...
+compiling stm32h7xx_hal_sram.c...
+compiling stm32h7xx_hal_sdram.c...
+compiling stm32h7xx_hal_sd_ex.c...
+compiling stm32h7xx_hal_mdma.c...
+compiling stm32h7xx_hal_dma_ex.c...
+compiling mpu.c...
+compiling stm32h7xx_hal_qspi.c...
+compiling stm32h7xx_ll_fmc.c...
+compiling sdram.c...
+compiling stm32h7xx_hal_sd.c...
+compiling stm32h7xx_ll_sdmmc.c...
+compiling stm32h7xx_hal_tim_ex.c...
+compiling ltdc.c...
+compiling lcd.c...
+compiling tft_spi.c...
+compiling qspi.c...
+compiling ffunicode.c...
+compiling stm32h7xx_hal_tim.c...
+compiling ffsystem.c...
+compiling norflash.c...
+compiling led.c...
+compiling sdmmc_sdcard.c...
+compiling diskio.c...
+compiling Color.cpp...
+compiling Fonts.cpp...
+compiling ff.c...
+"..\..\Output\STM32H743.axf" - 15 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:04

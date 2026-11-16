@@ -1,0 +1,154 @@
+﻿
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 15 2026 16:40:36
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 15 2026 16:40:36
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 15 2026 16:40:36
+==============================================
+[1/5] MPU + SDRAM
+  addr scan : 2048 checkpoints over 32768 KB, 0 error(s)
+  pattern   : 64 KB x 5 patterns, total error(s) = 0
+[2/5] LCD (LTDC + DMA2D + SDRAM framebuffer)
+LCD ID:4384
+  panel id  : 4384, 800x480
+  pixel rb  : F800 OK (framebuffer @ 0xC0000000)
+[3/5] QSPI NOR flash
+ID:ef17
+  flash id  : EF17
+  rw verify : 4096 bytes @ 0x800000, 0 mismatch(es)
+[4/5] SD card (SDMMC1, 4-bit)
+  card      : 15801 MB, type=1, block=512 B
+  bus       : 4-bit, sweep 6/15/30 MHz
+  div=20 ( 6 MHz): OK   2766 KB/s  
+  div=8  (15 MHz): OK   6489 KB/s  
+  div=4  (30 MHz): OK   11756 KB/s  
+  stress    : 32 x 8 KB over the card, 0 error(s), 10398 KB/s
+  using     : 30 MHz, MBR sig=55AA
+[5/5] FATFS on SD volume 0:
+  volume    : FAT32, total 15784 MB, free 15783 MB
+   System Volume Information/  0 B
+   spineboy-pma.atlas   1652 B
+  read      : 0:/spineboy-pma.atlas -> 16 B, 73 70 69 6E ...
+   spineboy-pma.raw   524304 B
+   spineboy-pro.skel   65335 B
+  entries   : 4 listed, file read OK
+  write     : 512 B -> readback match, delete ok
+----------------------------------------------
+RESULT SDRAM=PASS LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+RESULT SDRAM=PASS LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+----------------------------------------------
+[TGX] starting 2D render test
+
+[TGX] 2D render self-test, framebuffer @ 0xC0000000
+[TGX] benchmarking...
+[TGX] fill   : 76.56 Mpx/s  (800x480 x10)
+[TGX] texquad: 3.64 Mpx/s  (800x480 x4, bilinear+alpha)
+[TGX] tris   : 3.09 Mpx/s  (16x12 grid, gradient triangles)
+[TGX] 565/ow : 5.03 Mpx/s
+[TGX] 32/ow  : 4.68 Mpx/s
+[TGX] 32/blend: 3.64 Mpx/s
+[TGX] 565 8KB : 4.97 Mpx/s  (texture fits in D-cache)
+[TGX] 60 fps budget @ tris rate: 51531 kpx per frame
+[TGX] 30 fps budget @ tris rate: 103059 kpx per frame
+
+[RASTR] minimal custom rasterizer probe
+[RASTR] quad opaque : 35.60 Mpx/s
+[RASTR] quad key    : 34.62 Mpx/s
+[RASTR] quad key+tint: 21.76 Mpx/s
+[RASTR] grid key    : 23.40 Mpx/s  (16x12, 768 tris)
+[RASTR] grid key+tint: 15.72 Mpx/s
+[RASTR] RESULT PASS
+
+[R2D] custom rasterizer: regression + benchmark
+  T1 coverage     : 0 uncovered px  OK
+  T2 seam         : 0 mismatched pairs  OK
+  T3 clip         : 367608 px painted  OK
+  T4 vtx colour   : 0 non-monotonic  OK
+  T5 blend modes  : 0 wrong  OK
+[R2D] quad 4444 opaque: 6.02 Mpx/s
+[R2D] quad 565 const tint : 9.13 Mpx/s
+[R2D] quad 4444 alpha-only: 4.45 Mpx/s
+[R2D] grid 4444 alpha-only: 4.16 Mpx/s
+[R2D] quad 1555 const tint: 16.43 Mpx/s
+[R2D] grid 1555 vcol      : 6.84 Mpx/s
+[R2D] quad 565 const : 27.62 Mpx/s
+[R2D] quad 565 vcol  : 6.34 Mpx/s
+[R2D] quad 4444 vcol : 4.13 Mpx/s
+[R2D] grid 565 vcol  : 5.57 Mpx/s
+[R2D] grid 4444 vcol : 3.68 Mpx/s
+[R2D] RESULT PASS (regressions 0)
+[TGX] RESULT PASS
+RESULT TGX=PASS
+----------------------------------------------
+
+[SPN] animation contact sheet
+[SPN] texture /spine/spineboy-pma.raw : 1024x256 ARGB1555
+[SPN] 11 animations:
+        [ 0] aim
+        [ 1] death
+        [ 2] hoverboard
+        [ 3] idle
+        [ 4] idle-turn
+        [ 5] jump
+        [ 6] portal
+        [ 7] run
+        [ 8] run-to-idle
+        [ 9] shoot
+        [10] walk
+[SPN] probe: uv=(1015.0,67.0)px texel=0000 a=0 rgb555=(0,0,0) tint=FFFFFFFF
+[SPN] rt.fmt=1 w=1024 h=256 px=c0a28008
+[SPN] motion check (run): t0=DEC33A42 t1=BFA8C4DA MOVING
+[SPN] sheet: 11 cells rendered in 75.76 ms (13.2 fps for whole sheet)
+[SPN] RESULT PASS
+
+[DUO] 2 characters, render 800x480, 60 fps, 4 s x 3 iters
+[SPN] texture /spine/spineboy-pma.raw : 1024x256 ARGB1555
+[DUO] it1 load 222.1 ms (tex 55.9 + read 7.6 + parse 158.6, blocks 7224) | 37.09 ms/frame (27.0 fps) | clear 4.14 raster 30.44 present 0.35 | heap 715096->825160 peak 825240 fails 0
+[DUO] it1 after delete: heap used 405288 (delta after load -309808)
+[SPN] texture /spine/spineboy-pma.raw : 1024x256 ARGB1555
+[DUO] it2 load 227.0 ms (tex 55.9 + read 7.6 + parse 163.5, blocks 7237) | 37.10 ms/frame (27.0 fps) | clear 4.16 raster 30.44 present 0.35 | heap 715304->825368 peak 825448 fails 0
+[DUO] it2 after delete: heap used 405288 (delta after load -310016)
+[SPN] texture /spine/spineboy-pma.raw : 1024x256 ARGB1555
+[DUO] it3 load 227.0 ms (tex 55.9 + read 7.6 + parse 163.5, blocks 7237) | 37.10 ms/frame (27.0 fps) | clear 4.15 raster 30.44 present 0.35 | heap 715304->825368 peak 825448 fails 0
+[DUO] it3 after delete: heap used 405288 (delta after load -310016)
+[DUO] ================================
+[DUO] fps per iteration:
+[DUO]   it1: 27.0 fps (37.09 ms)
+[DUO]   it2: 27.0 fps (37.10 ms)
+[DUO]   it3: 27.0 fps (37.10 ms)
+[DUO] RESULT PASS
+
+[DUO] 2 characters, render 400x240, 60 fps, 4 s x 3 iters
+[SPN] texture /spine/spineboy-pma.raw : 1024x256 ARGB1555
+[DUO] it1 load 227.4 ms (tex 55.8 + read 7.6 + parse 164.0, blocks 7237) | 25.45 ms/frame (39.3 fps) | clear 0.98 raster 13.70 present 8.61 | heap 715304->825368 peak 825448 fails 0
+[DUO] it1 after delete: heap used 405288 (delta after load -310016)
+[SPN] texture /spine/spineboy-pma.raw : 1024x256 ARGB1555
+[DUO] it2 load 226.7 ms (tex 55.8 + read 7.3 + parse 163.7, blocks 7237) | 25.45 ms/frame (39.3 fps) | clear 0.97 raster 13.71 present 8.60 | heap 715304->825368 peak 825448 fails 0
+[DUO] it2 after delete: heap used 405288 (delta after load -310016)
+[SPN] texture /spine/spineboy-pma.raw : 1024x256 ARGB1555
+[DUO] it3 load 226.9 ms (tex 55.9 + read 7.3 + parse 163.7, blocks 7237) | 25.45 ms/frame (39.3 fps) | clear 0.97 raster 13.71 present 8.61 | heap 715304->825368 peak 825448 fails 0
+[DUO] it3 after delete: heap used 405288 (delta after load -310016)
+[DUO] ================================
+[DUO] fps per iteration:
+[DUO]   it1: 39.3 fps (25.45 ms)
+[DUO]   it2: 39.3 fps (25.45 ms)
+[DUO]   it3: 39.3 fps (25.45 ms)
+[DUO] RESULT PASS
+heartbeat start
+alive 1
+alive 2
+alive 3
+alive 4
+alive 5
+

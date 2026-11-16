@@ -1,0 +1,1515 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+assembling startup_stm32h743xx.s...
+../../User/cpp_probe.cpp(5): warning: 'constexpr' specifier is incompatible with C++98 [-Wc++98-compat]
+constexpr int probe_size_v = (int)sizeof(T);
+^
+../../User/cpp_probe.cpp(5): warning: variable templates are incompatible with C++ standards before C++14 [-Wc++98-c++11-compat]
+constexpr int probe_size_v = (int)sizeof(T);
+              ^
+../../User/cpp_probe.cpp(5): warning: use of old-style cast [-Wold-style-cast]
+constexpr int probe_size_v = (int)sizeof(T);
+                             ^    ~~~~~~~~~
+../../User/cpp_probe.cpp(11): warning: constexpr if is incompatible with C++ standards before C++1z [-Wc++98-c++11-c++14-compat]
+    if constexpr (probe_size_v<int> == 4)
+       ^
+../../User/cpp_probe.cpp(7): warning: no previous prototype for function 'cpp_probe' [-Wmissing-prototypes]
+int cpp_probe(void)
+    ^
+5 warnings generated.
+compiling cpp_probe.cpp...
+../../Drivers/SYSTEM/sys/sys.c(14): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/SYSTEM/sys/sys.c(14): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+5 warnings generated.
+compiling sys.c...
+../../User/stm32h7xx_it.c(22): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../User/stm32h7xx_it.c(22): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../User/stm32h7xx_it.c(71): warning: function 'NMI_Handler' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+{
+^
+../../User/stm32h7xx_it.c(86): warning: function 'HardFault_Handler' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+{
+^
+../../User/stm32h7xx_it.c(101): warning: function 'MemManage_Handler' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+{
+^
+../../User/stm32h7xx_it.c(116): warning: function 'BusFault_Handler' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+{
+^
+../../User/stm32h7xx_it.c(131): warning: function 'UsageFault_Handler' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+{
+^
+10 warnings generated.
+compiling stm32h7xx_it.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c(82): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c(82): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c(216): warning: function 'HAL_NVIC_SystemReset' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+{
+^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c(82): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(292): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_cortex.h(53): warning: padding struct 'MPU_Region_InitTypeDef' with 2 bytes to align 'BaseAddress' [-Wpadded]
+  uint32_t               BaseAddress;           /*!< Specifies the base address of the region to protect.                           */
+                         ^
+7 warnings generated.
+compiling stm32h7xx_hal_cortex.c...
+../../Drivers/SYSTEM/usart/usart.c(15): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/SYSTEM/usart/usart.c(15): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/SYSTEM/usart/usart.c(49): warning: explicitly assigning value of variable of type 'int' to itself [-Wself-assign]
+    ch = ch;
+    ~~ ^ ~~
+../../Drivers/SYSTEM/usart/usart.c(47): warning: no previous prototype for function '_ttywrch' [-Wmissing-prototypes]
+int _ttywrch(int ch)
+    ^
+../../Drivers/SYSTEM/usart/usart.c(56): warning: explicitly assigning value of variable of type 'int' to itself [-Wself-assign]
+    x = x;
+    ~ ^ ~
+../../Drivers/SYSTEM/usart/usart.c(54): warning: no previous prototype for function '_sys_exit' [-Wmissing-prototypes]
+void _sys_exit(int x)
+     ^
+../../Drivers/SYSTEM/usart/usart.c(59): warning: unused parameter 'cmd' [-Wunused-parameter]
+char *_sys_command_string(char *cmd, int len)
+                                ^
+../../Drivers/SYSTEM/usart/usart.c(59): warning: unused parameter 'len' [-Wunused-parameter]
+char *_sys_command_string(char *cmd, int len)
+                                         ^
+../../Drivers/SYSTEM/usart/usart.c(59): warning: no previous prototype for function '_sys_command_string' [-Wmissing-prototypes]
+char *_sys_command_string(char *cmd, int len)
+      ^
+../../Drivers/SYSTEM/usart/usart.c(68): warning: unused parameter 'f' [-Wunused-parameter]
+int fputc(int ch, FILE *f)
+                        ^
+../../Drivers/SYSTEM/usart/usart.c(15): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(456): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_uart.h(233): warning: padding struct 'struct __UART_HandleTypeDef' with 2 bytes to align 'FifoMode' [-Wpadded]
+  uint32_t                 FifoMode;                 /*!< Specifies if the FIFO mode is being used.
+                           ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_uart.h(252): warning: padding struct 'struct __UART_HandleTypeDef' with 3 bytes to align 'gState' [-Wpadded]
+  __IO HAL_UART_StateTypeDef    gState;              /*!< UART state information related to global Handle management
+                                ^
+../../Drivers/SYSTEM/usart/usart.c(15): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(252): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dma.h(146): warning: padding struct 'struct __DMA_HandleTypeDef' with 2 bytes to align 'Parent' [-Wpadded]
+  void                            *Parent;                                                          /*!< Parent object state                           */
+                                   ^
+../../Drivers/SYSTEM/usart/usart.c(207): warning: no previous prototype for function 'USART1_IRQHandler' [-Wmissing-prototypes]
+void USART_UX_IRQHandler(void)
+     ^
+../../Drivers\./SYSTEM/usart/usart.h(37): note: expanded from macro 'USART_UX_IRQHandler'
+#define USART_UX_IRQHandler             USART1_IRQHandler
+                                        ^
+17 warnings generated.
+compiling usart.c...
+../../User/main.c(9): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../User/main.c(9): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+5 warnings generated.
+compiling main.c...
+../../Drivers/CMSIS/Device/ST/STM32H7xx/Source/Templates/system_stm32h7xx.c(47): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/CMSIS/Device/ST/STM32H7xx/Source/Templates/system_stm32h7xx.c(47): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+5 warnings generated.
+compiling system_stm32h7xx.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c(36): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c(36): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+5 warnings generated.
+compiling stm32h7xx_hal.c...
+rom ../../User\stm32h7xx_hal_conf.h:276:
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/SYSTEM/delay/delay.c(18): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/SYSTEM/delay/delay.c(18): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...:28:
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/SYSTEM/delay/delay.c(202): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+    delay_ms(Delay);
+    ~~~~~~~~ ^~~~~
+6 warnings generated.
+compiling delay.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c(107): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c(107): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+5 warnings generated.
+compiling stm32h7xx_hal_gpio.c...
+../../User/selftest.c(10): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../User/selftest.c(10): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../User/selftest.c(21): warning: In file included from...../../Middlewares\./FATFS/source/ff.h(188): warning: padding struct 'FFOBJID' with 4 bytes to align 'objsize' [-Wpadded]
+        FSIZE_t objsize;                /* Object size (valid when sclust != 0) */
+                ^
+../../Middlewares\./FATFS/source/ff.h(182): warning: padding size of 'FFOBJID' with 4 bytes to alignment boundary [-Wpadded]
+typedef struct {
+        ^
+../../User/selftest.c(15): warning: In file included from...../../Drivers\./BSP/LCD/lcd.h(25): warning: padding size of '_lcd_dev' with 1 byte to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../User/selftest.c(216): warning: cast from function call of type 'HAL_StatusTypeDef' to non-matching type 'uint8_t' (aka 'unsigned char') [-Wbad-function-cast]
+    rc = (uint8_t)HAL_SD_ReadBlocks(&g_sd_handle, g_sd_buf, 0u, 1u, timeout_ms);
+                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../User/selftest.c(285): warning: cast from function call of type 'HAL_StatusTypeDef' to non-matching type 'uint8_t' (aka 'unsigned char') [-Wbad-function-cast]
+        rc = (uint8_t)HAL_SD_ReadBlocks(&g_sd_handle, g_sd_rd, 0u, SD_SWEEP_SECTORS, 3000u);
+                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../User/selftest.c(305): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint8_t' (aka 'unsigned char') [-Wconversion]
+            best = i;                 /* keep the fastest passing divider */
+                 ~ ^
+../../User/selftest.c(21): warning: In file included from...../../Middlewares\./FATFS/source/ff.h(138): warning: padding struct 'FATFS' with 1 byte to align 'id' [-Wpadded]
+        WORD    id;                             /* Volume mount ID */
+                ^
+../../Middlewares\./FATFS/source/ff.h(247): warning: padding size of 'FILINFO' with 6 bytes to alignment boundary [-Wpadded]
+typedef struct {
+        ^
+../../User/selftest.c(624): warning: expansion of date or time macro is not reproducible [-Wdate-time]
+        printf(" build: %s %s\r\n", __DATE__, __TIME__);
+                                    ^
+../../User/selftest.c(624): warning: expansion of date or time macro is not reproducible [-Wdate-time]
+        printf(" build: %s %s\r\n", __DATE__, __TIME__);
+                                              ^
+../../User/selftest.c(610): warning: function 'selftest_run' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+{
+^
+../../User/selftest.c(19): warning: In file included from...../../Drivers\./BSP/NORFLASH/norflash.h(68): warning: unused function 'norflash_wait_busy' [-Wunused-function]
+static void norflash_wait_busy(void);                                            /* <U+7B49><U+5F85><U+7A7A><U+95F2> */
+            ^
+../../Drivers\./BSP/NORFLASH/norflash.h(69): warning: unused function 'norflash_write_page' [-Wunused-function]
+static void norflash_write_page(uint8_t *pbuf, uint32_t addr, uint16_t datalen); /* <U+5199><U+5165>page */
+            ^
+../../User/selftest.c(10): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(432): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(129): warning: padding struct 'SD_HandleTypeDef' with 3 bytes to align 'pTxBuffPtr' [-Wpadded]
+  uint8_t                      *pTxBuffPtr;      /*!< Pointer to SD Tx transfer Buffer    */
+                                ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(141): warning: padding struct 'SD_HandleTypeDef' with 3 bytes to align 'ErrorCode' [-Wpadded]
+  __IO uint32_t                ErrorCode;        /*!< SD Card Error codes                 */
+                               ^
+../../User/selftest.c(21): warning: In file included from...../../Middlewares\./FATFS/source/ff.h(209): warning: padding struct 'FIL' with 6 bytes to align 'fptr' [-Wpadded]
+        FSIZE_t fptr;                   /* File read/write pointer (Zeroed on file open) */
+                ^
+../../Middlewares\./FATFS/source/ff.h(205): warning: padding size of 'FIL' with 4 bytes to alignment boundary [-Wpadded]
+typedef struct {
+        ^
+22 warnings generated.
+compiling selftest.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr.c(146): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr.c(146): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr.c(564): warning: unused parameter 'Regulator' [-Wunused-parameter]
+void HAL_PWR_EnterSLEEPMode (uint32_t Regulator, uint8_t SLEEPEntry)
+                                      ^
+6 warnings generated.
+compiling stm32h7xx_hal_pwr.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c(95): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c(95): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c(347): warning: cast from function call of type 'uint32_t' (aka 'unsigned int') to non-matching type 'DMA_Base_Registers *' [-Wbad-function-cast]
+    regs_dma = (DMA_Base_Registers *)DMA_CalcBaseAndBitshift(hdma);
+                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c(392): warning: cast from function call of type 'uint32_t' (aka 'unsigned int') to non-matching type 'BDMA_Base_Registers *' [-Wbad-function-cast]
+    regs_bdma = (BDMA_Base_Registers *)DMA_CalcBaseAndBitshift(hdma);
+                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c(95): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(252): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dma.h(146): warning: padding struct 'struct __DMA_HandleTypeDef' with 2 bytes to align 'Parent' [-Wpadded]
+  void                            *Parent;                                                          /*!< Parent object state                           */
+                                   ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c(497): warning: cast from function call of type 'uint32_t' (aka 'unsigned int') to non-matching type 'DMA_Base_Registers *' [-Wbad-function-cast]
+    regs_dma = (DMA_Base_Registers *)DMA_CalcBaseAndBitshift(hdma);
+                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c(520): warning: cast from function call of type 'uint32_t' (aka 'unsigned int') to non-matching type 'BDMA_Base_Registers *' [-Wbad-function-cast]
+    regs_bdma = (BDMA_Base_Registers *)DMA_CalcBaseAndBitshift(hdma);
+                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c(1588): warning: enumeration value 'HAL_DMA_XFER_ALL_CB_ID' not explicitly handled in switch [-Wswitch-enum]
+    switch (CallbackID)
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c(1689): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
+    default:
+    ^
+12 warnings generated.
+compiling stm32h7xx_hal_dma.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.c(153): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.c(153): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+5 warnings generated.
+compiling stm32h7xx_hal_pwr_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.c(67): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.c(67): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+5 warnings generated.
+compiling stm32h7xx_hal_rcc.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.c(23): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.c(23): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+5 warnings generated.
+compiling stm32h7xx_hal_rcc_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c(44): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c(44): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c(44): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(456): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_uart.h(233): warning: padding struct 'struct __UART_HandleTypeDef' with 2 bytes to align 'FifoMode' [-Wpadded]
+  uint32_t                 FifoMode;                 /*!< Specifies if the FIFO mode is being used.
+                           ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_uart.h(252): warning: padding struct 'struct __UART_HandleTypeDef' with 3 bytes to align 'gState' [-Wpadded]
+  __IO HAL_UART_StateTypeDef    gState;              /*!< UART state information related to global Handle management
+                                ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c(44): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(252): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dma.h(146): warning: padding struct 'struct __DMA_HandleTypeDef' with 2 bytes to align 'Parent' [-Wpadded]
+  void                            *Parent;                                                          /*!< Parent object state                           */
+                                   ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c(44): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(456): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_uart.h(1575): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h(46): warning: padding size of 'UART_WakeUpTypeDef' with 1 byte to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c(747): warning: cast from 'uint8_t *' (aka 'unsigned char *') to 'uint16_t *' (aka 'unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+      pdata16bits = (uint16_t *) pData;
+                    ^~~~~~~~~~~~~~~~~~
+10 warnings generated.
+compiling stm32h7xx_hal_uart_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart_ex.c(43): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart_ex.c(43): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart_ex.c(43): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(460): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_usart.h(147): warning: padding struct 'struct __USART_HandleTypeDef' with 2 bytes to align 'SlaveMode' [-Wpadded]
+  uint32_t                      SlaveMode;               /*!< Enable/Disable UART SPI Slave Mode. This parameter can be a value
+                                ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_usart.h(165): warning: padding struct 'struct __USART_HandleTypeDef' with 2 bytes to align 'ErrorCode' [-Wpadded]
+  __IO uint32_t                 ErrorCode;               /*!< USART Error code                    */
+                                ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart_ex.c(43): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(252): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dma.h(146): warning: padding struct 'struct __DMA_HandleTypeDef' with 2 bytes to align 'Parent' [-Wpadded]
+  void                            *Parent;                                                          /*!< Parent object state                           */
+                                   ^
+8 warnings generated.
+compiling stm32h7xx_hal_usart_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ltdc_ex.c(20): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ltdc_ex.c(20): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+5 warnings generated.
+compiling stm32h7xx_hal_ltdc_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ltdc.c(163): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ltdc.c(163): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ltdc.c(163): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(388): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_ltdc.h(182): warning: padding struct 'LTDC_HandleTypeDef' with 2 bytes to align 'ErrorCode' [-Wpadded]
+  __IO uint32_t               ErrorCode;                /*!< LTDC Error code                           */
+                              ^
+6 warnings generated.
+compiling stm32h7xx_hal_ltdc.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c(162): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c(162): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c(162): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(456): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_uart.h(233): warning: padding struct 'struct __UART_HandleTypeDef' with 2 bytes to align 'FifoMode' [-Wpadded]
+  uint32_t                 FifoMode;                 /*!< Specifies if the FIFO mode is being used.
+                           ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_uart.h(252): warning: padding struct 'struct __UART_HandleTypeDef' with 3 bytes to align 'gState' [-Wpadded]
+  __IO HAL_UART_StateTypeDef    gState;              /*!< UART state information related to global Handle management
+                                ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c(162): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(252): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dma.h(146): warning: padding struct 'struct __DMA_HandleTypeDef' with 2 bytes to align 'Parent' [-Wpadded]
+  void                            *Parent;                                                          /*!< Parent object state                           */
+                                   ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c(1150): warning: cast from 'const uint8_t *' (aka 'const unsigned char *') to 'const uint16_t *' (aka 'const unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+      pdata16bits = (const uint16_t *) pData;
+                    ^~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c(1245): warning: cast from 'uint8_t *' (aka 'unsigned char *') to 'uint16_t *' (aka 'unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+      pdata16bits = (uint16_t *) pData;
+                    ^~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c(3095): warning: enumeration values 'UART_CLOCKSOURCE_D2PCLK1', 'UART_CLOCKSOURCE_D2PCLK2', and 'UART_CLOCKSOURCE_UNDEFINED' not explicitly handled in switch [-Wswitch-enum]
+    switch (clocksource)
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c(3162): warning: enumeration values 'UART_CLOCKSOURCE_D3PCLK1' and 'UART_CLOCKSOURCE_UNDEFINED' not explicitly handled in switch [-Wswitch-enum]
+    switch (clocksource)
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c(3218): warning: enumeration values 'UART_CLOCKSOURCE_D3PCLK1' and 'UART_CLOCKSOURCE_UNDEFINED' not explicitly handled in switch [-Wswitch-enum]
+    switch (clocksource)
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c(4080): warning: cast from 'const uint8_t *' (aka 'const unsigned char *') to 'const uint16_t *' (aka 'const unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+      tmp = (const uint16_t *) huart->pTxBuffPtr;
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c(4157): warning: cast from 'const uint8_t *' (aka 'const unsigned char *') to 'const uint16_t *' (aka 'const unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+        tmp = (const uint16_t *) huart->pTxBuffPtr;
+              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c(4288): warning: cast from 'uint8_t *' (aka 'unsigned char *') to 'uint16_t *' (aka 'unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+    tmp = (uint16_t *) huart->pRxBuffPtr ;
+          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c(4523): warning: cast from 'uint8_t *' (aka 'unsigned char *') to 'uint16_t *' (aka 'unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+      tmp = (uint16_t *) huart->pRxBuffPtr ;
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+17 warnings generated.
+compiling stm32h7xx_hal_uart.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c(140): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+In file included from ../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c(140): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(460): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_usart.h(147): warning: padding struct 'struct __USART_HandleTypeDef' with 2 bytes to align 'SlaveMode' [-Wpadded]
+  uint32_t                      SlaveMode;               /*!< Enable/Disable UART SPI Slave Mode. This parameter can be a value
+                                ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_usart.h(165): warning: padding struct 'struct __USART_HandleTypeDef' with 2 bytes to align 'ErrorCode' [-Wpadded]
+  __IO uint32_t                 ErrorCode;               /*!< USART Error code                    */
+                                ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c(140): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(252): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dma.h(146): warning: padding struct 'struct __DMA_HandleTypeDef' with 2 bytes to align 'Parent' [-Wpadded]
+  void                            *Parent;                                                          /*!< Parent object state                           */
+                                   ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c(780): warning: cast from 'const uint8_t *' (aka 'const unsigned char *') to 'const uint16_t *' (aka 'const unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+      ptxdata16bits = (const uint16_t *) pTxData;
+                      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c(882): warning: cast from 'uint8_t *' (aka 'unsigned char *') to 'uint16_t *' (aka 'unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+      prxdata16bits = (uint16_t *) pRxData;
+                      ^~~~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c(1001): warning: cast from 'const uint8_t *' (aka 'const unsigned char *') to 'const uint16_t *' (aka 'const unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+      ptxdata16bits = (const uint16_t *) pTxData;
+                      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c(1002): warning: cast from 'uint8_t *' (aka 'unsigned char *') to 'uint16_t *' (aka 'unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+      prxdata16bits = (uint16_t *) pRxData;
+                      ^~~~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c(2936): warning: enumeration value 'USART_CLOCKSOURCE_UNDEFINED' not explicitly handled in switch [-Wswitch-enum]
+  switch (clocksource)
+          ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c(3108): warning: cast from 'const uint8_t *' (aka 'const unsigned char *') to 'const uint16_t *' (aka 'const unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+      tmp = (const uint16_t *) husart->pTxBuffPtr;
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c(3195): warning: cast from 'const uint8_t *' (aka 'const unsigned char *') to 'const uint16_t *' (aka 'const unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+        tmp = (const uint16_t *) husart->pTxBuffPtr;
+              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c(3373): warning: cast from 'uint8_t *' (aka 'unsigned char *') to 'uint16_t *' (aka 'unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+    tmp = (uint16_t *) husart->pRxBuffPtr;
+          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_usart.c(3606): warning: cast from 'uint8_t *' (aka 'unsigned char *') to 'uint16_t *' (aka 'unsigned short *') increases required alignment from 1 to 2 [-Wcast-align]
+        tmp = (uint16_t *) husart->pRxBuffPtr;
+              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+17 warnings generated.
+compiling stm32h7xx_hal_usart.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma2d.c(164): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma2d.c(164): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma2d.c(164): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(268): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dma2d.h(172): warning: padding struct 'struct __DMA2D_HandleTypeDef' with 2 bytes to align 'ErrorCode' [-Wpadded]
+  __IO uint32_t               ErrorCode;                                  /*!< DMA2D error code.                      */
+                              ^
+6 warnings generated.
+compiling stm32h7xx_hal_dma2d.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sram.c(116): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sram.c(116): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sram.c(116): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(348): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sram.h(75): warning: padding struct 'SRAM_HandleTypeDef' with 2 bytes to align 'hmdma' [-Wpadded]
+  MDMA_HandleTypeDef             *hmdma;      /*!< Pointer DMA handler                          */
+                                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sram.c(116): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(256): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_mdma.h(212): warning: padding struct 'struct __MDMA_HandleTypeDef' with 2 bytes to align 'Parent' [-Wpadded]
+  void                  *Parent;                                                               /*!< Parent object state                    */
+                         ^
+7 warnings generated.
+compiling stm32h7xx_hal_sram.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sdram.c(115): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sdram.c(115): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sdram.c(115): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(436): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sdram.h(76): warning: padding struct 'SDRAM_HandleTypeDef' with 2 bytes to align 'hmdma' [-Wpadded]
+  MDMA_HandleTypeDef             *hmdma;      /*!< Pointer DMA handler                   */
+                                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sdram.c(115): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(256): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_mdma.h(212): warning: padding struct 'struct __MDMA_HandleTypeDef' with 2 bytes to align 'Parent' [-Wpadded]
+  void                  *Parent;                                                               /*!< Parent object state                    */
+                         ^
+7 warnings generated.
+compiling stm32h7xx_hal_sdram.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_qspi.c(228): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_qspi.c(228): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_qspi.c(228): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(412): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_qspi.h(109): warning: padding struct 'QSPI_HandleTypeDef' with 2 bytes to align 'ErrorCode' [-Wpadded]
+  __IO uint32_t              ErrorCode;        /* QSPI Error code                    */
+                             ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_qspi.c(228): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(256): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_mdma.h(212): warning: padding struct 'struct __MDMA_HandleTypeDef' with 2 bytes to align 'Parent' [-Wpadded]
+  void                  *Parent;                                                               /*!< Parent object state                    */
+                         ^
+7 warnings generated.
+compiling stm32h7xx_hal_qspi.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sd_ex.c(36): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sd_ex.c(36): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sd_ex.c(36): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(432): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(129): warning: padding struct 'SD_HandleTypeDef' with 3 bytes to align 'pTxBuffPtr' [-Wpadded]
+  uint8_t                      *pTxBuffPtr;      /*!< Pointer to SD Tx transfer Buffer    */
+                                ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(141): warning: padding struct 'SD_HandleTypeDef' with 3 bytes to align 'ErrorCode' [-Wpadded]
+  __IO uint32_t                ErrorCode;        /*!< SD Card Error codes                 */
+                               ^
+7 warnings generated.
+compiling stm32h7xx_hal_sd_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mdma.c(150): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mdma.c(150): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mdma.c(150): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(256): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_mdma.h(212): warning: padding struct 'struct __MDMA_HandleTypeDef' with 2 bytes to align 'Parent' [-Wpadded]
+  void                  *Parent;                                                               /*!< Parent object state                    */
+                         ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mdma.c(424): warning: enumeration value 'HAL_MDMA_XFER_ALL_CB_ID' not explicitly handled in switch [-Wswitch-enum]
+    switch (CallbackID)
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mdma.c(524): warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
+    default:
+    ^
+8 warnings generated.
+compiling stm32h7xx_hal_mdma.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.c(51): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.c(51): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.c(51): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(252): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dma.h(146): warning: padding struct 'struct __DMA_HandleTypeDef' with 2 bytes to align 'Parent' [-Wpadded]
+  void                            *Parent;                                                          /*!< Parent object state                           */
+                                   ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.c(51): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(252): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dma.h(1174): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma_ex.h(72): warning: padding struct 'HAL_DMA_MuxSyncConfigTypeDef' with 2 bytes to align 'RequestNumber' [-Wpadded]
+  uint32_t RequestNumber; /*!< Specifies the number of DMA request that will be authorized after a sync event.
+           ^
+7 warnings generated.
+compiling stm32h7xx_hal_dma_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sd.c(254): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sd.c(254): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sd.c(254): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(432): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(251): warning: padding struct 'HAL_SD_CardStatusTypeDef' with 1 byte to align 'EraseSize' [-Wpadded]
+  __IO uint16_t EraseSize;              /*!< Determines the number of AUs to be erased in one operation */
+                ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(242): warning: padding size of 'HAL_SD_CardStatusTypeDef' with 1 byte to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(129): warning: padding struct 'SD_HandleTypeDef' with 3 bytes to align 'pTxBuffPtr' [-Wpadded]
+  uint8_t                      *pTxBuffPtr;      /*!< Pointer to SD Tx transfer Buffer    */
+                                ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(141): warning: padding struct 'SD_HandleTypeDef' with 3 bytes to align 'ErrorCode' [-Wpadded]
+  __IO uint32_t                ErrorCode;        /*!< SD Card Error codes                 */
+                               ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(224): warning: padding struct 'HAL_SD_CardCIDTypeDef' with 1 byte to align 'OEM_AppliID' [-Wpadded]
+  __IO uint16_t OEM_AppliID;     /*!< OEM/Application ID    */
+                ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(228): warning: padding struct 'HAL_SD_CardCIDTypeDef' with 2 bytes to align 'ProdSN' [-Wpadded]
+  __IO uint32_t ProdSN;          /*!< Product Serial Number */
+                ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(230): warning: padding struct 'HAL_SD_CardCIDTypeDef' with 1 byte to align 'ManufactDate' [-Wpadded]
+  __IO uint16_t ManufactDate;    /*!< Manufacturing Date    */
+                ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(221): warning: padding size of 'HAL_SD_CardCIDTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(189): warning: padding struct 'HAL_SD_CardCSDTypeDef' with 2 bytes to align 'DeviceSize' [-Wpadded]
+  __IO uint32_t DeviceSize;           /*!< Device Size                           */
+                ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(174): warning: padding size of 'HAL_SD_CardCSDTypeDef' with 1 byte to alignment boundary [-Wpadded]
+typedef struct
+        ^
+15 warnings generated.
+compiling stm32h7xx_hal_sd.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c(58): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c(58): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+5 warnings generated.
+compiling stm32h7xx_ll_fmc.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.c(82): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.c(82): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.c(82): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(452): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_tim.h(363): warning: padding struct 'TIM_HandleTypeDef' with 3 bytes to align 'hdma' [-Wpadded]
+  DMA_HandleTypeDef                  *hdma[7];          /*!< DMA Handlers array
+                                      ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_tim.h(357): warning: padding size of 'TIM_HandleTypeDef' with 3 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.c(82): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(252): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dma.h(146): warning: padding struct 'struct __DMA_HandleTypeDef' with 2 bytes to align 'Parent' [-Wpadded]
+  void                            *Parent;                                                          /*!< Parent object state                           */
+                                   ^
+8 warnings generated.
+compiling stm32h7xx_hal_tim_ex.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_sdmmc.c(154): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_sdmmc.c(154): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+5 warnings generated.
+compiling stm32h7xx_ll_sdmmc.c...
+../../Drivers/BSP/MPU/mpu.c(14): warning: In file included from...../../Drivers\./BSP/MPU/mpu.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/MPU/mpu.c(14): warning: In file included from...../../Drivers\./BSP/MPU/mpu.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/MPU/mpu.c(14): warning: In file included from...../../Drivers\./BSP/MPU/mpu.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(292): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_cortex.h(53): warning: padding struct 'MPU_Region_InitTypeDef' with 2 bytes to align 'BaseAddress' [-Wpadded]
+  uint32_t               BaseAddress;           /*!< Specifies the base address of the region to protect.                           */
+                         ^
+../../Drivers/BSP/MPU/mpu.c(46): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint8_t' (aka 'unsigned char') [-Wconversion]
+    mpu_region_init_handle.Number = rnum;                      /* <U+8BBE><U+7F6E><U+4FDD><U+62A4><U+533A><U+57DF> */
+                                  ~ ^~~~
+../../Drivers/BSP/MPU/mpu.c(48): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint8_t' (aka 'unsigned char') [-Wconversion]
+    mpu_region_init_handle.Size = size;                        /* <U+8BBE><U+7F6E><U+4FDD><U+62A4><U+533A><U+57DF><U+5927><U+5C0F> */
+                                ~ ^~~~
+8 warnings generated.
+compiling mpu.c...
+../../Drivers/BSP/SDRAM/sdram.c(14): warning: In file included from...../../Drivers\./BSP/SDRAM/sdram.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/SDRAM/sdram.c(14): warning: In file included from...../../Drivers\./BSP/SDRAM/sdram.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/SDRAM/sdram.c(14): warning: In file included from...../../Drivers\./BSP/SDRAM/sdram.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(436): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sdram.h(76): warning: padding struct 'SDRAM_HandleTypeDef' with 2 bytes to align 'hmdma' [-Wpadded]
+  MDMA_HandleTypeDef             *hmdma;      /*!< Pointer DMA handler                   */
+                                  ^
+../../Drivers/BSP/SDRAM/sdram.c(14): warning: In file included from...../../Drivers\./BSP/SDRAM/sdram.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(256): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_mdma.h(212): warning: padding struct 'struct __MDMA_HandleTypeDef' with 2 bytes to align 'Parent' [-Wpadded]
+  void                  *Parent;                                                               /*!< Parent object state                    */
+                         ^
+../../Drivers/BSP/SDRAM/sdram.c(84): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+    sdram_send_cmd(0, FMC_SDRAM_CMD_LOAD_MODE, 1, temp);              /* <U+8BBE><U+7F6E>SDRAM<U+7684><U+6A21><U+5F0F><U+5BC4><U+5B58><U+5668> */
+    ~~~~~~~~~~~~~~                                ^~~~
+../../Drivers/BSP/SDRAM/sdram.c(93): warning: unused parameter 'hsdram' [-Wunused-parameter]
+void HAL_SDRAM_MspInit(SDRAM_HandleTypeDef *hsdram)
+                                            ^
+../../Drivers/BSP/SDRAM/sdram.c(18): warning: no previous extern declaration for non-static variable 'g_sdram_handle' [-Wmissing-variable-declarations]
+SDRAM_HandleTypeDef g_sdram_handle;                                           /* SDRAM<U+53E5><U+67C4> */
+                    ^
+10 warnings generated.
+compiling sdram.c...
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.c(187): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.c(187): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.c(187): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(452): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_tim.h(363): warning: padding struct 'TIM_HandleTypeDef' with 3 bytes to align 'hdma' [-Wpadded]
+  DMA_HandleTypeDef                  *hdma[7];          /*!< DMA Handlers array
+                                      ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_tim.h(357): warning: padding size of 'TIM_HandleTypeDef' with 3 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.c(187): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(252): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dma.h(146): warning: padding struct 'struct __DMA_HandleTypeDef' with 2 bytes to align 'Parent' [-Wpadded]
+  void                            *Parent;                                                          /*!< Parent object state                           */
+                                   ^
+8 warnings generated.
+compiling stm32h7xx_hal_tim.c...
+../../Drivers/BSP/LCD/ltdc.c(14): warning: In file included from...../../Drivers\./BSP/LCD/ltdc.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/LCD/ltdc.c(14): warning: In file included from...../../Drivers\./BSP/LCD/ltdc.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/LCD/ltdc.c(14): warning: In file included from...../../Drivers\./BSP/LCD/ltdc.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(388): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_ltdc.h(182): warning: padding struct 'LTDC_HandleTypeDef' with 2 bytes to align 'ErrorCode' [-Wpadded]
+  __IO uint32_t               ErrorCode;                /*!< LTDC Error code                           */
+                              ^
+../../Drivers/BSP/LCD/ltdc.c(14): warning: In file included from...../../Drivers\./BSP/LCD/ltdc.h(42): warning: padding struct '_ltdc_dev' with 2 bytes to align 'pixsize' [-Wpadded]
+    uint32_t pixsize;      /* ??????????????? */
+             ^
+../../Drivers\./BSP/LCD/ltdc.h(28): warning: padding size of '_ltdc_dev' with 3 bytes to alignment boundary [-Wpadded]
+typedef struct  
+        ^
+../../Drivers/BSP/LCD/ltdc.c(107): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcdltdc.width = lcdltdc.pheight;
+                      ~ ~~~~~~~~^~~~~~~
+../../Drivers/BSP/LCD/ltdc.c(108): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcdltdc.height = lcdltdc.pwidth;
+                       ~ ~~~~~~~~^~~~~~
+../../Drivers/BSP/LCD/ltdc.c(112): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcdltdc.width = lcdltdc.pwidth;
+                      ~ ~~~~~~~~^~~~~~
+../../Drivers/BSP/LCD/ltdc.c(113): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcdltdc.height = lcdltdc.pheight;
+                       ~ ~~~~~~~~^~~~~~~
+../../Drivers/BSP/LCD/ltdc.c(153): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        *(uint16_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lcdltdc.pwidth * y + x)) = color;
+                                                                                                                   ~ ^~~~~
+../../Drivers/BSP/LCD/ltdc.c(157): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        *(uint16_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lcdltdc.pwidth * (lcdltdc.pheight - x - 1) + y)) = color;
+                                                                                                                                           ~ ^~~~~
+../../Drivers/BSP/LCD/ltdc.c(234): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+            ex = lcdltdc.pheight - 1;   /* <U+9650><U+5236><U+8303><U+56F4> */
+               ~ ~~~~~~~~~~~~~~~~^~~
+../../Drivers/BSP/LCD/ltdc.c(239): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+            sx = lcdltdc.pheight - 1;   /* <U+9650><U+5236><U+8303><U+56F4> */
+               ~ ~~~~~~~~~~~~~~~~^~~
+../../Drivers/BSP/LCD/ltdc.c(248): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+    offline = lcdltdc.pwidth - (pex - psx + 1);   /* <U+884C><U+504F><U+79FB>:<U+5F53><U+524D><U+884C><U+6700><U+540E><U+4E00><U+4E2A><U+50CF><U+7D20><U+548C><U+4E0B><U+4E00><U+884C><U+7B2C><U+4E00><U+4E2A><U+50CF><U+7D20><U+4E4B><U+95F4><U+7684><U+50CF><U+7D20><U+6570><U+76EE> */
+            ~ ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+../../Drivers/BSP/LCD/ltdc.c(372): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+    offline = lcdltdc.pwidth - (pex - psx + 1);   /* <U+884C><U+504F><U+79FB>:<U+5F53><U+524D><U+884C><U+6700><U+540E><U+4E00><U+4E2A><U+50CF><U+7D20><U+548C><U+4E0B><U+4E00><U+884C><U+7B2C><U+4E00><U+4E2A><U+50CF><U+7D20><U+4E4B><U+95F4><U+7684><U+50CF><U+7D20><U+6570><U+76EE> */
+            ~ ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+../../Drivers/BSP/LCD/ltdc.c(466): warning: implicit conversion changes signedness: 'int' to 'uint32_t' (aka 'unsigned int') [-Wsign-conversion]
+        LTDC_Layer1->CFBLR = (width * 4 << 16) | (width * 4 + 7);   /* <U+5E27><U+7F13><U+51B2><U+533A><U+884C><U+957F><U+548C><U+884C><U+95F4><U+8DDD><U+8BBE><U+7F6E>(<U+4EE5><U+5B57><U+8282><U+4E3A><U+5355><U+4F4D>) */
+                           ~ ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+../../Drivers/BSP/LCD/ltdc.c(539): warning: cast from function call of type 'GPIO_PinState' to non-matching type 'uint8_t' (aka 'unsigned char') [-Wbad-function-cast]
+    idx  = (uint8_t)HAL_GPIO_ReadPin(GPIOG, GPIO_PIN_6);       /* <U+8BFB><U+53D6>M0 */
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/BSP/LCD/ltdc.c(540): warning: cast from function call of type 'GPIO_PinState' to non-matching type 'uint8_t' (aka 'unsigned char') [-Wbad-function-cast]
+    idx |= (uint8_t)HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_2) << 1;  /* <U+8BFB><U+53D6>M1 */
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/BSP/LCD/ltdc.c(541): warning: cast from function call of type 'GPIO_PinState' to non-matching type 'uint8_t' (aka 'unsigned char') [-Wbad-function-cast]
+    idx |= (uint8_t)HAL_GPIO_ReadPin(GPIOI, GPIO_PIN_7) << 2;  /* <U+8BFB><U+53D6>M2 */
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/BSP/LCD/ltdc.c(673): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+    lcddev.width = lcdltdc.pwidth;      /* <U+8BBE><U+7F6E>lcddev<U+7684><U+5BBD><U+5EA6><U+53C2><U+6570> */
+                 ~ ~~~~~~~~^~~~~~
+../../Drivers/BSP/LCD/ltdc.c(15): warning: In file included from...../../Drivers\./BSP/LCD/lcd.h(25): warning: padding size of '_lcd_dev' with 1 byte to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/LCD/ltdc.c(674): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+    lcddev.height = lcdltdc.pheight;    /* <U+8BBE><U+7F6E>lcddev<U+7684><U+9AD8><U+5EA6><U+53C2><U+6570> */
+                  ~ ~~~~~~~~^~~~~~~
+../../Drivers/BSP/LCD/ltdc.c(684): warning: cast from 'uint16_t (*)[1280][800]' to 'uint32_t *' (aka 'unsigned int *') increases required alignment from 2 to 4 [-Wcast-align]
+    g_ltdc_framebuf[0] = (uint32_t *)&ltdc_lcd_framebuf;
+                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/BSP/LCD/ltdc.c(729): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+    ltdc_layer_window_config(0, 0, 0, lcdltdc.pwidth, lcdltdc.pheight);                                     /* <U+5C42><U+7A97><U+53E3><U+914D><U+7F6E>,<U+4EE5>LCD<U+9762><U+677F><U+5750><U+6807><U+7CFB><U+4E3A><U+57FA><U+51C6>,<U+4E0D><U+8981><U+968F><U+4FBF><U+4FEE><U+6539>! */
+    ~~~~~~~~~~~~~~~~~~~~~~~~          ~~~~~~~~^~~~~~
+../../Drivers/BSP/LCD/ltdc.c(729): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+    ltdc_layer_window_config(0, 0, 0, lcdltdc.pwidth, lcdltdc.pheight);                                     /* <U+5C42><U+7A97><U+53E3><U+914D><U+7F6E>,<U+4EE5>LCD<U+9762><U+677F><U+5750><U+6807><U+7CFB><U+4E3A><U+57FA><U+51C6>,<U+4E0D><U+8981><U+968F><U+4FBF><U+4FEE><U+6539>! */
+    ~~~~~~~~~~~~~~~~~~~~~~~~                          ~~~~~~~~^~~~~~~
+../../Drivers/BSP/LCD/ltdc.c(758): warning: unused parameter 'hltdc' [-Wunused-parameter]
+void HAL_LTDC_MspInit(LTDC_HandleTypeDef *hltdc)
+                                          ^
+../../Drivers/BSP/LCD/ltdc.c(14): warning: In file included from...../../Drivers\./BSP/LCD/ltdc.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(268): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dma2d.h(172): warning: padding struct 'struct __DMA2D_HandleTypeDef' with 2 bytes to align 'ErrorCode' [-Wpadded]
+  __IO uint32_t               ErrorCode;                                  /*!< DMA2D error code.                      */
+                              ^
+../../Drivers/BSP/LCD/ltdc.c(39): warning: no previous extern declaration for non-static variable 'ltdc_lcd_framebuf' [-Wmissing-variable-declarations]
+    uint16_t ltdc_lcd_framebuf[1280][800] __attribute__((section(".bss.ARM.__at_0XC0000000")));  /* <U+5B9A><U+4E49><U+6700><U+5927><U+5C4F><U+5206><U+8FA8><U+7387><U+65F6>,LTDC<U+6240><U+9700><U+7684><U+5E27><U+7F13><U+5B58><U+6570><U+7EC4><U+5927><U+5C0F> */
+             ^
+../../Drivers/BSP/LCD/ltdc.c(45): warning: no previous extern declaration for non-static variable 'g_ltdc_framebuf' [-Wmissing-variable-declarations]
+uint32_t *g_ltdc_framebuf[2];              /* LTDC LCD<U+5E27><U+7F13><U+5B58><U+6570><U+7EC4><U+6307><U+9488>,<U+5FC5><U+987B><U+6307><U+5411><U+5BF9><U+5E94><U+5927><U+5C0F><U+7684><U+5185><U+5B58><U+533A><U+57DF> */
+          ^
+32 warnings generated.
+compiling ltdc.c...
+../../Drivers/BSP/LCD/lcd.c(15): warning: In file included from...../../Drivers\./BSP/LCD/lcd.h(18): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/LCD/lcd.c(15): warning: In file included from...../../Drivers\./BSP/LCD/lcd.h(18): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/LCD/lcd.c(16): warning: In file included from...../../Drivers\./BSP/LCD/lcdfont.h(19): warning: no previous extern declaration for non-static variable 'asc2_1206' [-Wmissing-variable-declarations]
+const unsigned char asc2_1206[95][12]={
+                    ^
+../../Drivers\./BSP/LCD/lcdfont.h(118): warning: no previous extern declaration for non-static variable 'asc2_1608' [-Wmissing-variable-declarations]
+const unsigned char asc2_1608[95][16]={ 
+                    ^
+../../Drivers\./BSP/LCD/lcdfont.h(217): warning: no previous extern declaration for non-static variable 'asc2_2412' [-Wmissing-variable-declarations]
+const unsigned char asc2_2412[95][36]={   
+                    ^
+../../Drivers\./BSP/LCD/lcdfont.h(316): warning: no previous extern declaration for non-static variable 'asc2_3216' [-Wmissing-variable-declarations]
+const unsigned char asc2_3216[95][64]={
+                    ^
+../../Drivers/BSP/LCD/lcd.c(34): warning: no previous prototype for function 'lcd_opt_delay' [-Wmissing-prototypes]
+void lcd_opt_delay(uint32_t i)
+     ^
+../../Drivers/BSP/LCD/lcd.c(61): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+    b = (rgb565 & 0X001F) << 3;
+      ~ ~~~~~~~~~~~~~~~~~~^~~~
+../../Drivers/BSP/LCD/lcd.c(63): warning: implicit conversion changes signedness: 'int' to 'uint32_t' (aka 'unsigned int') [-Wsign-conversion]
+    rgb888 = (r << 16) | (g << 8) | b;
+           ~ ~~~~~~~~~~~~~~~~~~~~~^~~
+../../Drivers/BSP/LCD/lcd.c(15): warning: In file included from...../../Drivers\./BSP/LCD/lcd.h(25): warning: padding size of '_lcd_dev' with 1 byte to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/LCD/lcd.c(15): warning: In file included from...../../Drivers\./BSP/LCD/lcd.h(19): warning: In file included from...../../Drivers\./BSP/LCD/ltdc.h(42): warning: padding struct '_ltdc_dev' with 2 bytes to align 'pixsize' [-Wpadded]
+    uint32_t pixsizepadding size of '_ltdc_dev' with 3 bytes to alignment boundary [-Wpadded]
+typedef struct  
+        ^
+../../Drivers/BSP/LCD/lcd.c(111): warning: unused parameter 'x' [-Wunused-parameter]
+void lcd_set_cursor(uint16_t x, uint16_t y)
+                             ^
+../../Drivers/BSP/LCD/lcd.c(111): warning: unused parameter 'y' [-Wunused-parameter]
+void lcd_set_cursor(uint16_t x, uint16_t y)
+                                         ^
+../../Drivers/BSP/LCD/lcd.c(124): warning: unused parameter 'dir' [-Wunused-parameter]
+void lcd_scan_dir(uint8_t dir)
+                          ^
+../../Drivers/BSP/LCD/lcd.c(168): warning: unused parameter 'sx' [-Wunused-parameter]
+void lcd_set_window(uint16_t sx, uint16_t sy, uint16_t width, uint16_t height)
+                             ^
+../../Drivers/BSP/LCD/lcd.c(168): warning: unused parameter 'sy' [-Wunused-parameter]
+void lcd_set_window(uint16_t sx, uint16_t sy, uint16_t width, uint16_t height)
+                                          ^
+../../Drivers/BSP/LCD/lcd.c(168): warning: unused parameter 'width' [-Wunused-parameter]
+void lcd_set_window(uint16_t sx, uint16_t sy, uint16_t width, uint16_t height)
+                                                       ^
+../../Drivers/BSP/LCD/lcd.c(168): warning: unused parameter 'height' [-Wunused-parameter]
+void lcd_set_window(uint16_t sx, uint16_t sy, uint16_t width, uint16_t height)
+                                                                       ^
+../../Drivers/BSP/LCD/lcd.c(290): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(row, col, color);        /* <U+753B><U+70B9> */
+        ~~~~~~~~~~~~~~ ^~~
+../../Drivers/BSP/LCD/lcd.c(290): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(row, col, color);        /* <U+753B><U+70B9> */
+        ~~~~~~~~~~~~~~      ^~~
+../../Drivers/BSP/LCD/lcd.c(354): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 + a, y0 - b, color);  /* 5 */
+        ~~~~~~~~~~~~~~ ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(354): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 + a, y0 - b, color);  /* 5 */
+        ~~~~~~~~~~~~~~         ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(355): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 + b, y0 - a, color);  /* 0 */
+        ~~~~~~~~~~~~~~ ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(355): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 + b, y0 - a, color);  /* 0 */
+        ~~~~~~~~~~~~~~         ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(356): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 + b, y0 + a, color);  /* 4 */
+        ~~~~~~~~~~~~~~ ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(356): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 + b, y0 + a, color);  /* 4 */
+        ~~~~~~~~~~~~~~         ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(357): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 + a, y0 + b, color);  /* 6 */
+        ~~~~~~~~~~~~~~ ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(357): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 + a, y0 + b, color);  /* 6 */
+        ~~~~~~~~~~~~~~         ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(358): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 - a, y0 + b, color);  /* 1 */
+        ~~~~~~~~~~~~~~ ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(358): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 - a, y0 + b, color);  /* 1 */
+        ~~~~~~~~~~~~~~         ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(359): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 - b, y0 + a, color);
+        ~~~~~~~~~~~~~~ ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(359): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 - b, y0 + a, color);
+        ~~~~~~~~~~~~~~         ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(360): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 - a, y0 - b, color);  /* 2 */
+        ~~~~~~~~~~~~~~ ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(360): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 - a, y0 - b, color);  /* 2 */
+        ~~~~~~~~~~~~~~         ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(361): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 - b, y0 - a, color);  /* 7 */
+        ~~~~~~~~~~~~~~ ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(361): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_point(x0 - b, y0 - a, color);  /* 7 */
+        ~~~~~~~~~~~~~~         ~~~^~~
+../../Drivers/BSP/LCD/lcd.c(400): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+                lcd_draw_hline (x - i + 1, y + xr, 2 * (i - 1), color);
+                ~~~~~~~~~~~~~~  ~~~~~~^~~
+../../Drivers/BSP/LCD/lcd.c(400): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+                lcd_draw_hline (x - i + 1, y + xr, 2 * (i - 1), color);
+                ~~~~~~~~~~~~~~             ~~^~~~
+../../Drivers/BSP/LCD/lcd.c(400): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+                lcd_draw_hline (x - i + 1, y + xr, 2 * (i - 1), color);
+                ~~~~~~~~~~~~~~                     ~~^~~~~~~~~
+../../Drivers/BSP/LCD/lcd.c(401): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+                lcd_draw_hline (x - i + 1, y - xr, 2 * (i - 1), color);
+                ~~~~~~~~~~~~~~  ~~~~~~^~~
+../../Drivers/BSP/LCD/lcd.c(401): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+                lcd_draw_hline (x - i + 1, y - xr, 2 * (i - 1), color);
+                ~~~~~~~~~~~~~~             ~~^~~~
+../../Drivers/BSP/LCD/lcd.c(401): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+                lcd_draw_hline (x - i + 1, y - xr, 2 * (i - 1), color);
+                ~~~~~~~~~~~~~~                     ~~^~~~~~~~~
+../../Drivers/BSP/LCD/lcd.c(408): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_hline(x - xr, y + i, 2 * xr, color);
+        ~~~~~~~~~~~~~~ ~~^~~~
+../../Drivers/BSP/LCD/lcd.c(408): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_hline(x - xr, y + i, 2 * xr, color);
+        ~~~~~~~~~~~~~~         ~~^~~
+../../Drivers/BSP/LCD/lcd.c(408): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_hline(x - xr, y + i, 2 * xr, color);
+        ~~~~~~~~~~~~~~                ~~^~~~
+../../Drivers/BSP/LCD/lcd.c(409): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_hline(x - xr, y - i, 2 * xr, color);
+        ~~~~~~~~~~~~~~ ~~^~~~
+../../Drivers/BSP/LCD/lcd.c(409): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_hline(x - xr, y - i, 2 * xr, color);
+        ~~~~~~~~~~~~~~         ~~^~~
+../../Drivers/BSP/LCD/lcd.c(409): warning: implicit conversion loses integer precision: 'unsigned int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        lcd_draw_hline(x - xr, y - i, 2 * xr, color);
+        ~~~~~~~~~~~~~~                ~~^~~~
+../../Drivers/BSP/LCD/lcd.c(435): warning: array subscript is of type 'char' [-Wchar-subscripts]
+            pfont = (uint8_t *)asc2_1206[chr];  /* <U+8C03><U+7528>1206<U+5B57><U+4F53> */
+                                        ^~~~
+../../Drivers/BSP/LCD/lcd.c(435): warning: cast from 'const unsigned char *' to 'unsigned char *' drops const qualifier [-Wcast-qual]
+            pfont = (uint8_t *)asc2_1206[chr];  /* <U+8C03><U+7528>1206<U+5B57><U+4F53> */
+                               ^
+../../Drivers/BSP/LCD/lcd.c(439): warning: array subscript is of type 'char' [-Wchar-subscripts]
+            pfont = (uint8_t *)asc2_1608[chr];  /* <U+8C03><U+7528>1608<U+5B57><U+4F53> */
+                                        ^~~~
+../../Drivers/BSP/LCD/lcd.c(439): warning: cast from 'const unsigned char *' to 'unsigned char *' drops const qualifier [-Wcast-qual]
+            pfont = (uint8_t *)asc2_1608[chr];  /* <U+8C03><U+7528>1608<U+5B57><U+4F53> */
+                               ^
+../../Drivers/BSP/LCD/lcd.c(443): warning: array subscript is of type 'char' [-Wchar-subscripts]
+            pfont = (uint8_t *)asc2_2412[chr];  /* <U+8C03><U+7528>2412<U+5B57><U+4F53> */
+                                        ^~~~
+../../Drivers/BSP/LCD/lcd.c(443): warning: cast from 'const unsigned char *' to 'unsigned char *' drops const qualifier [-Wcast-qual]
+            pfont = (uint8_t *)asc2_2412[chr];  /* <U+8C03><U+7528>2412<U+5B57><U+4F53> */
+                               ^
+../../Drivers/BSP/LCD/lcd.c(447): warning: array subscript is of type 'char' [-Wchar-subscripts]
+            pfont = (uint8_t *)asc2_3216[chr];  /* <U+8C03><U+7528>3216<U+5B57><U+4F53> */
+                                        ^~~~
+../../Drivers/BSP/LCD/lcd.c(447): warning: 
+                                        ^~~~
+../../Drivers/BSP/LCD/lcd.c(447): warning:             pfont = (uint8_t *)asc2_3216[chr];  /* <U+8C03><U+7528>3216<U+5B57><U+4F53> */
+                               ^
+../../Drivers/BSP/LCD/lcd.c(598): warning: implicit conversion loses integer precision: 'uint16_t' (aka 'unsigned short') to 'uint8_t' (aka 'unsigned char') [-Wconversion]
+    uint8_t x0 = x;
+            ~~   ^
+61 warnings generated.
+compiling lcd.c...
+../../Drivers/BSP/LCD/tft_spi.c(14): warning: In file included from...../../Drivers\./BSP/LCD/tft_spi.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/LCD/tft_spi.c(14): warning: In file included from...../../Drivers\./BSP/LCD/tft_spi.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+5 warnings generated.
+compiling tft_spi.c...
+../../Drivers/BSP/QSPI/qspi.c(14): warning: In file included from...../../Drivers\./BSP/QSPI/qspi.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/QSPI/qspi.c(14): warning: In file included from...../../Drivers\./BSP/QSPI/qspi.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/QSPI/qspi.c(14): warning: In file included from...../../Drivers\./BSP/QSPI/qspi.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(412): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_qspi.h(109): warning: padding struct 'QSPI_HandleTypeDef' with 2 bytes to align 'ErrorCode' [-Wpadded]
+  __IO uint32_t              ErrorCode;        /* QSPI Error code                    */
+                             ^
+../../Drivers/BSP/QSPI/qspi.c(14): warning: In file included from...../../Drivers\./BSP/QSPI/qspi.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(256): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_mdma.h(212): warning: padding struct 'struct __MDMA_HandleTypeDef' with 2 bytes to align 'Parent' [-Wpadded]
+  void                  *Parent;                                                               /*!< Parent object state                    */
+                         ^
+../../Drivers/BSP/QSPI/qspi.c(85): warning: unused parameter 'hqspi' [-Wunused-parameter]
+void HAL_QSPI_MspInit(QSPI_HandleTypeDef *hqspi)
+                                          ^
+../../Drivers/BSP/QSPI/qspi.c(17): warning: no previous extern declaration for non-static variable 'g_qspi_handle' [-Wmissing-variable-declarations]
+QSPI_HandleTypeDef g_qspi_handle;     /* QSPI<U+53E5><U+67C4> */
+                   ^
+9 warnings generated.
+compiling qspi.c...
+../../Drivers/BSP/NORFLASH/norflash.c(14): warning: In file included from...../../Drivers\./BSP/QSPI/qspi.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/NORFLASH/norflash.c(14): warning: In file included from...../../Drivers\./BSP/QSPI/qspi.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/NORFLASH/norflash.c(23): warning: no previous extern declaration for non-static variable 'g_norflash_addrw' [-Wmissing-variable-declarations]
+volatile uint8_t g_norflash_addrw = 2;  /* SPI FLASH<U+5730><U+5740><U+4F4D><U+5BBD>, <U+5728>norflash_read_id<U+51FD><U+6570><U+91CC><U+9762><U+88AB><U+4FEE><U+6539>
+                 ^
+../../Drivers/BSP/NORFLASH/norflash.c(237): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+    deviceid = (temp[0] << 8) | temp[1];
+             ~ ~~~~~~~~~~~~~~~^~~~~~~~~
+../../Drivers/BSP/NORFLASH/norflash.c(258): warning: implicit conversion loses integer precision: 'int' to 'uint8_t' (aka 'unsigned char') [-Wconversion]
+    qspi_send_cmd(FLASH_FastReadQuad, addr, (3 << 6) | (g_norflash_addrw << 4) | (3 << 2) | (1 << 0), 6);
+    ~~~~~~~~~~~~~                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+../../Drivers/BSP/NORFLASH/norflash.c(275): warning: implicit conversion loses integer precision: 'int' to 'uint8_t' (aka 'unsigned char') [-Wconversion]
+    qspi_send_cmd(FLASH_PageProgramQuad, addr, (3 << 6) | (g_norflash_addrw << 4) | (1 << 2) | (1 << 0), 0);
+    ~~~~~~~~~~~~~                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+../../Drivers/BSP/NORFLASH/norflash.c(299): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        pageremain = datalen;           
+                   ~ ^~~~~~~
+../../Drivers/BSP/NORFLASH/norflash.c(325): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+                pageremain = datalen;   /* <U+4E0D><U+591F>256<U+4E2A><U+5B57><U+8282><U+4E86> */
+                           ~ ^~~~~~~
+../../Drivers/BSP/NORFLASH/norflash.c(360): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+        secremain = datalen;                                /* <U+4E0D><U+5927><U+4E8E>4096<U+4E2A><U+5B57><U+8282> */
+                  ~ ^~~~~~~
+../../Drivers/BSP/NORFLASH/norflash.c(410): warning: implicit conversion loses integer precision: 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') [-Wconversion]
+                secremain = datalen;  /* <U+4E0B><U+4E00><U+4E2A><U+6247><U+533A><U+53EF><U+4EE5><U+5199><U+5B8C><U+4E86> */
+                          ~ ^~~~~~~
+../../Drivers/BSP/NORFLASH/norflash.c(448): warning: implicit conversion loses integer precision: 'int' to 'uint8_t' (aka 'unsigned char') [-Wconversion]
+    qspi_send_cmd(FLASH_SectorErase, saddr, (0 << 6) | (g_norflash_addrw << 4) | (1 << 2) | (1 << 0), 0);
+    ~~~~~~~~~~~~~                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+../../Drivers/BSP/NORFLASH/norflash.c(342): warning: no previous extern declaration for non-static variable 'g_norflash_buf' [-Wmissing-variable-declarations]
+uint8_t g_norflash_buf[4096];     /* <U+6247><U+533A><U+7F13><U+5B58> */
+        ^
+15 warnings generated.
+compiling norflash.c...
+../../Drivers/BSP/SDMMC/sdmmc_sdcard.c(15): warning: In file included from...../../Drivers\./SYSTEM/usart/usart.h(19): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/SDMMC/sdmmc_sdcard.c(15): warning: In file included from...../../Drivers\./SYSTEM/usart/usart.h(19): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/SDMMC/sdmmc_sdcard.c(15): warning: In file included from...../../Drivers\./SYSTEM/usart/usart.h(19): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(432): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(129): warning: padding struct 'SD_HandleTypeDef' with 3 bytes to align 'pTxBuffPtr' [-Wpadded]
+  uint8_t                      *pTxBuffPtr;      /*!< Pointer to SD Tx transfer Buffer    */
+                                ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_sd.h(141): warning: padding struct 'SD_HandleTypeDef' with 3 bytes to align 'ErrorCode' [-Wpadded]
+  __IO uint32_t                ErrorCode;        /*!< SD Card Error codes                 */
+                               ^
+../../Drivers/BSP/SDMMC/sdmmc_sdcard.c(167): warning: cast from function call of type 'HAL_StatusTypeDef' to non-matching type 'uint8_t' (aka 'unsigned char') [-Wbad-function-cast]
+    sta = (uint8_t)HAL_SD_ReadBlocks(&g_sd_handle, (uint8_t *)pbuf, saddr, cnt, 1000u);
+                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Drivers/BSP/SDMMC/sdmmc_sdcard.c(194): warning: cast from function call of type 'HAL_StatusTypeDef' to non-matching type 'uint8_t' (aka 'unsigned char') [-Wbad-function-cast]
+    sta = (uint8_t)HAL_SD_WriteBlocks(&g_sd_handle, (uint8_t *)pbuf, saddr, cnt, 1000u);
+                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+9 warnings generated.
+compiling sdmmc_sdcard.c...
+../../Drivers/BSP/LED/led.c(14): warning: In file included from...../../Drivers\./BSP/LED/led.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Drivers/BSP/LED/led.c(14): warning: In file included from...../../Drivers\./BSP/LED/led.h(17): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+5 warnings generated.
+compiling led.c...
+../../Middlewares/FATFS/source/ffsystem.c(11): warning: In file included from...../../Middlewares/FATFS/source/ff.h(188): warning: padding struct 'FFOBJID' with 4 bytes to align 'objsize' [-Wpadded]
+        FSIZE_t objsize;                /* Object size (valid when sclust != 0) */
+                ^
+../../Middlewares/FATFS/source/ff.h(182): warning: padding size of 'FFOBJID' with 4 bytes to alignment boundary [-Wpadded]
+typedef struct {
+        ^
+../../Middlewares/FATFS/source/ffsystem.c(20): warning: no previous prototype for function 'ff_memalloc' [-Wmissing-prototypes]
+void *ff_memalloc(UINT size)
+      ^
+../../Middlewares/FATFS/source/ffsystem.c(25): warning: no previous prototype for function 'ff_memfree' [-Wmissing-prototypes]
+void ff_memfree(void *mfbuf)
+     ^
+4 warnings generated.
+compiling ffsystem.c...
+../../Middlewares/FATFS/source/ffunicode.c(26): warning: In file included from...../../Middlewares/FATFS/source/ff.h(188): warning: padding struct 'FFOBJID' with 4 bytes to align 'objsize' [-Wpadded]
+        FSIZE_t objsize;                /* Object size (valid when sclust != 0) */
+                ^
+../../Middlewares/FATFS/source/ff.h(182): warning: padding size of 'FFOBJID' with 4 bytes to alignment boundary [-Wpadded]
+typedef struct {
+        ^
+2 warnings generated.
+compiling ffunicode.c...
+../../Middlewares/FATFS/source/diskio.c(15): warning: In file included from...../../Middlewares/FATFS/source/ff.h(188): warning: padding struct 'FFOBJID' with 4 bytes to align 'objsize' [-Wpadded]
+        FSIZE_t objsize;                /* Object size (valid when sclust != 0) */
+                ^
+../../Middlewares/FATFS/source/ff.h(182): warning: padding size of 'FFOBJID' with 4 bytes to alignment boundary [-Wpadded]
+typedef struct {
+        ^
+../../Middlewares/FATFS/source/diskio.c(17): warning: In file included from...../../Drivers\./BSP/SDMMC/sdmmc_sdcard.h(23): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(276): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(59): warning: padding struct 'DFSDM_Channel_OutputClockTypeDef' with 3 bytes to align 'Selection' [-Wpadded]
+  uint32_t        Selection;  /*!< Output clock is system clock or audio clock.
+                  ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_dfsdm.h(169): warning: padding size of 'DFSDM_Filter_RegularParamTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Middlewares/FATFS/source/diskio.c(17): warning: In file included from...../../Drivers\./BSP/SDMMC/sdmmc_sdcard.h(23): warning: In file included from...../../Drivers\./SYSTEM/sys/sys.h(17): warning: In file included from...../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h(282): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal.h(29): warning: In file included from...../../User\stm32h7xx_hal_conf.h(480): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_pcd.h(28): warning: In file included from...../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(189): warning: padding struct 'USB_OTG_HCTypeDef' with 1 byte to align 'xfer_buff' [-Wpadded]
+  uint8_t   *xfer_buff;         /*!< Pointer to transfer buffer.                                                */
+             ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(203): warning: padding struct 'USB_OTG_HCTypeDef' with 2 bytes to align 'dma_addr' [-Wpadded]
+  uint32_t  dma_addr;           /*!< 32 bits aligned transfer buffer address.                                   */
+            ^
+../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h(158): warning: padding size of 'USB_OTG_HCTypeDef' with 2 bytes to alignment boundary [-Wpadded]
+typedef struct
+        ^
+../../Middlewares/FATFS/source/diskio.c(111): warning: cast from 'const unsigned char *' to 'unsigned char *' drops const qualifier [-Wcast-qual]
+            if (sd_write_disk((uint8_t *)buff, (uint32_t)sector, count) == 0u)
+                                         ^
+../../Middlewares/FATFS/source/diskio.c(124): warning: cast from 'const unsigned char *' to 'unsigned char *' drops const qualifier [-Wcast-qual]
+            norflash_write((uint8_t *)buff, (uint32_t)sector * NOR_SECTOR_SIZE, NOR_SECTOR_SIZE);
+                                      ^
+../../Middlewares/FATFS/source/diskio.c(18): warning: In file included from...../../Drivers\./BSP/NORFLASH/norflash.h(68): warning: unused function 'norflash_wait_busy' [-Wunused-function]
+static void norflash_wait_busy(void);                                            /* <U+7B49><U+5F85><U+7A7A><U+95F2> */
+            ^
+../../Drivers\./BSP/NORFLASH/norflash.h(69): warning: unused function 'norflash_write_page' [-Wunused-function]
+static void norflash_write_page(uint8_t *pbuf, uint32_t addr, uint16_t datalen); /* <U+5199><U+5165>page */
+            ^
+11 warnings generated.
+compiling diskio.c...
+../../Middlewares/FATFS/source/ff.c(23): warning: In file included from...../../Middlewares/FATFS/source/ff.h(188): warning: padding struct 'FFOBJID' with 4 bytes to align 'objsize' [-Wpadded]
+        FSIZE_t objsize;                /* Object size (valid when sclust != 0) */
+                ^
+../../Middlewares/FATFS/source/ff.h(182): warning: padding size of 'FFOBJID' with 4 bytes to alignment boundary [-Wpadded]
+typedef struct {
+        ^
+../../Middlewares/FATFS/source/ff.c(622): warning: implicit conversion loses integer precision: 'int' to 'WORD' (aka 'unsigned short') [-Wconversion]
+        rv = rv << 8 | ptr[0];
+           ~ ~~~~~~~~^~~~~~~~
+../../Middlewares/FATFS/source/ff.c(789): warning: implicit conversion loses integer precision: 'int' to 'WCHAR' (aka 'unsigned short') [-Wconversion]
+                wc = (wc << 8) + b;             /* Make a DBC */
+                   ~ ~~~~~~~~~~^~~
+../../Middlewares/FATFS/source/ff.c(1156): warning: implicit conversion changes signedness: 'int' to 'unsigned int' [-Wsign-conversion]
+                        wc |= fs->win[bc % SS(fs)] << 8;        /* Merge 2nd byte of the entry */
+                           ~~ ~~~~~~~~~~~~~~~~~~~~~^~~~
+../../Middlewares/FATFS/source/ff.c(1230): warning: implicit conversion loses integer precision: 'int' to 'BYTE' (aka 'unsigned char') [-Wconversion]
+                        *p = (clst & 1) ? ((*p & 0x0F) | ((BYTE)val << 4)) : (BYTE)val; /* Update 1st byte */
+                           ~               ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+../../Middlewares/FATFS/source/ff.c(1293): warning: implicit conversion loses integer precision: 'int' to 'BYTE' (aka 'unsigned char') [-Wconversion]
+                i = val / 8 % SS(fs); bm = 1 << (val % 8);
+                                         ~ ~~^~~~~~~~~~~~
+../../Middlewares/FATFS/source/ff.c(1332): warning: implicit conversion loses integer precision: 'int' to 'BYTE' (aka 'unsigned char') [-Wconversion]
+        bm = 1 << (clst % 8);                                   /* Bit mask in the byte */
+           ~ ~~^~~~~~~~~~~~~
+../../Middlewares/FATFS/source/ff.c(23): warning: In file included from...../../Middlewares/FATFS/source/ff.h(138): warning: padding struct 'FATFS' with 1 byte to align 'id' [-Wpadded]
+        WORD    id;                             /* Volume mount ID */
+                ^
+../../Middlewares/FATFS/source/ff.c(2034): warning: implicit conversion loses integer precision: 'int' to 'BYTE' (aka 'unsigned char') [-Wconversion]
+                sum = (sum >> 1) + (sum << 7) + *dir++;
+                    ~ ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+../../Middlewares/FATFS/source/ff.c(2493): warning: variable 'res' may be uninitialized when used here [-Wconditional-uninitialized]
+                if (res != FR_NO_FILE) return res;      /* Abort if the result is other than 'not collided' */
+                    ^~~
+../../Middlewares/FATFS/source/ff.c(2442): note: variable 'res' is declared here
+        FRESULT res;
+        ^
+../../Middlewares/FATFS/source/ff.c(3424): warning: implicit conversion loses integer precision: 'int' to 'WORD' (aka 'unsigned short') [-Wconversion]
+                fs->csize = 1 << fs->win[BPB_SecPerClusEx];             /* Cluster size */
+                          ~ ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares/FATFS/source/ff.c(23): warning: In file included from...../../Middlewares/FATFS/source/ff.h(209): warning: padding struct 'FIL' with 6 bytes to align 'fptr' [-Wpadded]
+        FSIZE_t fptr;                   /* File read/write pointer (Zeroed on file open) */
+                ^
+../../Middlewares/FATFS/source/ff.h(205): warning: padding size of 'FIL' with 4 bytes to alignment boundary [-Wpadded]
+typedef struct {
+        ^
+../../Middlewares/FATFS/source/ff.h(247): warning: padding size of 'FILINFO' with 6 bytes to alignment boundary [-Wpadded]
+typedef struct {
+        ^
+../../Middlewares/FATFS/source/ff.h(267): warning: padding struct 'MKFS_PARM' with 2 bytes to align 'align' [-Wpadded]
+        UINT align;                     /* Data area alignment (sector) */
+             ^
+../../Middlewares/FATFS/source/ff.c(6849): warning: implicit conversion changes signedness: 'int' to 'UINT' (aka 'unsigned int') [-Wsign-conversion]
+                        w = va_arg(arp, int);
+                          ~ ^~~~~~~~~~~~~~~~
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\stdarg.h(43): note: expanded from macro 'va_arg'
+  #define va_arg(ap, type)    __builtin_va_arg(ap, type)
+                              ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares/FATFS/source/ff.c(6897): warning: implicit conversion changes signedness: 'int' to 'UINT' (aka 'unsigned int') [-Wsign-conversion]
+                        if (prec >= 0 && j > (UINT)prec) j = prec;      /* Limited length of string body */
+                                                           ~ ^~~~
+18 warnings generated.
+compiling ff.c...
+linking...
+Program Size: Code=57374 RO-data=15598 RW-data=36 ZI-data=2074276  
+FromELF: creating hex file...
+"..\..\Output\STM32H743.axf" - 0 Error(s), 467 Warning(s).
+Build Time Elapsed:  00:00:04

@@ -1,0 +1,75 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+compiling selftest.c...
+../../User/spine_test.cpp(1526): error: no member named 'getChildren' in 'spine::BoneData'
+            if (b->getChildren().size() > 0)
+                ~  ^
+../../User/spine_test.cpp(1541): error: no member named 'getChildren' in 'spine::BoneData'
+           target->getName().buffer(), (int)target->getChildren().size());
+                                            ~~~~~~  ^
+../../User/spine_test.cpp(1547): error: '_bone' is a private member of 'spine::PhysicsConstraintData'
+    pcd->_bone = target;
+         ^
+../../Middlewares/SPINE/include\spine/PhysicsConstraintData.h(121): note: declared private here
+                BoneData *_bone;
+                          ^
+../../User/spine_test.cpp(1548): error: '_limit' is a private member of 'spine::PhysicsConstraintData'
+    pcd->_limit = 5000.0f;
+         ^
+../../Middlewares/SPINE/include\spine/PhysicsConstraintData.h(122): note: declared private here
+                float _x, _y, _rotate, _scaleX, _shearX, _limit, _step;
+                                                         ^
+../../User/spine_test.cpp(1549): error: '_step' is a private member of 'spine::PhysicsConstraintData'
+    pcd->_step = 1.0f / (float)fps;
+         ^
+../../Middlewares/SPINE/include\spine/PhysicsConstraintData.h(122): note: declared private here
+                float _x, _y, _rotate, _scaleX, _shearX, _limit, _step;
+                                                                 ^
+../../User/spine_test.cpp(1550): error: '_setupPose' is a protected member of 'spine::PosedDataGeneric<spine::PhysicsConstraintPose>'
+    pcd->_setupPose.setInertia(0.5f);
+         ^
+../../Middlewares/SPINE/include\spine/PosedData.h(129): note: declared protected here
+                P _setupPose;
+                  ^
+../../User/spine_test.cpp(1551): error: '_setupPose' is a protected member of 'spine::PosedDataGeneric<spine::PhysicsConstraintPose>'
+    pcd->_setupPose.setStrength(100.0f);
+         ^
+../../Middlewares/SPINE/include\spine/PosedData.h(129): note: declared protected here
+                P _setupPose;
+                  ^
+../../User/spine_test.cpp(1552): error: '_setupPose' is a protected member of 'spine::PosedDataGeneric<spine::PhysicsConstraintPose>'
+    pcd->_setupPose.setDamping(0.85f);
+         ^
+../../Middlewares/SPINE/include\spine/PosedData.h(129): note: declared protected here
+                P _setupPose;
+                  ^
+../../User/spine_test.cpp(1553): error: '_setupPose' is a protected member of 'spine::PosedDataGeneric<spine::PhysicsConstraintPose>'
+    pcd->_setupPose.setMassInverse(1.0f);
+         ^
+../../Middlewares/SPINE/include\spine/PosedData.h(129): note: declared protected here
+                P _setupPose;
+                  ^
+../../User/spine_test.cpp(1554): error: '_setupPose' is a protected member of 'spine::PosedDataGeneric<spine::PhysicsConstraintPose>'
+    pcd->_setupPose.setGravity(1.0f);
+         ^
+../../Middlewares/SPINE/include\spine/PosedData.h(129): note: declared protected here
+                P _setupPose;
+                  ^
+../../User/spine_test.cpp(1555): error: '_setupPose' is a protected member of 'spine::PosedDataGeneric<spine::PhysicsConstraintPose>'
+    pcd->_setupPose.setMix(1.0f);
+         ^
+../../Middlewares/SPINE/include\spine/PosedData.h(129): note: declared protected here
+                P _setupPose;
+                  ^
+../../User/spine_test.cpp(1569): error: no member named 'Physics_Setup' in namespace 'spine'; did you mean 'Physics_Reset'?
+    skeleton.updateWorldTransform(spine::Physics_Setup);
+                                  ~~~~~~~^~~~~~~~~~~~~
+                                         Physics_Reset
+../../Middlewares/SPINE/include\spine/Physics.h(40): note: 'Physics_Reset' declared here
+                Physics_Reset,
+                ^
+12 errors generated.
+compiling spine_test.cpp...
+"..\..\Output\STM32H743.axf" - 12 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:02

@@ -1,0 +1,16 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_test.cpp(1040): error: expected expression
+        printf("[SPN] buf%d sum=%08lX
+               ^
+../../User/spine_test.cpp(1049): error: expected '}'
+}
+ ^
+../../User/spine_test.cpp(752): note: to match this '{'
+{
+^
+2 errors generated.
+compiling spine_test.cpp...
+"..\..\Output\STM32H743.axf" - 2 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

@@ -1,0 +1,99 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+error: invalid argument '-std=c++1z' not allowed with 'C/ObjC'
+compiling sys.c...
+error: invalid argument '-std=c++1z' not allowed with 'C/ObjC'
+compiling delay.c...
+compiling raster_probe.cpp...
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(34): warning: In file included from...../../Middlewares\./TGX/Image.h(36): warning: In file included from...../../Middlewares\./TGX/Rasterizer.h(141): error: 'auto' not allowed in template parameter until C++1z
+    template<auto shader_function, typename RASTERIZER_PARAMS>
+             ^~~~
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(34): warning: In file included from...../../Middlewares\./TGX/Image.h(3931): warning: In file included from...../../Middlewares\./TGX/Image.inl(4113): error: no matching function for call to 'rasterizeTriangle'
+                    tgx::rasterizeTriangle<tgx::shader_2D_texture<true, true, false, color_t, color_t_tex> >(_lx, _ly, V1, V2, V3, 0, 0, rparam);
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares\./TGX/Image.inl(3938): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::_drawTexturedTriangle<tgx::RGB32, false, true, false>' requested here
+            _drawTexturedTriangle<color_t_tex, false, true, false>(src_im, color_t_tex(), srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, color_t_tex(), color_t_tex(), color_t_tex(), opacity);
+            ^
+../../Middlewares\./TGX/Image.inl(4313): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedTriangle<tgx::RGB32>' requested here
+        drawTexturedTriangle(src_im, srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, opacity);
+        ^
+../../User/tgx_selftest.cpp(99): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedQuad<tgx::RGB32>' requested here
+        dst.drawTexturedQuad(src, s0, s1, s2, s3, d0, d1, d2, d3, 1.0f);
+            ^
+../../Middlewares\./TGX/Rasterizer.h(142): note: candidate template ignored: invalid explicitly-specified argument for template parameter 'shader_function'
+    TGX_RASTERIZE_TRIANGLE_INLINE inline void rasterizeTriangle(const int LX, const int LY, const RasterizerVec4 & V0, const RasterizerVec4 & V1, const RasterizerVec4 & V2, const int32_t offset_x, const int32_t offset_y, const RASTERIZER_PARAMS & data)
+                                              ^
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(34): warning: In file included from...../../Middlewares\./TGX/Image.h(3931): warning: In file included from...../../Middlewares\./TGX/Image.inl(4113): error: no matching function for call to 'rasterizeTriangle'
+                    tgx::rasterizeTriangle<tgx::shader_2D_texture<true, true, false, color_t, color_t_tex> >(_lx, _ly, V1, V2, V3, 0, 0, rparam);
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares\./TGX/Image.inl(3942): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::_drawTexturedTriangle<tgx::RGB32, false, false, false>' requested here
+            _drawTexturedTriangle<color_t_tex, false, false, false>(src_im, color_t_tex(), srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, color_t_tex(), color_t_tex(), color_t_tex(), 1.0f);
+            ^
+../../Middlewares\./TGX/Image.inl(4313): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedTriangle<tgx::RGB32>' requested here
+        drawTexturedTriangle(src_im, srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, opacity);
+        ^
+../../User/tgx_selftest.cpp(99): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedQuad<tgx::RGB32>' requested here
+        dst.drawTexturedQuad(src, s0, s1, s2, s3, d0, d1, d2, d3, 1.0f);
+            ^
+../../Middlewares\./TGX/Rasterizer.h(142): note: candidate template ignored: invalid explicitly-specified argument for template parameter 'shader_function'
+    TGX_RASTERIZE_TRIANGLE_INLINE inline void rasterizeTriangle(const int LX, const int LY, const RasterizerVec4 & V0, const RasterizerVec4 & V1, const RasterizerVec4 & V2, const int32_t offset_x, const int32_t offset_y, const RASTERIZER_PARAMS & data)
+                                              ^
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(34): warning: In file included from...../../Middlewares\./TGX/Image.h(3931): warning: In file included from...../../Middlewares\./TGX/Image.inl(4113): error: no matching function for call to 'rasterizeTriangle'
+                    tgx::rasterizeTriangle<tgx::shader_2D_texture<true, true, false, color_t, color_t_tex> >(_lx, _ly, V1, V2, V3, 0, 0, rparam);
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares\./TGX/Image.inl(3953): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::_drawTexturedTriangle<tgx::RGB32, true, true, false>' requested here
+            _drawTexturedTriangle<color_t_tex, true, true, false>(src_im, color_t_tex(), srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, C1, C2, C3, opacity);
+            ^
+../../User/tgx_selftest.cpp(130): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedGradientTriangle<tgx::RGB32>' requested here
+                dst.drawTexturedGradientTriangle(src, t0p, t1p, t2p, p0, p1, p2, c1, c2, c3);
+                    ^
+../../Middlewares\./TGX/Rasterizer.h(142): note: candidate template ignored: invalid explicitly-specified argument for template parameter 'shader_function'
+    TGX_RASTERIZE_TRIANGLE_INLINE inline void rasterizeTriangle(const int LX, const int LY, const RasterizerVec4 & V0, const RasterizerVec4 & V1, const RasterizerVec4 & V2, const int32_t offset_x, const int32_t offset_y, const RASTERIZER_PARAMS & data)
+                                              ^
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(34): warning: In file included from...../../Middlewares\./TGX/Image.h(3931): warning: In file included from...../../Middlewares\./TGX/Image.inl(4113): error: no matching function for call to 'rasterizeTriangle'
+                    tgx::rasterizeTriangle<tgx::shader_2D_texture<true, true, false, color_t, color_t_tex> >(_lx, _ly, V1, V2, V3, 0, 0, rparam);
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares\./TGX/Image.inl(3957): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::_drawTexturedTriangle<tgx::RGB32, true, false, false>' requested here
+            _drawTexturedTriangle<color_t_tex, true, false, false>(src_im, color_t_tex(), srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, C1, C2, C3, 1.0f);
+            ^
+../../User/tgx_selftest.cpp(130): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedGradientTriangle<tgx::RGB32>' requested here
+                dst.drawTexturedGradientTriangle(src, t0p, t1p, t2p, p0, p1, p2, c1, c2, c3);
+                    ^
+../../Middlewares\./TGX/Rasterizer.h(142): note: candidate template ignored: invalid explicitly-specified argument for template parameter 'shader_function'
+    TGX_RASTERIZE_TRIANGLE_INLINE inline void rasterizeTriangle(const int LX, const int LY, const RasterizerVec4 & V0, const RasterizerVec4 & V1, const RasterizerVec4 & V2, const int32_t offset_x, const int32_t offset_y, const RASTERIZER_PARAMS & data)
+                                              ^
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(34): warning: In file included from...../../Middlewares\./TGX/Image.h(3931): warning: In file included from...../../Middlewares\./TGX/Image.inl(4113): error: no matching function for call to 'rasterizeTriangle'
+                    tgx::rasterizeTriangle<tgx::shader_2D_texture<true, true, false, color_t, color_t_tex> >(_lx, _ly, V1, V2, V3, 0, 0, rparam);
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares\./TGX/Image.inl(3938): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::_drawTexturedTriangle<tgx::RGB565, false, true, false>' requested here
+            _drawTexturedTriangle<color_t_tex, false, true, false>(src_im, color_t_tex(), srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, color_t_tex(), color_t_tex(), color_t_tex(), opacity);
+            ^
+../../Middlewares\./TGX/Image.inl(4313): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedTriangle<tgx::RGB565>' requested here
+        drawTexturedTriangle(src_im, srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, opacity);
+        ^
+../../User/tgx_selftest.cpp(166): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedQuad<tgx::RGB565>' requested here
+                dst.drawTexturedQuad(src565, s0, s1, s2, s3, d0, d1, d2, d3, TGX_DEFAULT_NO_BLENDING);
+                    ^
+../../Middlewares\./TGX/Rasterizer.h(142): note: candidate template ignored: invalid explicitly-specified argument for template parameter 'shader_function'
+    TGX_RASTERIZE_TRIANGLE_INLINE inline void rasterizeTriangle(const int LX, const int LY, const RasterizerVec4 & V0, const RasterizerVec4 & V1, const RasterizerVec4 & V2, const int32_t offset_x, const int32_t offset_y, const RASTERIZER_PARAMS & data)
+                                              ^
+../../User/tgx_selftest.cpp(14): warning: In file included from...../../Middlewares\./TGX/tgx.h(34): warning: In file included from...../../Middlewares\./TGX/Image.h(3931): warning: In file included from...../../Middlewares\./TGX/Image.inl(4113): error: no matching function for call to 'rasterizeTriangle'
+                    tgx::rasterizeTriangle<tgx::shader_2D_texture<true, true, false, color_t, color_t_tex> >(_lx, _ly, V1, V2, V3, 0, 0, rparam);
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares\./TGX/Image.inl(3942): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::_drawTexturedTriangle<tgx::RGB565, false, false, false>' requested here
+            _drawTexturedTriangle<color_t_tex, false, false, false>(src_im, color_t_tex(), srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, color_t_tex(), color_t_tex(), color_t_tex(), 1.0f);
+            ^
+../../Middlewares\./TGX/Image.inl(4313): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedTriangle<tgx::RGB565>' requested here
+        drawTexturedTriangle(src_im, srcP1, srcP2, srcP3, dstP1, dstP2, dstP3, opacity);
+        ^
+../../User/tgx_selftest.cpp(166): note: in instantiation of function template specialization 'tgx::Image<tgx::RGB565>::drawTexturedQuad<tgx::RGB565>' requested here
+                dst.drawTexturedQuad(src565, s0, s1, s2, s3, d0, d1, d2, d3, TGX_DEFAULT_NO_BLENDING);
+                    ^
+../../Middlewares\./TGX/Rasterizer.h(142): note: candidate template ignored: invalid explicitly-specified argument for template parameter 'shader_function'
+    TGX_RASTERIZE_TRIANGLE_INLINE inline void rasterizeTriangle(const int LX, const int LY, const RasterizerVec4 & V0, const RasterizerVec4 & V1, const RasterizerVec4 & V2, const int32_t offset_x, const int32_t offset_y, const RASTERIZER_PARAMS & data)
+                                              ^
+7 errors generated.
+compiling tgx_selftest.cpp...
+"..\..\Output\STM32H743.axf" - 9 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:02

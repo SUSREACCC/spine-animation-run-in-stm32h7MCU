@@ -1,0 +1,115 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/selftest.c(24): warning: In file included from...../../User/spine_test.h(29): error: expected ')'
+void spine_set_gravity(spine::Skeleton *skel, float gx, float gy);
+                            ^
+../../User/spine_test.h(29): note: to match this '('
+void spine_set_gravity(spine::Skeleton *skel, float gx, float gy);
+                      ^
+1 error generated.
+compiling selftest.c...
+../../User/spine_test.cpp(23): warning: In file included from...../../User/spine_test.h(29): error: use of undeclared identifier 'spine'
+void spine_set_gravity(spine::Skeleton *skel, float gx, float gy);
+                       ^
+../../User/spine_test.cpp(1449): error: member access into incomplete type 'spine::Bone'
+        printf("        bone[%2d] %s\r\n", (int)i, bones[i]->getData().getName().buffer());
+                                                           ^
+../../Middlewares/SPINE/include\spine/Skeleton.h(47): note: forward declaration of 'spine::Bone'
+        class Bone;
+              ^
+../../User/spine_test.cpp(1522): error: member access into incomplete type 'spine::BoneData'
+            if (b->getChildren().size() > 0)
+                 ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(38): note: forward declaration of 'spine::BoneData'
+        class BoneData;
+              ^
+../../User/spine_test.cpp(1537): error: member access into incomplete type 'spine::BoneData'
+           target->getName().buffer(), (int)target->getChildren().size());
+                 ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(38): note: forward declaration of 'spine::BoneData'
+        class BoneData;
+              ^
+../../User/spine_test.cpp(1537): error: member access into incomplete type 'spine::BoneData'
+           target->getName().buffer(), (int)target->getChildren().size());
+                                                  ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(38): note: forward declaration of 'spine::BoneData'
+        class BoneData;
+              ^
+../../User/spine_test.cpp(1541): error: allocation of incomplete type 'spine::PhysicsConstraintData'
+        new spine::PhysicsConstraintData(spine::String("demo-physics"));
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares/SPINE/include\spine/SkeletonData.h(54): note: forward declaration of 'spine::PhysicsConstraintData'
+        class PhysicsConstraintData;
+              ^
+../../User/spine_test.cpp(1543): error: member access into incomplete type 'spine::PhysicsConstraintData'
+    pcd->_bone = target;
+       ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(54): note: forward declaration of 'spine::PhysicsConstraintData'
+        class PhysicsConstraintData;
+              ^
+../../User/spine_test.cpp(1544): error: member access into incomplete type 'spine::PhysicsConstraintData'
+    pcd->_limit = 5000.0f;
+       ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(54): note: forward declaration of 'spine::PhysicsConstraintData'
+        class PhysicsConstraintData;
+              ^
+../../User/spine_test.cpp(1545): error: member access into incomplete type 'spine::PhysicsConstraintData'
+    pcd->_step = 1.0f / (float)fps;
+       ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(54): note: forward declaration of 'spine::PhysicsConstraintData'
+        class PhysicsConstraintData;
+              ^
+../../User/spine_test.cpp(1546): error: member access into incomplete type 'spine::PhysicsConstraintData'
+    pcd->_setupPose.setInertia(0.5f);
+       ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(54): note: forward declaration of 'spine::PhysicsConstraintData'
+        class PhysicsConstraintData;
+              ^
+../../User/spine_test.cpp(1547): error: member access into incomplete type 'spine::PhysicsConstraintData'
+    pcd->_setupPose.setStrength(100.0f);
+       ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(54): note: forward declaration of 'spine::PhysicsConstraintData'
+        class PhysicsConstraintData;
+              ^
+../../User/spine_test.cpp(1548): error: member access into incomplete type 'spine::PhysicsConstraintData'
+    pcd->_setupPose.setDamping(0.85f);
+       ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(54): note: forward declaration of 'spine::PhysicsConstraintData'
+        class PhysicsConstraintData;
+              ^
+../../User/spine_test.cpp(1549): error: member access into incomplete type 'spine::PhysicsConstraintData'
+    pcd->_setupPose.setMassInverse(1.0f);
+       ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(54): note: forward declaration of 'spine::PhysicsConstraintData'
+        class PhysicsConstraintData;
+              ^
+../../User/spine_test.cpp(1550): error: member access into incomplete type 'spine::PhysicsConstraintData'
+    pcd->_setupPose.setGravity(1.0f);
+       ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(54): note: forward declaration of 'spine::PhysicsConstraintData'
+        class PhysicsConstraintData;
+              ^
+../../User/spine_test.cpp(1551): error: member access into incomplete type 'spine::PhysicsConstraintData'
+    pcd->_setupPose.setMix(1.0f);
+       ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(54): note: forward declaration of 'spine::PhysicsConstraintData'
+        class PhysicsConstraintData;
+              ^
+../../User/spine_test.cpp(1553): error: reference to type 'spine::ConstraintData *const' could not bind to an lvalue of type 'spine::PhysicsConstraintData *'
+    sd->getConstraints().add(pcd);
+                             ^~~
+../../Middlewares/SPINE/include\spine/Array.h(112): note: passing argument to parameter 'inValue' here
+                inline void add(const T &inValue) {
+                                         ^
+../../User/spine_test.cpp(1565): error: no member named 'Physics_Setup' in namespace 'spine'; did you mean 'Physics_Reset'?
+    skeleton.updateWorldTransform(spine::Physics_Setup);
+                                  ~~~~~~~^~~~~~~~~~~~~
+                                         Physics_Reset
+../../Middlewares/SPINE/include\spine/Physics.h(40): note: 'Physics_Reset' declared here
+                Physics_Reset,
+                ^
+17 errors generated.
+compiling spine_test.cpp...
+"..\..\Output\STM32H743.axf" - 18 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

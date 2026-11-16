@@ -1,0 +1,43 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_test.cpp(932): error: expected expression
+        printf("[GRAV] no animation: static pose, gravity is the only motion
+               ^
+../../User/spine_test.cpp(953): error: use of undeclared identifier 'dt'
+            state.update(dt);
+                         ^
+../../User/spine_test.cpp(1074): error: expected unqualified-id
+extern "C" void raster_pixel_reset(void);
+       ^
+../../User/spine_test.cpp(1075): error: expected unqualified-id
+extern "C" uint32_t raster_pixel_count(void);
+       ^
+../../User/spine_test.cpp(1081): error: function definition is not allowed here
+{
+^
+../../User/spine_test.cpp(1097): error: function definition is not allowed here
+{
+^
+../../User/spine_test.cpp(1109): error: expected unqualified-id
+extern "C" uint8_t spine_play_duo(const char *skel_path, const char *atlas_path,
+       ^
+../../User/spine_test.cpp(1452): error: expected unqualified-id
+extern "C" void spine_set_gravity(spine::Skeleton *skel, float gx, float gy)
+       ^
+../../User/spine_test.cpp(1461): error: expected unqualified-id
+extern "C" void spine_dump_bones(spine::Skeleton *skel)
+       ^
+../../User/spine_test.cpp(1477): error: expected unqualified-id
+extern "C" uint8_t spine_gravity_test(const char *skel_path, const char *atlas_path,
+       ^
+../../User/spine_test.cpp(1759): error: expected '}'
+}
+ ^
+../../User/spine_test.cpp(760): note: to match this '{'
+{
+^
+11 errors generated.
+compiling spine_test.cpp...
+"..\..\Output\STM32H743.axf" - 11 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

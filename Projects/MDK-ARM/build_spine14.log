@@ -1,0 +1,21 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+compiling selftest.c...
+../../User/spine_test.cpp(288): error: no matching constructor for initialization of 'spine::AtlasAttachmentLoader'
+    spine::AtlasAttachmentLoader  attachment_loader(&atlas);
+                                  ^                 ~~~~~~
+../../Middlewares/SPINE/include\spine/AtlasAttachmentLoader.h(49): note: candidate constructor not viable: no known conversion from 'spine::Atlas *' to 'spine::Atlas &' for 1st argument; remove &
+                explicit AtlasAttachmentLoader(Atlas &atlas);
+                         ^
+../../Middlewares/SPINE/include\spine/AtlasAttachmentLoader.h(47): note: candidate constructor (the implicit move constructor) not viable: no known conversion from 'spine::Atlas *' to 'spine::AtlasAttachmentLoader' for 1st argument
+        class SP_API AtlasAttachmentLoader : public AttachmentLoader {
+                     ^
+../../Middlewares/SPINE/include\spine/AtlasAttachmentLoader.h(47): note: candidate constructor (the implicit copy constructor) not viable: no known conversion from 'spine::Atlas *' to 'const spine::AtlasAttachmentLoader' for 1st argument
+../../User/spine_test.cpp(311): error: no member named 'setToSetupPose' in 'spine::Skeleton'
+    skeleton.setToSetupPose();
+    ~~~~~~~~ ^
+2 errors generated.
+compiling spine_test.cpp...
+"..\..\Output\STM32H743.axf" - 2 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

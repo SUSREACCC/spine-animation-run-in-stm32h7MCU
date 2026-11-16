@@ -1,0 +1,123 @@
+﻿
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 15 2026 17:51:18
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 15 2026 17:51:18
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 15 2026 17:51:18
+==============================================
+[1/5] MPU + SDRAM
+  addr scan : 2048 checkpoints over 32768 KB, 0 error(s)
+  pattern   : 64 KB x 5 patterns, total error(s) = 0
+[2/5] LCD (LTDC + DMA2D + SDRAM framebuffer)
+LCD ID:4384
+  panel id  : 4384, 800x480
+  pixel rb  : F800 OK (framebuffer @ 0xC0000000)
+[3/5] QSPI NOR flash
+ID:ef17
+  flash id  : EF17
+  rw verify : 4096 bytes @ 0x800000, 0 mismatch(es)
+[4/5] SD card (SDMMC1, 4-bit)
+  card      : 15801 MB, type=1, block=512 B
+  bus       : 4-bit, sweep 6/15/30 MHz
+  div=20 ( 6 MHz): OK   2766 KB/s  
+  div=8  (15 MHz): OK   6497 KB/s  
+  div=4  (30 MHz): OK   11781 KB/s  
+  stress    : 32 x 8 KB over the card, 0 error(s), 10166 KB/s
+  using     : 30 MHz, MBR sig=55AA
+[5/5] FATFS on SD volume 0:
+  volume    : FAT32, total 15784 MB, free 15779 MB
+   System Volume Information/  0 B
+   spineboy-pma.atlas   1652 B
+  read      : 0:/spineboy-pma.atlas -> 16 B, 73 70 69 6E ...
+   spineboy-pma.raw   524304 B
+   spineboy-pro.skel   65335 B
+   celestial-circus-pro.skel   53305 B
+   celestial-circus-pro.atlas   2560 B
+   celestial-circus-pro.raw   2097168 B
+   celestial-circus-pro_2.raw   2097168 B
+  entries   : 8 listed, file read OK
+  write     : 512 B -> readback match, delete ok
+----------------------------------------------
+RESULT SDRAM=PASS LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+RESULT SDRAM=PASS LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+----------------------------------------------
+[TGX] starting 2D render test
+
+[TGX] 2D render self-test, framebuffer @ 0xC0000000
+[TGX] benchmarking...
+[TGX] fill   : 76.58 Mpx/s  (800x480 x10)
+[TGX] texquad: 3.64 Mpx/s  (800x480 x4, bilinear+alpha)
+[TGX] tris   : 3.08 Mpx/s  (16x12 grid, gradient triangles)
+[TGX] 565/ow : 5.03 Mpx/s
+[TGX] 32/ow  : 4.38 Mpx/s
+[TGX] 32/blend: 3.64 Mpx/s
+[TGX] 565 8KB : 5.02 Mpx/s  (texture fits in D-cache)
+[TGX] 60 fps budget @ tris rate: 51490 kpx per frame
+[TGX] 30 fps budget @ tris rate: 102978 kpx per frame
+
+[RASTR] minimal custom rasterizer probe
+[RASTR] quad opaque : 35.41 Mpx/s
+[RASTR] quad key    : 34.65 Mpx/s
+[RASTR] quad key+tint: 21.76 Mpx/s
+[RASTR] grid key    : 23.40 Mpx/s  (16x12, 768 tris)
+[RASTR] grid key+tint: 15.72 Mpx/s
+[RASTR] RESULT PASS
+
+[R2D] custom rasterizer: regression + benchmark
+  T1 coverage     : 0 uncovered px  OK
+  T2 seam         : 0 mismatched pairs  OK
+  T3 clip         : 367608 px painted  OK
+  T4 vtx colour   : 0 non-monotonic  OK
+  T5 blend modes  : 0 wrong  OK
+[R2D] quad 4444 opaque: 6.02 Mpx/s
+[R2D] quad 565 const tint : 9.13 Mpx/s
+[R2D] quad 4444 alpha-only: 4.44 Mpx/s
+[R2D] grid 4444 alpha-only: 4.16 Mpx/s
+[R2D] quad 1555 const tint: 16.43 Mpx/s
+[R2D] grid 1555 vcol      : 6.84 Mpx/s
+[R2D] quad 565 const : 27.61 Mpx/s
+[R2D] quad 565 vcol  : 6.34 Mpx/s
+[R2D] quad 4444 vcol : 4.13 Mpx/s
+[R2D] grid 565 vcol  : 5.57 Mpx/s
+[R2D] grid 4444 vcol : 3.68 Mpx/s
+[R2D] RESULT PASS (regressions 0)
+[TGX] RESULT PASS
+RESULT TGX=PASS
+----------------------------------------------
+
+[SPN] animation contact sheet
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x1024 ARGB1555
+[SPN] texture /spine/celestial-circus-pro_2.raw : 1024x1024 ARGB1555
+[SPN] 7 animations:
+        [ 0] eyeblink
+        [ 1] eyeblink-long
+        [ 2] stars
+        [ 3] swing
+        [ 4] wind-idle
+        [ 5] wing-flap
+        [ 6] wings-and-feet
+[SPN] probe: uv=(441.9,211.0)px texel=0000 a=0 rgb555=(0,0,0) tint=FFFFFFFF
+[SPN] rt.fmt=1 w=1024 h=1024 px=c0a2800c
+[SPN] sheet: 7 cells rendered in 93.52 ms (10.7 fps for whole sheet)
+[SPN] RESULT PASS
+
+[DUO] 2 characters, render 800x480, 60 fps, 4 s x 2 iters
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x1024 ARGB1555
+[SPN] texture /spine/celestial-circus-pro_2.raw : 1024x1024 ARGB1555
+[DUO] it1 load 587.0 ms | 87.62 ms/frame (11.4 fps) | anim 0.95 build 4.18 clear 4.19 draw 3.38 present 0.35 wait 0.00 | sum 13.05 wall 87.61 | heap 687256 fails 0
+[DUO] it1 after delete: heap used 367208 (delta after load -134328)
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x1024 ARGB1555
+[SPN] texture /spine/celestial-circus-pro_2.raw : 1024x1024 ARGB1555
+[DUO] it2 load 590.2 ms | 87.60 ms/frame (11.4 fps) | anim 0.95 build 4.18 clear 4.20 draw 3.36 present 0.35 wait 0.00 | sum 13.03 wall 87.60 | heap 686952 fails 0
+

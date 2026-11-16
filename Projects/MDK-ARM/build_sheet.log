@@ -1,0 +1,26 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_test.cpp(535): error: member access into incomplete type 'spine::Animation'
+        printf("        [%2d] %s\r\n", (int)i, sd->getAnimations()[i]->getName().buffer());
+                                                                     ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(46): note: forward declaration of 'spine::Animation'
+        class Animation;
+              ^
+../../User/spine_test.cpp(588): error: member access into incomplete type 'spine::Animation'
+        state.setAnimation(0, sd->getAnimations()[i]->getName(), true);
+                                                    ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(46): note: forward declaration of 'spine::Animation'
+        class Animation;
+              ^
+../../User/spine_test.cpp(601): error: member access into incomplete type 'spine::Animation'
+                        (char *)sd->getAnimations()[i]->getName().buffer(), 0xFFFFu);
+                                                      ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(46): note: forward declaration of 'spine::Animation'
+        class Animation;
+              ^
+3 errors generated.
+compiling spine_test.cpp...
+compiling selftest.c...
+"..\..\Output\STM32H743.axf" - 3 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

@@ -1,0 +1,65 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_test.cpp(857): error: expected expression
+    printf("[SPN] low buffer @ %p  (%dx%d)
+           ^
+../../User/spine_test.cpp(892): error: use of undeclared identifier 'pby'
+    int pbx[3], pby[3], pbX[3], pbY[3];
+                ^
+../../User/spine_test.cpp(892): error: use of undeclared identifier 'pbX'
+    int pbx[3], pby[3], pbX[3], pbY[3];
+                        ^
+../../User/spine_test.cpp(892): error: use of undeclared identifier 'pbY'
+    int pbx[3], pby[3], pbX[3], pbY[3];
+                                ^
+../../User/spine_test.cpp(896): error: use of undeclared identifier 'pbx'
+        pbx[i] = 0; pby[i] = 0; pbX[i] = -1; pbY[i] = -1;
+        ^
+../../User/spine_test.cpp(896): error: use of undeclared identifier 'pby'
+        pbx[i] = 0; pby[i] = 0; pbX[i] = -1; pbY[i] = -1;
+                    ^
+../../User/spine_test.cpp(896): error: use of undeclared identifier 'pbX'
+        pbx[i] = 0; pby[i] = 0; pbX[i] = -1; pbY[i] = -1;
+                                ^
+../../User/spine_test.cpp(896): error: use of undeclared identifier 'pbY'
+        pbx[i] = 0; pby[i] = 0; pbX[i] = -1; pbY[i] = -1;
+                                             ^
+../../User/spine_test.cpp(922): error: use of undeclared identifier 'rs'
+        rs.px = (divisor == 1) ? dst : low;
+        ^
+../../User/spine_test.cpp(929): error: use of undeclared identifier 'pbX'
+        int dbx0 = (pbX[draw_idx] < 0) ? cbx0 : ((cbx0 < pbx[draw_idx]) ? cbx0 : pbx[draw_idx]);
+                    ^
+../../User/spine_test.cpp(929): error: use of undeclared identifier 'pbx'
+        int dbx0 = (pbX[draw_idx] < 0) ? cbx0 : ((cbx0 < pbx[draw_idx]) ? cbx0 : pbx[draw_idx]);
+                                                         ^
+../../User/spine_test.cpp(929): error: use of undeclared identifier 'pbx'
+        int dbx0 = (pbX[draw_idx] < 0) ? cbx0 : ((cbx0 < pbx[draw_idx]) ? cbx0 : pbx[draw_idx]);
+                                                                                 ^
+../../User/spine_test.cpp(930): error: use of undeclared identifier 'pbX'
+        int dby0 = (pbX[draw_idx] < 0) ? cby0 : ((cby0 < pby[draw_idx]) ? cby0 : pby[draw_idx]);
+                    ^
+../../User/spine_test.cpp(930): error: use of undeclared identifier 'pby'
+        int dby0 = (pbX[draw_idx] < 0) ? cby0 : ((cby0 < pby[draw_idx]) ? cby0 : pby[draw_idx]);
+                                                         ^
+../../User/spine_test.cpp(930): error: use of undeclared identifier 'pby'
+        int dby0 = (pbX[draw_idx] < 0) ? cby0 : ((cby0 < pby[draw_idx]) ? cby0 : pby[draw_idx]);
+                                                                                 ^
+../../User/spine_test.cpp(931): error: use of undeclared identifier 'pbX'
+        int dbx1 = (pbX[draw_idx] < 0) ? cbx1 : ((cbx1 > pbX[draw_idx]) ? cbx1 : pbX[draw_idx]);
+                    ^
+../../User/spine_test.cpp(931): error: use of undeclared identifier 'pbX'
+        int dbx1 = (pbX[draw_idx] < 0) ? cbx1 : ((cbx1 > pbX[draw_idx]) ? cbx1 : pbX[draw_idx]);
+                                                         ^
+../../User/spine_test.cpp(931): error: use of undeclared identifier 'pbX'
+        int dbx1 = (pbX[draw_idx] < 0) ? cbx1 : ((cbx1 > pbX[draw_idx]) ? cbx1 : pbX[draw_idx]);
+                                                                                 ^
+../../User/spine_test.cpp(932): error: use of undeclared identifier 'pbX'
+        int dby1 = (pbX[draw_idx] < 0) ? cby1 : ((cby1 > pbY[draw_idx]) ? cby1 : pbY[draw_idx]);
+                    ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling spine_test.cpp...
+"..\..\Output\STM32H743.axf" - 19 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

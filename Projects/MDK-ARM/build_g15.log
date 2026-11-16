@@ -1,0 +1,95 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_test.cpp(1565): error: expected expression
+    printf("[GRAV] probe bone: %s
+           ^
+../../User/spine_test.cpp(1566): error: invalid suffix on literal; C++11 requires a space between literal and identifier [-Wreserved-user-defined-literal]
+", (probe_bone != nullptr) ? "ok" : "null");
+                              ^
+                               
+../../User/spine_test.cpp(1566): error: invalid suffix on literal; C++11 requires a space between literal and identifier [-Wreserved-user-defined-literal]
+", (probe_bone != nullptr) ? "ok" : "null");
+                                     ^
+                                      
+../../User/spine_test.cpp(1575): error: use of undeclared identifier 'wmaxx'; did you mean 'g_maxx'?
+    float wminx = 1e9f, wmaxx = -1e9f, wminy = 1e9f, wmaxy = -1e9f;
+                        ^~~~~
+                        g_maxx
+../../User/spine_test.cpp(225): note: 'g_maxx' declared here
+static float g_minx = 1e9f, g_maxx = -1e9f, g_miny = 1e9f, g_maxy = -1e9f;
+                            ^
+../../User/spine_test.cpp(1575): error: use of undeclared identifier 'wminy'; did you mean 'g_miny'?
+    float wminx = 1e9f, wmaxx = -1e9f, wminy = 1e9f, wmaxy = -1e9f;
+                                       ^~~~~
+                                       g_miny
+../../User/spine_test.cpp(225): note: 'g_miny' declared here
+static float g_minx = 1e9f, g_maxx = -1e9f, g_miny = 1e9f, g_maxy = -1e9f;
+                                            ^
+../../User/spine_test.cpp(1575): error: use of undeclared identifier 'wmaxy'; did you mean 'g_maxy'?
+    float wminx = 1e9f, wmaxx = -1e9f, wminy = 1e9f, wmaxy = -1e9f;
+                                                     ^~~~~
+                                                     g_maxy
+../../User/spine_test.cpp(225): note: 'g_maxy' declared here
+static float g_minx = 1e9f, g_maxx = -1e9f, g_miny = 1e9f, g_maxy = -1e9f;
+                                                           ^
+../../User/spine_test.cpp(1577): error: use of undeclared identifier 'renderer'
+        spine::RenderCommand *m = renderer.render(skeleton);
+                                  ^
+../../User/spine_test.cpp(1586): error: use of undeclared identifier 'wminx'; did you mean 'g_minx'?
+                if (x < wminx) { wminx = x; }
+                        ^~~~~
+                        g_minx
+../../User/spine_test.cpp(225): note: 'g_minx' declared here
+static float g_minx = 1e9f, g_maxx = -1e9f, g_miny = 1e9f, g_maxy = -1e9f;
+             ^
+../../User/spine_test.cpp(1586): error: use of undeclared identifier 'wminx'
+                if (x < wminx) { wminx = x; }
+                                 ^
+../../User/spine_test.cpp(1587): error: use of undeclared identifier 'wmaxx'; did you mean 'g_maxx'?
+                if (x > wmaxx) { wmaxx = x; }
+                        ^~~~~
+                        g_maxx
+../../User/spine_test.cpp(225): note: 'g_maxx' declared here
+static float g_minx = 1e9f, g_maxx = -1e9f, g_miny = 1e9f, g_maxy = -1e9f;
+                            ^
+../../User/spine_test.cpp(1587): error: use of undeclared identifier 'wmaxx'
+                if (x > wmaxx) { wmaxx = x; }
+                                 ^
+../../User/spine_test.cpp(1588): error: use of undeclared identifier 'wminy'; did you mean 'g_miny'?
+                if (y < wminy) { wminy = y; }
+                        ^~~~~
+                        g_miny
+../../User/spine_test.cpp(225): note: 'g_miny' declared here
+static float g_minx = 1e9f, g_maxx = -1e9f, g_miny = 1e9f, g_maxy = -1e9f;
+                                            ^
+../../User/spine_test.cpp(1588): error: use of undeclared identifier 'wminy'
+                if (y < wminy) { wminy = y; }
+                                 ^
+../../User/spine_test.cpp(1589): error: use of undeclared identifier 'wmaxy'; did you mean 'g_maxy'?
+                if (y > wmaxy) { wmaxy = y; }
+                        ^~~~~
+                        g_maxy
+../../User/spine_test.cpp(225): note: 'g_maxy' declared here
+static float g_minx = 1e9f, g_maxx = -1e9f, g_miny = 1e9f, g_maxy = -1e9f;
+                                                           ^
+../../User/spine_test.cpp(1589): error: use of undeclared identifier 'wmaxy'
+                if (y > wmaxy) { wmaxy = y; }
+                                 ^
+../../User/spine_test.cpp(1595): error: use of undeclared identifier 'wmaxx'
+    if ((wmaxx <= wminx) || (wmaxy <= wminy))
+         ^
+../../User/spine_test.cpp(1595): error: use of undeclared identifier 'wminx'
+    if ((wmaxx <= wminx) || (wmaxy <= wminy))
+                  ^
+../../User/spine_test.cpp(1595): error: use of undeclared identifier 'wmaxy'
+    if ((wmaxx <= wminx) || (wmaxy <= wminy))
+                             ^
+../../User/spine_test.cpp(1595): error: use of undeclared identifier 'wminy'
+    if ((wmaxx <= wminx) || (wmaxy <= wminy))
+                                      ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling spine_test.cpp...
+"..\..\Output\STM32H743.axf" - 19 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

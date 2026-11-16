@@ -1,0 +1,36 @@
+﻿
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 14 2026 16:41:49
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 14 2026 16:41:49
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 14 2026 16:41:49
+==============================================
+[1/4] MPU + SDRAM
+  addr scan : 2048 checkpoints over 32768 KB, 0 error(s)
+  pattern   : 64 KB x 5 patterns, total error(s) = 0
+[2/4] LCD (LTDC + DMA2D + SDRAM framebuffer)
+LCD ID:4384
+  panel id  : 4384, 800x480
+  pixel rb  : F800 OK (framebuffer @ 0xC0000000)
+[3/4] QSPI NOR flash
+ID:ef17
+  flash id  : EF17
+  rw verify : 4096 bytes @ 0x800000, 0 mismatch(es)
+[4/4] SD card (SDMMC1, 4-bit)
+  card      : 15801 MB, type=1, block=512 B
+  read      : div=4 failed (err=0x80000000)
+  read      : div=8 failed (err=0x80000000)
+  read      : div=20 failed (err=0x80000000)
+  fallback  : retry with 1-bit bus
+

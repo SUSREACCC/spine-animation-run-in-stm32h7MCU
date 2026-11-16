@@ -1,0 +1,1969 @@
+/**
+ ****************************************************************************************************
+ * @file        spine_test.cpp
+ * @brief       spine-cpp 4.3 集成测试：加载 .skel + .atlas + 原始纹理，播放动画并渲染到帧缓冲
+ * @note        管线：
+ *                FatFs 读 .skel → SkeletonBinary → SkeletonData
+ *                Atlas（纹理由 RawTextureLoader 从 .raw 载入 SDRAM）
+ *                AnimationState 推进 → SkeletonRenderer 生成 RenderCommand
+ *                → raster_mesh（自写光栅器，ARGB1555）
+ *
+ *              纹理原始文件格式（PC 侧脚本生成）：
+ *                magic  "R2DT"  (4 B)
+ *                uint16 width, uint16 height
+ *                uint16 format (1 = ARGB1555), uint16 reserved
+ *                uint32 dataBytes
+ *                像素数据（行优先，小端 uint16）
+ ****************************************************************************************************
+ */
+
+#include <stdio.h>
+#include <string.h>
+
+#include "spine_test.h"
+#include "spine_platform.h"
+
+extern "C"
+{
+#include "./SYSTEM/sys/sys.h"
+#include "./SYSTEM/usart/usart.h"
+#include "./SYSTEM/delay/delay.h"
+#include "./BSP/LCD/lcd.h"
+#include "./RASTER/raster2d.h"
+#include "./FATFS/source/ff.h"
+}
+
+#include <spine/Atlas.h>
+#include <spine/AtlasAttachmentLoader.h>
+#include <spine/SkeletonBinary.h>
+#include <spine/SkeletonData.h>
+#include <spine/Skeleton.h>
+#include <spine/Animation.h>
+#include <spine/AnimationState.h>
+#include <spine/AnimationStateData.h>
+#include <spine/SkeletonRenderer.h>
+#include <spine/BoneData.h>
+#include <spine/Bone.h>
+#include <spine/PhysicsConstraintData.h>
+#include <spine/PhysicsConstraint.h>
+#include <spine/TextureLoader.h>
+#include <spine/SpineString.h>
+#include <spine/Physics.h>
+
+#define SCR_W       800
+#define SCR_H       480
+#define FB_ADDR     0xC0000000u
+#define ARENA_BASE  SPINE_ARENA_BASE
+
+#define TEXTURE_DIR "/spine/"
+#define SPINE_MAX_VERTS 8192
+
+/*----------------------------------------------------------------- 原始纹理 */
+
+struct RawTexture
+{
+    uint16_t        w;
+    uint16_t        h;
+    uint16_t        fmt;        /* 1 = ARGB1555, 2 = ARGB4444（来自 .raw 文件头） */
+    const uint16_t *px;
+};
+
+static uint32_t s_arena_used = 0;
+
+static uint16_t *arena_alloc(uint32_t bytes)
+{
+    bytes = (bytes + 3u) & ~3u;
+
+    if ((s_arena_used + bytes) > SPINE_ARENA_SIZE)
+    {
+        return nullptr;
+    }
+
+    uint16_t *p = (uint16_t *)(ARENA_BASE + s_arena_used);
+
+    s_arena_used += bytes;
+    return p;
+}
+
+static const RawTexture *load_raw_texture(const char *raw_path)
+{
+    FIL     fil;
+    UINT    br = 0;
+    uint8_t hdr[16];
+
+    if ((f_open(&fil, raw_path, FA_READ) != FR_OK) &&
+        ((strrchr(raw_path, '/') == nullptr) ||
+         (f_open(&fil, strrchr(raw_path, '/') + 1, FA_READ) != FR_OK)))
+    {
+        printf("[SPN] cannot open %s\r\n", raw_path);
+        return nullptr;
+    }
+
+    if ((f_read(&fil, hdr, 16, &br) != FR_OK) || (br != 16) || (memcmp(hdr, "R2DT", 4) != 0))
+    {
+        f_close(&fil);
+        printf("[SPN] bad header in %s\r\n", raw_path);
+        return nullptr;
+    }
+
+    uint16_t w = (uint16_t)(hdr[4] | (hdr[5] << 8));
+    uint16_t h = (uint16_t)(hdr[6] | (hdr[7] << 8));
+    uint16_t fmt = (uint16_t)(hdr[8] | (hdr[9] << 8));
+    uint32_t bytes = (uint32_t)hdr[12] | ((uint32_t)hdr[13] << 8) | ((uint32_t)hdr[14] << 16) | ((uint32_t)hdr[15] << 24);
+
+    if (((fmt != 1u) && (fmt != 2u)) || (bytes != (uint32_t)w * h * 2u))
+    {
+        f_close(&fil);
+        printf("[SPN] unsupported raw texture %s (fmt=%u bytes=%lu)\r\n", raw_path, fmt, (unsigned long)bytes);
+        return nullptr;
+    }
+
+    RawTexture *t = (RawTexture *)arena_alloc(sizeof(RawTexture));
+
+    if (t == nullptr)
+    {
+        f_close(&fil);
+        return nullptr;
+    }
+
+    uint16_t *px = arena_alloc(bytes);
+
+    if (px == nullptr)
+    {
+        f_close(&fil);
+        return nullptr;
+    }
+
+    if ((f_read(&fil, px, bytes, &br) != FR_OK) || (br != bytes))
+    {
+        f_close(&fil);
+        printf("[SPN] short read in %s\r\n", raw_path);
+        return nullptr;
+    }
+
+    f_close(&fil);
+
+    t->w = w;
+    t->h = h;
+    t->fmt = fmt;
+    t->px = px;
+
+    printf("[SPN] texture %s : %ux%u %s\r\n", raw_path, w, h,
+           (fmt == 2u) ? "ARGB4444" : "ARGB1555");
+    return t;
+}
+
+/*----------------------------------------------------------------- TextureLoader */
+
+class RawTextureLoader : public spine::TextureLoader
+{
+public:
+    void load(spine::AtlasPage &page, const spine::String &path) override
+    {
+        char raw[128];
+        int  n = path.length();
+
+        if ((n <= 0) || (n >= 120))
+        {
+            return;
+        }
+
+        /* 把 "xxx.png" 换成 "/spine/xxx.raw" */
+        const char *base = path.buffer();
+        const char *slash = strrchr(base, '/');
+        const char *name = slash ? (slash + 1) : base;
+
+        snprintf(raw, sizeof(raw), "%s%s", TEXTURE_DIR, name);
+
+        char *dot = strrchr(raw, '.');
+
+        if (dot != nullptr)
+        {
+            strcpy(dot, ".raw");
+        }
+
+        const RawTexture *t = load_raw_texture(raw);
+
+        if (t == nullptr)
+        {
+            return;
+        }
+
+        page.texture = (void *)t;
+        page.width = t->w;
+        page.height = t->h;
+    }
+
+    void unload(void *texture) override
+    {
+        (void)texture;
+    }
+};
+
+/*----------------------------------------------------------------- 渲染 */
+
+static raster_surface_t s_surf;
+
+static inline uint8_t blend_of(spine::BlendMode m)
+{
+    switch (m)
+    {
+        case spine::BlendMode_Additive: return RASTER_BLEND_ADD;
+        case spine::BlendMode_Multiply: return RASTER_BLEND_MULTIPLY;
+        case spine::BlendMode_Screen:   return RASTER_BLEND_SCREEN;
+        default:                        return RASTER_BLEND_NORMAL;
+    }
+}
+
+static raster_vertex_t *s_verts = nullptr;
+
+/* 诊断统计 */
+static int g_cmds = 0;
+static int g_verts = 0;
+static int g_nulltex = 0;
+static int g_skipped = 0;
+static float g_minx = 1e9f, g_maxx = -1e9f, g_miny = 1e9f, g_maxy = -1e9f;
+
+static void draw_commands(spine::RenderCommand *cmd, float scale, float ox, float oy,
+                           raster_surface_t *surf)
+{
+    raster_vertex_t *verts = s_verts;
+
+    while (cmd != nullptr)
+    {
+        const RawTexture *tex = (const RawTexture *)cmd->texture;
+
+        g_cmds++;
+
+        if (tex == nullptr)
+        {
+            g_nulltex++;
+        }
+        else if (cmd->numVertices > 0)
+        {
+            g_verts += cmd->numVertices;
+        }
+
+        if ((tex != nullptr) && (verts != nullptr) && (cmd->numVertices > 0) && (cmd->numVertices <= SPINE_MAX_VERTS))
+        {
+            int n = cmd->numVertices;
+
+            for (int i = 0; i < n; i++)
+            {
+                float x = cmd->positions[2 * i + 0];
+                float y = cmd->positions[2 * i + 1];
+
+                verts[i].x = x * scale + ox;
+                verts[i].y = y * scale + oy;
+                verts[i].u = cmd->uvs[2 * i + 0] * (float)tex->w;
+                verts[i].v = cmd->uvs[2 * i + 1] * (float)tex->h;
+                verts[i].color = cmd->colors[i];
+
+                if (verts[i].x < g_minx) { g_minx = verts[i].x; }
+                if (verts[i].x > g_maxx) { g_maxx = verts[i].x; }
+                if (verts[i].y < g_miny) { g_miny = verts[i].y; }
+                if (verts[i].y > g_maxy) { g_maxy = verts[i].y; }
+            }
+
+            raster_texture_t rt;
+            static int probed = 0;
+
+            if (probed == 0)
+            {
+                probed = 1;
+
+                int pu = (int)verts[0].u;
+                int pv = (int)verts[0].v;
+
+                if (pu < 0) { pu = 0; }
+                if (pu >= tex->w) { pu = tex->w - 1; }
+                if (pv < 0) { pv = 0; }
+                if (pv >= tex->h) { pv = tex->h - 1; }
+
+                unsigned raw = tex->px[pv * tex->w + pu];
+                unsigned rr = (raw >> 10) & 0x1F;
+                unsigned gg = (raw >> 5) & 0x1F;
+                unsigned bb = raw & 0x1F;
+
+                printf("[SPN] probe: uv=(%.1f,%.1f)px texel=%04X a=%u rgb555=(%u,%u,%u) tint=%08X\r\n",
+                       verts[0].u, verts[0].v, raw, (raw >> 15) & 1, rr, gg, bb, verts[0].color);
+            }
+
+            rt.px = tex->px;
+            rt.w = tex->w;
+            rt.h = tex->h;
+            rt.stride = tex->w;
+            rt.fmt = (tex->fmt == 2u) ? RASTER_FMT_ARGB4444 : RASTER_FMT_ARGB1555;
+            rt.key = 0;
+
+            {
+                static int fmt_probed = 0;
+
+                if (fmt_probed == 0)
+                {
+                    fmt_probed = 1;
+                    printf("[SPN] rt.fmt=%d w=%d h=%d px=%p\r\n", (int)rt.fmt, rt.w, rt.h, (void *)rt.px);
+                }
+            }
+
+            raster_mesh(surf, &rt, verts, n, cmd->indices, cmd->numIndices,
+                        (raster_blend_t)blend_of(cmd->blendMode), 255);
+        }
+
+        cmd = cmd->next;
+    }
+}
+
+/*----------------------------------------------------------------- 入口 */
+
+static volatile float g_spine_ms = 0.0f;
+
+extern "C" uint8_t spine_test_run(const char *skel_path, const char *atlas_path, const char *anim, int frames)
+{
+    printf("\r\n[SPN] spine-cpp 4.3 integration test\r\n");
+
+    s_surf.px = (uint16_t *)FB_ADDR;
+    s_surf.w = SCR_W;
+    s_surf.h = SCR_H;
+    s_surf.stride = SCR_W;
+    s_surf.clip_x0 = 0;
+    s_surf.clip_y0 = 0;
+    s_surf.clip_x1 = SCR_W - 1;
+    s_surf.clip_y1 = SCR_H - 1;
+
+    s_arena_used = 0;
+    s_verts = (raster_vertex_t *)arena_alloc(sizeof(raster_vertex_t) * SPINE_MAX_VERTS);
+
+    if (s_verts == nullptr)
+    {
+        printf("[SPN] arena too small\r\n");
+        return 4;
+    }
+
+    /* ---- atlas + skeleton ---- */
+    RawTextureLoader loader;
+    spine::Atlas atlas(atlas_path, &loader);
+
+    if (atlas.getPages().size() == 0)
+    {
+        printf("[SPN] atlas load FAILED (%s)\r\n", atlas_path);
+        return 1;
+    }
+
+    /* 把 page 的纹理对象挂到每个 region 上，SkeletonRenderer 通过 _rendererObject 取 */
+    for (size_t i = 0; i < atlas.getRegions().size(); i++)
+    {
+        spine::AtlasRegion *r = atlas.getRegions()[i];
+
+        if (r->getPage() != nullptr)
+        {
+            r->setRendererObject(r->getPage()->texture);
+        }
+    }
+
+    spine::AtlasAttachmentLoader  attachment_loader(atlas);
+    spine::SkeletonBinary         binary(attachment_loader, false);
+    spine::SkeletonData          *sd = binary.readSkeletonDataFile(skel_path);
+
+    if (sd == nullptr)
+    {
+        printf("[SPN] skeleton load FAILED (%s)\r\n", skel_path);
+        return 2;
+    }
+
+    printf("[SPN] skeleton '%s' bones=%d slots=%d anims=%d size=%.0fx%.0f\r\n",
+           sd->getName().buffer(), (int)sd->getBones().size(), (int)sd->getSlots().size(),
+           (int)sd->getAnimations().size(), sd->getWidth(), sd->getHeight());
+
+    spine::Skeleton            skeleton(*sd);
+    spine::AnimationStateData  asd(*sd);
+    spine::AnimationState      state(asd);
+    spine::SkeletonRenderer    renderer;
+
+    /* ---- 第一遍：测世界包围盒，自动缩放到屏幕 ---- */
+    skeleton.setupPose();
+    skeleton.updateWorldTransform(spine::Physics_Update);
+    state.apply(skeleton);
+    skeleton.updateWorldTransform(spine::Physics_Update);
+
+    float wminx = 1e9f, wmaxx = -1e9f, wminy = 1e9f, wmaxy = -1e9f;
+    {
+        spine::RenderCommand *m = renderer.render(skeleton);
+
+        while (m != nullptr)
+        {
+            for (int i = 0; i < m->numVertices; i++)
+            {
+                float x = m->positions[2 * i + 0];
+                float y = m->positions[2 * i + 1];
+
+                if (x < wminx) { wminx = x; }
+                if (x > wmaxx) { wmaxx = x; }
+                if (y < wminy) { wminy = y; }
+                if (y > wmaxy) { wmaxy = y; }
+            }
+            m = m->next;
+        }
+    }
+
+    if ((wmaxx <= wminx) || (wmaxy <= wminy))
+    {
+        printf("[SPN] empty skeleton bounds\r\n");
+        return 5;
+    }
+
+    const float margin_top = 30.0f;
+    const float margin_bot = 30.0f;
+    const float margin_x = 40.0f;
+
+    float sx = (SCR_W - 2 * margin_x) / (wmaxx - wminx);
+    float sy = (SCR_H - margin_top - margin_bot) / (wmaxy - wminy);
+    float scale = (sx < sy) ? sx : sy;
+
+    /* 屏幕 y 向下：y' = SCR_H - (y * scale + oy) */
+    float ox = margin_x + (SCR_W - 2 * margin_x - (wmaxx - wminx) * scale) * 0.5f
+               - wminx * scale;
+    float oy = margin_top - wminy * scale;
+
+    printf("[SPN] fit: world=(%.0f,%.0f)-(%.0f,%.0f) scale=%.3f ox=%.0f oy=%.0f\r\n",
+           wminx, wminy, wmaxx, wmaxy, scale, ox, oy);
+
+    /* ---- 帧循环 ---- */
+    uint32_t t0 = DWT->CYCCNT;
+
+    for (int f = 0; f < frames; f++)
+    {
+        state.update(1.0f / 30.0f);
+        state.apply(skeleton);
+        skeleton.updateWorldTransform(spine::Physics_Update);
+
+        raster_clear(&s_surf, 0x18C3u);        /* 深灰背景 */
+
+        spine::RenderCommand *cmd = renderer.render(skeleton);
+
+        draw_commands(cmd, scale, ox, oy, &s_surf);
+    }
+
+    {
+        uint32_t sum = 0;
+
+        for (int i = 0; i < 1000; i++)
+        {
+            sum += s_surf.px[(size_t)i * 97u];
+        }
+
+        printf("[SPN] fb checksum=%08lX base=%p\r\n", (unsigned long)sum, (void *)s_surf.px);
+    }
+
+    uint32_t cycles = DWT->CYCCNT - t0;
+    float    ms = (float)cycles / 480000.0f / (float)frames;
+
+    g_spine_ms = ms;
+
+    raster_flush((uint16_t *)FB_ADDR, SCR_W * SCR_H * 2);
+
+    printf("[SPN] diag: cmds=%d verts=%d nullTex=%d bbox=(%.0f,%.0f)-(%.0f,%.0f)\r\n",
+           g_cmds, g_verts, g_nulltex, g_minx, g_miny, g_maxx, g_maxy);
+    printf("[SPN] %d frames, %.2f ms/frame (%.1f fps), arena=%lu B\r\n",
+           frames, ms, (ms > 0.0f) ? (1000.0f / ms) : 0.0f, (unsigned long)s_arena_used);
+
+    spine_heap_stats_t st;
+    spine_heap_get_stats(&st);
+    printf("[SPN] spine heap used=%lu peak=%lu allocs=%lu fails=%lu\r\n",
+           (unsigned long)st.used_bytes, (unsigned long)st.peak_bytes,
+           (unsigned long)st.alloc_count, (unsigned long)st.fail_count);
+
+    printf("[SPN] RESULT %s\r\n", (ms > 0.0f) ? "PASS" : "FAIL");
+    return (ms > 0.0f) ? 0u : 3u;
+}
+
+/*----------------------------------------------------------------- 动画总览 */
+
+extern "C" uint8_t spine_anim_sheet(const char *skel_path, const char *atlas_path, float at_time)
+{
+    printf("\r\n[SPN] animation contact sheet\r\n");
+
+    s_surf.px = (uint16_t *)FB_ADDR;
+    s_surf.w = SCR_W;
+    s_surf.h = SCR_H;
+    s_surf.stride = SCR_W;
+    s_surf.clip_x0 = 0;
+    s_surf.clip_y0 = 0;
+    s_surf.clip_x1 = SCR_W - 1;
+    s_surf.clip_y1 = SCR_H - 1;
+
+    s_arena_used = 0;
+    s_verts = (raster_vertex_t *)arena_alloc(sizeof(raster_vertex_t) * SPINE_MAX_VERTS);
+
+    if (s_verts == nullptr)
+    {
+        return 4;
+    }
+
+    RawTextureLoader loader;
+    spine::Atlas atlas(atlas_path, &loader);
+
+    if (atlas.getPages().size() == 0)
+    {
+        printf("[SPN] atlas load FAILED\r\n");
+        return 1;
+    }
+
+    for (size_t i = 0; i < atlas.getRegions().size(); i++)
+    {
+        spine::AtlasRegion *r = atlas.getRegions()[i];
+
+        if (r->getPage() != nullptr)
+        {
+            r->setRendererObject(r->getPage()->texture);
+        }
+    }
+
+    spine::AtlasAttachmentLoader attachment_loader(atlas);
+    spine::SkeletonBinary        binary(attachment_loader, false);
+    spine::SkeletonData         *sd = binary.readSkeletonDataFile(skel_path);
+
+    if (sd == nullptr)
+    {
+        printf("[SPN] skeleton load FAILED\r\n");
+        return 2;
+    }
+
+    spine::Skeleton         skeleton(*sd);
+    spine::AnimationStateData asd(*sd);
+    spine::AnimationState   state(asd);
+    spine::SkeletonRenderer renderer;
+
+    /* 动画名列表 */
+    size_t n_anim = sd->getAnimations().size();
+
+    printf("[SPN] %d animations:\r\n", (int)n_anim);
+
+    for (size_t i = 0; i < n_anim; i++)
+    {
+        printf("        [%2d] %s\r\n", (int)i, sd->getAnimations()[i]->getName().buffer());
+    }
+
+    /* 包围盒（setup pose） */
+    skeleton.setupPose();
+    skeleton.updateWorldTransform(spine::Physics_Update);
+
+    float wminx = 1e9f, wmaxx = -1e9f, wminy = 1e9f, wmaxy = -1e9f;
+    {
+        spine::RenderCommand *m = renderer.render(skeleton);
+
+        while (m != nullptr)
+        {
+            for (int i = 0; i < m->numVertices; i++)
+            {
+                float x = m->positions[2 * i + 0];
+                float y = m->positions[2 * i + 1];
+
+                if (x < wminx) { wminx = x; }
+                if (x > wmaxx) { wmaxx = x; }
+                if (y < wminy) { wminy = y; }
+                if (y > wmaxy) { wmaxy = y; }
+            }
+            m = m->next;
+        }
+    }
+
+    if ((wmaxx <= wminx) || (wmaxy <= wminy))
+    {
+        return 5;
+    }
+
+    const int cols = 4;
+    const int rows = 3;
+    const float cell_w = (float)SCR_W / cols;
+    const float cell_h = (float)SCR_H / rows;
+
+    float cell_scale = (cell_h - 26.0f) / (wmaxy - wminy);
+
+    raster_clear(&s_surf, 0x1082u);
+
+    uint32_t t0 = DWT->CYCCNT;
+
+    for (size_t i = 0; (i < n_anim) && (i < (size_t)(cols * rows)); i++)
+    {
+        int cx = (int)(i % cols);
+        int cy = (int)(i / cols);
+
+        float ox = cx * cell_w + (cell_w - (wmaxx - wminx) * cell_scale) * 0.5f - wminx * cell_scale;
+        float oy = cy * cell_h + 14.0f - wminy * cell_scale;
+
+        skeleton.setupPose();
+        state.clearTracks();
+        state.setAnimation(0, sd->getAnimations()[i]->getName(), true);
+        state.update(at_time);
+        state.apply(skeleton);
+        skeleton.updateWorldTransform(spine::Physics_Update);
+
+        spine::RenderCommand *cmd = renderer.render(skeleton);
+
+        draw_commands(cmd, cell_scale, ox, oy, &s_surf);
+
+        /* 名字 */
+        g_back_color = 0x1082u;
+        lcd_show_string((uint16_t)(cx * cell_w + 6), (uint16_t)(cy * cell_h + cell_h - 18),
+                        (uint16_t)(cell_w - 10), 16, 16,
+                        (char *)sd->getAnimations()[i]->getName().buffer(), 0xFFFFu);
+    }
+
+    uint32_t cycles = DWT->CYCCNT - t0;
+
+
+    /* ---- 运动校验：同一 clip 两个时间点，比较单元格校验和 ---- */
+    {
+        size_t idx = 7;                     /* "run" */
+
+        if (idx < n_anim)
+        {
+            int cx = (int)(idx % cols);
+            int cy = (int)(idx / cols);
+            float ox = cx * cell_w + (cell_w - (wmaxx - wminx) * cell_scale) * 0.5f - wminx * cell_scale;
+            float oy = cy * cell_h + 14.0f - wminy * cell_scale;
+
+            uint32_t sums[2];
+
+            for (int k = 0; k < 2; k++)
+            {
+                skeleton.setupPose();
+                state.clearTracks();
+                state.setAnimation(0, sd->getAnimations()[idx]->getName(), true);
+                state.update((k == 0) ? at_time : (at_time + 0.30f));
+                state.apply(skeleton);
+                skeleton.updateWorldTransform(spine::Physics_Update);
+
+                /* 只清这个单元格 */
+                for (int yy = cy * (int)cell_h; yy < (cy + 1) * (int)cell_h; yy++)
+                {
+                    uint16_t *row = s_surf.px + (size_t)yy * s_surf.stride;
+
+                    for (int xx = cx * (int)cell_w; xx < (cx + 1) * (int)cell_w; xx++)
+                    {
+                        row[xx] = 0x1082u;
+                    }
+                }
+
+                draw_commands(renderer.render(skeleton), cell_scale, ox, oy, &s_surf);
+
+                uint32_t sum = 0;
+
+                for (int yy = cy * (int)cell_h; yy < (cy + 1) * (int)cell_h; yy++)
+                {
+                    const uint16_t *row = s_surf.px + (size_t)yy * s_surf.stride;
+
+                    for (int xx = cx * (int)cell_w; xx < (cx + 1) * (int)cell_w; xx += 3)
+                    {
+                        sum = sum * 31u + row[xx];
+                    }
+                }
+
+                sums[k] = sum;
+            }
+
+            /* 恢复 t0 的姿势，保证总览图仍是原样 */
+            skeleton.setupPose();
+            state.clearTracks();
+            state.setAnimation(0, sd->getAnimations()[idx]->getName(), true);
+            state.update(at_time);
+            state.apply(skeleton);
+            skeleton.updateWorldTransform(spine::Physics_Update);
+            draw_commands(renderer.render(skeleton), cell_scale, ox, oy, &s_surf);
+
+            printf("[SPN] motion check (%s): t0=%08lX t1=%08lX %s\r\n",
+                   sd->getAnimations()[idx]->getName().buffer(),
+                   (unsigned long)sums[0], (unsigned long)sums[1],
+                   (sums[0] != sums[1]) ? "MOVING" : "STATIC (bad)");
+        }
+    }
+
+    raster_flush((uint16_t *)FB_ADDR, SCR_W * SCR_H * 2);
+
+    float ms = (float)cycles / 480000.0f;
+
+    printf("[SPN] sheet: %d cells rendered in %.2f ms (%.1f fps for whole sheet)\r\n",
+           (int)((n_anim < (size_t)(cols * rows)) ? n_anim : (size_t)(cols * rows)),
+           ms, (ms > 0.0f) ? (1000.0f / ms) : 0.0f);
+
+    printf("[SPN] RESULT PASS\r\n");
+    return 0;
+}
+
+static void clear_rect(raster_surface_t *s, int x0, int y0, int x1, int y1, uint16_t color)
+{
+    if (x0 < s->clip_x0) { x0 = s->clip_x0; }
+    if (y0 < s->clip_y0) { y0 = s->clip_y0; }
+    if (x1 > s->clip_x1) { x1 = s->clip_x1; }
+    if (y1 > s->clip_y1) { y1 = s->clip_y1; }
+    if ((x0 > x1) || (y0 > y1)) { return; }
+
+    for (int y = y0; y <= y1; y++)
+    {
+        uint16_t *row = s->px + (size_t)y * s->stride;
+
+        for (int x = x0; x <= x1; x++)
+        {
+            row[x] = color;
+        }
+    }
+}
+
+/* 由渲染命令计算屏幕包围盒（真实顶点，不是 setup pose） */
+static void commands_bbox(spine::RenderCommand *cmd, float scale, float ox, float oy,
+                          int *bx0, int *by0, int *bx1, int *by1)
+{
+    float minx = 1e9f, maxx = -1e9f, miny = 1e9f, maxy = -1e9f;
+
+    while (cmd != nullptr)
+    {
+        for (int i = 0; i < cmd->numVertices; i++)
+        {
+            float x = cmd->positions[2 * i + 0] * scale + ox;
+            float y = cmd->positions[2 * i + 1] * scale + oy;
+
+            if (x < minx) { minx = x; }
+            if (x > maxx) { maxx = x; }
+            if (y < miny) { miny = y; }
+            if (y > maxy) { maxy = y; }
+        }
+        cmd = cmd->next;
+    }
+
+    if (maxx < minx)
+    {
+        *bx0 = *by0 = 0;
+        *bx1 = *by1 = -1;
+        return;
+    }
+
+    *bx0 = (int)floorf(minx) - 2;
+    *by0 = (int)floorf(miny) - 2;
+    *bx1 = (int)ceilf(maxx) + 2;
+    *by1 = (int)ceilf(maxy) + 2;
+}
+
+/*----------------------------------------------------------------- 实时播放（三缓冲 + 可选半分辨率） */
+
+#define FB_BUF1 ((uint16_t *)0xC1A00000u)
+#define FB_BUF2 ((uint16_t *)0xC1B00000u)
+
+static void ltdc_set_framebuffer(uint16_t *addr)
+{
+    LTDC_Layer1->CFBAR = (uint32_t)addr;
+    LTDC->SRCR = LTDC_SRCR_VBR;
+}
+
+extern "C" uint8_t spine_play(const char *skel_path, const char *atlas_path,
+                              const char *anim, int fps, int seconds, int divisor)
+{
+    if (divisor < 1)
+    {
+        divisor = 1;
+    }
+
+    const int RW = SCR_W / divisor;
+    const int RH = SCR_H / divisor;
+
+    printf("\r\n[SPN] playback: %s @ %d fps for %d s | render %dx%d (1/%d pixels)\r\n",
+           anim, fps, seconds, RW, RH, divisor * divisor);
+
+    s_arena_used = 0;
+    s_verts = (raster_vertex_t *)arena_alloc(sizeof(raster_vertex_t) * SPINE_MAX_VERTS);
+
+    if (s_verts == nullptr)
+    {
+        return 4;
+    }
+
+    RawTextureLoader loader;
+    spine::Atlas atlas(atlas_path, &loader);
+
+    if (atlas.getPages().size() == 0)
+    {
+        printf("[SPN] atlas load FAILED\r\n");
+        return 1;
+    }
+
+    for (size_t i = 0; i < atlas.getRegions().size(); i++)
+    {
+        spine::AtlasRegion *r = atlas.getRegions()[i];
+
+        if (r->getPage() != nullptr)
+        {
+            r->setRendererObject(r->getPage()->texture);
+        }
+    }
+
+    spine::AtlasAttachmentLoader attachment_loader(atlas);
+    spine::SkeletonBinary        binary(attachment_loader, false);
+    spine::SkeletonData         *sd = binary.readSkeletonDataFile(skel_path);
+
+    if (sd == nullptr)
+    {
+        printf("[SPN] skeleton load FAILED\r\n");
+        return 2;
+    }
+
+    spine::Skeleton           skeleton(*sd);
+    spine::AnimationStateData asd(*sd);
+    spine::AnimationState     state(asd);
+    spine::SkeletonRenderer   renderer;
+
+    skeleton.setupPose();
+    skeleton.updateWorldTransform(spine::Physics_Update);
+
+    float wminx = 1e9f, wmaxx = -1e9f, wminy = 1e9f, wmaxy = -1e9f;
+    {
+        spine::RenderCommand *m = renderer.render(skeleton);
+
+        while (m != nullptr)
+        {
+            for (int i = 0; i < m->numVertices; i++)
+            {
+                float x = m->positions[2 * i + 0];
+                float y = m->positions[2 * i + 1];
+
+                if (x < wminx) { wminx = x; }
+                if (x > wmaxx) { wmaxx = x; }
+                if (y < wminy) { wminy = y; }
+                if (y > wmaxy) { wmaxy = y; }
+            }
+            m = m->next;
+        }
+    }
+
+    if ((wmaxx <= wminx) || (wmaxy <= wminy))
+    {
+        return 5;
+    }
+
+    /* 适配到渲染分辨率 */
+    const float margin_top = 20.0f / (float)divisor;
+    const float margin_bot = margin_top;
+
+    float sx = ((float)RW - 80.0f / (float)divisor) / (wmaxx - wminx);
+    float sy = ((float)RH - margin_top - margin_bot) / (wmaxy - wminy);
+    float scale = (sx < sy) ? sx : sy;
+
+    float ox = ((float)RW - (wminx + wmaxx) * scale) * 0.5f;
+    float oy = margin_top - wminy * scale;
+
+    printf("[SPN] fit: scale=%.3f ox=%.0f oy=%.0f (render space)\r\n", scale, ox, oy);
+
+    /* ---- 渲染目标 ---- */
+    /* 三块低分辨率缓冲：与三块前台缓冲一一对应。
+     * 共用一块会让"第 N 帧的内容"混进"第 N-3 帧的缓冲"，产生叠影/闪烁。 */
+    uint16_t *lows[3];
+    uint16_t *bufs[3] = { (uint16_t *)FB_ADDR, FB_BUF1, FB_BUF2 };
+
+    for (int i = 0; i < 3; i++)
+    {
+        lows[i] = (uint16_t *)arena_alloc((uint32_t)RW * RH * 2u);
+
+        if (lows[i] == nullptr)
+        {
+            printf("[SPN] low-res buffer alloc failed\r\n");
+            return 6;
+        }
+    }
+
+    raster_surface_t rs;
+    rs.w = RW;
+    rs.h = RH;
+    rs.stride = RW;
+    rs.clip_x0 = 0;
+    rs.clip_y0 = 0;
+    rs.clip_x1 = RW - 1;
+    rs.clip_y1 = RH - 1;
+
+    /* divisor==1 直接画进目标缓冲；否则画进 low */
+    rs.px = (divisor == 1) ? bufs[0] : lows[0];
+
+    /* 三块全尺寸缓冲全部清干净：半分辨率时只放大脏矩形，
+     * 若这里留了上一轮的旧画面，屏幕上就会"看到不该看到的图层"。 */
+    for (int i = 0; i < 3; i++)
+    {
+        raster_surface_t fs;
+
+        fs.px = bufs[i];
+        fs.w = SCR_W;
+        fs.h = SCR_H;
+        fs.stride = SCR_W;
+        fs.clip_x0 = 0;
+        fs.clip_y0 = 0;
+        fs.clip_x1 = SCR_W - 1;
+        fs.clip_y1 = SCR_H - 1;
+
+        raster_clear(&fs, 0x0861u);
+        raster_flush(bufs[i], SCR_W * SCR_H * 2);
+    }
+
+    for (int i = 0; i < 3; i++)
+    {
+        rs.px = lows[i];
+        raster_clear(&rs, 0x0861u);
+        raster_flush(lows[i], RW * RH * 2);
+    }
+
+    printf("[SPN] bufs: %p %p %p low: %p %p %p\r\n", (void *)bufs[0], (void *)bufs[1], (void *)bufs[2],
+           (void *)lows[0], (void *)lows[1], (void *)lows[2]);
+
+    uint16_t *front = bufs[0];
+    ltdc_set_framebuffer(front);
+
+    /* 每块缓冲各自的上一帧脏矩形（渲染坐标系） */
+    int pbx[3], pby[3], pbX[3], pbY[3];
+
+    for (int i = 0; i < 3; i++)
+    {
+        pbx[i] = 0; pby[i] = 0; pbX[i] = -1; pbY[i] = -1;
+    }
+
+
+    state.setAnimation(0, spine::String(anim), true);
+
+    const float dt = 1.0f / (float)fps;
+    int total_frames = fps * seconds;
+    uint32_t stat_t0 = DWT->CYCCNT;
+    int stat_frames = 0;
+    float min_ms = 1e9f, max_ms = 0.0f;
+    uint64_t clear_cycles = 0;
+    uint64_t raster_cycles = 0;
+    uint64_t present_cycles = 0;
+
+    int draw_idx = 1;
+
+    for (int f = 0; f < total_frames; f++)
+    {
+        uint32_t f0 = DWT->CYCCNT;
+
+        state.update(dt);
+        state.apply(skeleton);
+        skeleton.update(dt);                     /* 推进 _time，物理约束靠它算 delta */
+        skeleton.updateWorldTransform(spine::Physics_Update);
+
+        uint16_t *dst = bufs[draw_idx];
+
+
+        rs.px = (divisor == 1) ? dst : lows[draw_idx];
+
+        spine::RenderCommand *cmd_list = renderer.render(skeleton);
+
+        int cbx0, cby0, cbx1, cby1;
+        commands_bbox(cmd_list, scale, ox, oy, &cbx0, &cby0, &cbx1, &cby1);
+
+        int dbx0 = (pbX[draw_idx] < 0) ? cbx0 : ((cbx0 < pbx[draw_idx]) ? cbx0 : pbx[draw_idx]);
+        int dby0 = (pbX[draw_idx] < 0) ? cby0 : ((cby0 < pby[draw_idx]) ? cby0 : pby[draw_idx]);
+        int dbx1 = (pbX[draw_idx] < 0) ? cbx1 : ((cbx1 > pbX[draw_idx]) ? cbx1 : pbX[draw_idx]);
+        int dby1 = (pbX[draw_idx] < 0) ? cby1 : ((cby1 > pbY[draw_idx]) ? cby1 : pbY[draw_idx]);
+
+        /* 夹到渲染区域 */
+        if (dbx0 < 0) { dbx0 = 0; }
+        if (dby0 < 0) { dby0 = 0; }
+        if (dbx1 > RW - 1) { dbx1 = RW - 1; }
+        if (dby1 > RH - 1) { dby1 = RH - 1; }
+
+        uint32_t tc0 = DWT->CYCCNT;
+
+        clear_rect(&rs, dbx0, dby0, dbx1, dby1, 0x0861u);
+
+        uint32_t tc1 = DWT->CYCCNT;
+
+        draw_commands(cmd_list, scale, ox, oy, &rs);
+
+        uint32_t tc2 = DWT->CYCCNT;
+
+        clear_cycles += tc1 - tc0;
+        raster_cycles += tc2 - tc1;
+
+        pbx[draw_idx] = cbx0;
+        pby[draw_idx] = cby0;
+        pbX[draw_idx] = cbx1;
+        pbY[draw_idx] = cby1;
+
+        if (divisor == 1)
+        {
+            raster_flush(dst, SCR_W * SCR_H * 2);
+        }
+        else
+        {
+            raster_flush(lows[draw_idx], RW * RH * 2);
+
+            /* 只放大脏矩形（从"本缓冲专属"的低分辨率缓冲读） */
+            raster_upscale2x(lows[draw_idx], RW, dst, SCR_W, dbx0, dby0, dbx1, dby1);
+            /* 冲刷放大区域：宽 (dbx1-dbx0+1)*2 像素 * 2 字节，高 (dby1-dby0+1)*2 行 */
+            raster_flush(dst + (size_t)(2 * dby0) * SCR_W, (dbx1 - dbx0 + 1) * 4 * (dby1 - dby0 + 1) * 2);
+        }
+
+        present_cycles += DWT->CYCCNT - tc2;
+
+
+        while ((LTDC->SRCR & LTDC_SRCR_VBR) != 0u)
+        {
+        }
+
+        ltdc_set_framebuffer(dst);
+
+        draw_idx = (draw_idx + 1) % 3;
+
+        float ms = (float)(DWT->CYCCNT - f0) / 480000.0f;
+
+        if (ms < min_ms) { min_ms = ms; }
+        if (ms > max_ms) { max_ms = ms; }
+
+        stat_frames++;
+
+        if (ms < (float)(1000 / fps))
+        {
+            delay_ms((uint16_t)((float)(1000 / fps) - ms));
+        }
+
+        if (stat_frames >= fps)
+        {
+            float avg = (float)(DWT->CYCCNT - stat_t0) / 480000.0f / (float)stat_frames;
+
+            printf("[SPN] t=%.1fs avg %.2f ms (%.1f fps) | clear %.2f raster %.2f present %.2f\r\n",
+                   (float)(f + 1) / (float)fps, avg, 1000.0f / avg,
+                   (double)clear_cycles / 480000.0 / (double)stat_frames,
+                   (double)raster_cycles / 480000.0 / (double)stat_frames,
+                   (double)present_cycles / 480000.0 / (double)stat_frames);
+
+            stat_t0 = DWT->CYCCNT;
+            stat_frames = 0;
+            min_ms = 1e9f;
+            max_ms = 0.0f;
+            clear_cycles = 0;
+            raster_cycles = 0;
+            present_cycles = 0;
+        }
+    }
+
+    for (int i = 0; i < 3; i++)
+    {
+        uint32_t sum = 0;
+        const uint16_t *b = bufs[i];
+
+        for (int k = 0; k < 1000; k++)
+        {
+            sum = sum * 31u + b[(size_t)k * 97u];
+        }
+        printf("[SPN] buf%d sum=%08lX\r\n", i, (unsigned long)sum);
+    }
+
+    ltdc_set_framebuffer(bufs[0]);
+
+    printf("[SPN] playback done (%d frames)\r\n", total_frames);
+    printf("[SPN] RESULT PASS\r\n");
+    return 0;
+}
+
+extern "C" void raster_pixel_reset(void);
+extern "C" uint32_t raster_pixel_count(void);
+
+/* 计时用：内存屏障 + 读周期计数。
+ * 只写 volatile 读不够——编译器仍可把普通函数调用挪到读之前/之后，
+ * 实测导致 draw 段少算 10 倍。加 "memory" clobber 才能保证顺序。 */
+static inline uint32_t cyc_now(void)
+{
+    __asm volatile("" ::: "memory");
+    return DWT->CYCCNT;
+}
+
+/*----------------------------------------------------------------- 双角色 + 反复重载 */
+
+struct DuoChar
+{
+    spine::Skeleton       *skel;
+    spine::AnimationState *state;
+    float scale, ox, oy;
+};
+
+static void duo_fit(DuoChar *c, float wminx, float wmaxx, float wminy, float wmaxy,
+                    float cell_x, float cell_w, float rw, float rh)
+{
+    float sx = (cell_w - 20.0f) / (wmaxx - wminx);
+    float sy = (rh - 30.0f) / (wmaxy - wminy);
+    float s = (sx < sy) ? sx : sy;
+
+    c->scale = s;
+    c->ox = cell_x + (cell_w - (wmaxx - wminx) * s) * 0.5f - wminx * s;
+    c->oy = 15.0f - wminy * s;
+}
+
+static const int g_duo_fixed = 1;
+
+extern "C" uint8_t spine_play_duo(const char *skel_path, const char *atlas_path,
+                                  const char *anim_a, const char *anim_b,
+                                  int fps, int seconds, int divisor, int iterations)
+{
+    if (divisor < 1)
+    {
+        divisor = 1;
+    }
+
+    const int RW = SCR_W / divisor;
+    const int RH = SCR_H / divisor;
+
+    printf("\r\n[DUO] 2 characters, render %dx%d, %d fps, %d s x %d iters\r\n",
+           RW, RH, fps, seconds, iterations);
+
+    uint16_t *bufs[3] = { (uint16_t *)FB_ADDR, FB_BUF1, FB_BUF2 };
+    uint16_t *lows[3] = { nullptr, nullptr, nullptr };
+
+    for (int i = 0; i < 3; i++)
+    {
+        raster_surface_t fs;
+
+        fs.px = bufs[i];
+        fs.w = SCR_W;
+        fs.h = SCR_H;
+        fs.stride = SCR_W;
+        fs.clip_x0 = 0;
+        fs.clip_y0 = 0;
+        fs.clip_x1 = SCR_W - 1;
+        fs.clip_y1 = SCR_H - 1;
+
+        raster_clear(&fs, 0x0861u);
+        raster_flush(bufs[i], SCR_W * SCR_H * 2);
+    }
+
+    float total_ms[8];
+
+    for (int it = 0; it < iterations && it < 8; it++)
+    {
+        uint32_t t_load0 = DWT->CYCCNT;
+
+        /* 每次迭代都重新从文件加载 */
+        s_arena_used = 0;
+        s_verts = (raster_vertex_t *)arena_alloc(sizeof(raster_vertex_t) * SPINE_MAX_VERTS);
+
+        for (int i = 0; i < 3; i++)
+        {
+            lows[i] = (uint16_t *)arena_alloc((uint32_t)RW * RH * 2u);
+        }
+
+        if ((s_verts == nullptr) || (lows[0] == nullptr) || (lows[1] == nullptr) || (lows[2] == nullptr))
+        {
+            printf("[DUO] arena alloc failed\r\n");
+            return 6;
+        }
+
+        uint32_t t_tex0 = DWT->CYCCNT;
+
+        RawTextureLoader loader;
+        spine::Atlas atlas(atlas_path, &loader);
+
+        uint32_t t_tex1 = DWT->CYCCNT;
+
+        if (atlas.getPages().size() == 0)
+        {
+            printf("[DUO] atlas load FAILED\r\n");
+            return 1;
+        }
+
+        for (size_t i = 0; i < atlas.getRegions().size(); i++)
+        {
+            spine::AtlasRegion *r = atlas.getRegions()[i];
+
+            if (r->getPage() != nullptr)
+            {
+                r->setRendererObject(r->getPage()->texture);
+            }
+        }
+
+        spine::AtlasAttachmentLoader attachment_loader(atlas);
+        spine::SkeletonBinary        binary(attachment_loader, false);
+
+        uint32_t t_r0 = DWT->CYCCNT;
+        int      bin_len = 0;
+        char    *bin = spine::SpineExtension::readFile(spine::String(skel_path), &bin_len);
+        uint32_t t_r1 = DWT->CYCCNT;
+
+        spine::SkeletonData *sd = (bin != nullptr)
+                                  ? binary.readSkeletonData((const unsigned char *)bin, bin_len)
+                                  : nullptr;
+        uint32_t t_r2 = DWT->CYCCNT;
+
+        if (bin != nullptr)
+        {
+            spine::SpineExtension::free(bin, __FILE__, __LINE__);
+        }
+
+        if (sd == nullptr)
+        {
+            printf("[DUO] skeleton load FAILED\r\n");
+            return 2;
+        }
+
+        uint32_t load_cycles = DWT->CYCCNT - t_load0;
+        float    load_ms = (float)load_cycles / 480000.0f;
+
+        spine_heap_stats_t hs0;
+        spine_heap_get_stats(&hs0);
+
+        /* 两个独立 skeleton，播不同动画 */
+        spine::Skeleton *skA = new spine::Skeleton(*sd);
+        spine::Skeleton *skB = new spine::Skeleton(*sd);
+
+        spine::AnimationStateData asdA(*sd);
+        spine::AnimationStateData asdB(*sd);
+        spine::AnimationState *stA = new spine::AnimationState(asdA);
+        spine::AnimationState *stB = new spine::AnimationState(asdB);
+
+        spine_register_skeleton(skA);            /* 加入世界重力注册表 */
+        spine_register_skeleton(skB);
+
+        skA->setupPose();
+        skA->updateWorldTransform(spine::Physics_Update);
+        skB->setupPose();
+        skB->updateWorldTransform(spine::Physics_Update);
+
+        float wminx = 1e9f, wmaxx = -1e9f, wminy = 1e9f, wmaxy = -1e9f;
+        {
+            spine::SkeletonRenderer probe;
+            spine::RenderCommand *m = probe.render(*skA);
+
+            while (m != nullptr)
+            {
+                for (int i = 0; i < m->numVertices; i++)
+                {
+                    float x = m->positions[2 * i + 0];
+                    float y = m->positions[2 * i + 1];
+
+                    if (x < wminx) { wminx = x; }
+                    if (x > wmaxx) { wmaxx = x; }
+                    if (y < wminy) { wminy = y; }
+                    if (y > wmaxy) { wmaxy = y; }
+                }
+                m = m->next;
+            }
+        }
+
+        DuoChar A = { skA, stA, 1.0f, 0.0f, 0.0f };
+        DuoChar B = { skB, stB, 1.0f, 0.0f, 0.0f };
+
+        duo_fit(&A, wminx, wmaxx, wminy, wmaxy, 0.0f, (float)RW * 0.5f, (float)RW, (float)RH);
+        duo_fit(&B, wminx, wmaxx, wminy, wmaxy, (float)RW * 0.5f, (float)RW * 0.5f, (float)RW, (float)RH);
+
+        stA->setAnimation(0, spine::String(anim_a), true);
+        stB->setAnimation(0, spine::String(anim_b), true);
+
+        spine::SkeletonRenderer rA, rB;
+
+        raster_surface_t rs;
+        rs.w = RW;
+        rs.h = RH;
+        rs.stride = RW;
+        rs.clip_x0 = 0;
+        rs.clip_y0 = 0;
+        rs.clip_x1 = RW - 1;
+        rs.clip_y1 = RH - 1;
+        rs.px = lows[0];
+
+        for (int i = 0; i < 3; i++)
+        {
+            rs.px = lows[i];
+            raster_clear(&rs, 0x0861u);
+            raster_flush(lows[i], RW * RH * 2);
+        }
+
+        int pbx[3], pby[3], pbX[3], pbY[3];
+
+        for (int i = 0; i < 3; i++)
+        {
+            pbx[i] = 0; pby[i] = 0; pbX[i] = -1; pbY[i] = -1;
+        }
+
+        const float dt = 1.0f / (float)fps;
+        int total_frames = fps * seconds;
+        int draw_idx = 1;
+        uint64_t clr_cyc = 0, ras_cyc = 0, pre_cyc = 0;   /* uint64：单帧 >37ms 时 uint32 会溢出 */
+        uint64_t anim_cyc = 0, build_cyc = 0;
+        uint64_t wait_cyc = 0;
+        uint64_t setfb_cyc = 0;
+        uint64_t px_sum = 0;
+        uint64_t frame_cyc_sum = 0;
+        uint32_t t_wall0 = HAL_GetTick();
+
+        ltdc_set_framebuffer(bufs[0]);
+
+        for (int f = 0; f < total_frames; f++)
+        {
+            uint32_t fr0 = cyc_now();
+
+            uint32_t p0 = fr0;
+
+            stA->update(dt);
+            stA->apply(*skA);
+            skA->update(dt);
+            skA->updateWorldTransform(spine::Physics_Update);
+
+            stB->update(dt);
+            stB->apply(*skB);
+            skB->update(dt);
+            skB->updateWorldTransform(spine::Physics_Update);
+
+            uint32_t p1 = cyc_now();      /* 动画结束 */
+
+            uint16_t *dst = bufs[draw_idx];
+            rs.px = (divisor == 1) ? dst : lows[draw_idx];
+
+            spine::RenderCommand *cA = rA.render(*skA);
+            spine::RenderCommand *cB = rB.render(*skB);
+
+            int ax0, ay0, ax1, ay1;
+            int bx0, by0, bx1, by1;
+
+            commands_bbox(cA, A.scale, A.ox, A.oy, &ax0, &ay0, &ax1, &ay1);
+            commands_bbox(cB, B.scale, B.ox, B.oy, &bx0, &by0, &bx1, &by1);
+
+            int cbx0 = (ax0 < bx0) ? ax0 : bx0;
+            int cby0 = (ay0 < by0) ? ay0 : by0;
+            int cbx1 = (ax1 > bx1) ? ax1 : bx1;
+            int cby1 = (ay1 > by1) ? ay1 : by1;
+
+            int dbx0 = (pbX[draw_idx] < 0) ? cbx0 : ((cbx0 < pbx[draw_idx]) ? cbx0 : pbx[draw_idx]);
+            int dby0 = (pbX[draw_idx] < 0) ? cby0 : ((cby0 < pby[draw_idx]) ? cby0 : pby[draw_idx]);
+            int dbx1 = (pbX[draw_idx] < 0) ? cbx1 : ((cbx1 > pbX[draw_idx]) ? cbx1 : pbX[draw_idx]);
+            int dby1 = (pbX[draw_idx] < 0) ? cby1 : ((cby1 > pbY[draw_idx]) ? cby1 : pbY[draw_idx]);
+
+            if (dbx0 < 0) { dbx0 = 0; }
+            if (dby0 < 0) { dby0 = 0; }
+            if (dbx1 > RW - 1) { dbx1 = RW - 1; }
+            if (dby1 > RH - 1) { dby1 = RH - 1; }
+
+            uint32_t p2 = cyc_now();      /* 构建命令 + 包围盒结束 */
+
+            uint32_t c0 = cyc_now();
+            clear_rect(&rs, dbx0, dby0, dbx1, dby1, 0x0861u);
+            uint32_t c1 = cyc_now();
+
+            draw_commands(cA, A.scale, A.ox, A.oy, &rs);
+            draw_commands(cB, B.scale, B.ox, B.oy, &rs);
+            uint32_t c2 = cyc_now();
+
+            clr_cyc += c1 - c0;
+            ras_cyc += c2 - c1;
+
+            anim_cyc += p1 - p0;
+            build_cyc += p2 - p1;
+
+            pbx[draw_idx] = cbx0;
+            pby[draw_idx] = cby0;
+            pbX[draw_idx] = cbx1;
+            pbY[draw_idx] = cby1;
+
+            if (divisor == 1)
+            {
+                raster_flush(dst, SCR_W * SCR_H * 2);
+            }
+            else
+            {
+                raster_flush(lows[draw_idx], RW * RH * 2);
+                raster_upscale2x(lows[draw_idx], RW, dst, SCR_W, dbx0, dby0, dbx1, dby1);
+                raster_flush(dst + (size_t)(2 * dby0) * SCR_W,
+                             (dbx1 - dbx0 + 1) * 4 * (dby1 - dby0 + 1) * 2);
+            }
+
+            pre_cyc += cyc_now() - c2;
+
+            uint32_t w0 = cyc_now();
+
+            while ((LTDC->SRCR & LTDC_SRCR_VBR) != 0u)
+            {
+            }
+
+            wait_cyc += cyc_now() - w0;
+
+            uint32_t s0 = cyc_now();
+            ltdc_set_framebuffer(dst);
+            setfb_cyc += cyc_now() - s0;
+
+            draw_idx = (draw_idx + 1) % 3;
+
+            frame_cyc_sum += (uint32_t)(cyc_now() - fr0);
+        }
+
+        float frame_ms = (float)frame_cyc_sum / 480000.0f / (float)total_frames;
+        float wall_ms = (float)(HAL_GetTick() - t_wall0) / (float)total_frames;
+        total_ms[it] = frame_ms;
+
+        spine_heap_stats_t hs1;
+        spine_heap_get_stats(&hs1);
+
+        float sum_ms = (float)(((double)anim_cyc + (double)build_cyc + (double)clr_cyc + (double)ras_cyc
+                                + (double)pre_cyc + (double)wait_cyc + (double)setfb_cyc)
+                               / 480000.0 / (double)total_frames);
+        const char *tag = (fabsf(sum_ms - frame_ms) > 2.0f) ? " [PHASE-SUM-INCONSISTENT]" : "";
+
+        printf("[DUO] it%d load %.1f ms | %.2f ms/frame (%.1f fps) | anim %.2f build %.2f clear %.2f draw %.2f present %.2f wait %.2f setfb %.2f | sum %.2f wall %.2f%s | heap %lu fails %lu\r\n",
+               it + 1, load_ms,
+               frame_ms, 1000.0f / frame_ms,
+               (double)anim_cyc / 480000.0 / (double)total_frames,
+               (double)build_cyc / 480000.0 / (double)total_frames,
+               (double)clr_cyc / 480000.0 / (double)total_frames,
+               (double)ras_cyc / 480000.0 / (double)total_frames,
+               (double)pre_cyc / 480000.0 / (double)total_frames,
+               (double)wait_cyc / 480000.0 / (double)total_frames,
+               (double)setfb_cyc / 480000.0 / (double)total_frames,
+               (double)sum_ms,
+               (double)wall_ms, tag,
+               (unsigned long)hs1.used_bytes, (unsigned long)hs1.fail_count);
+
+        spine_unregister_skeleton(skA);
+        spine_unregister_skeleton(skB);
+
+        delete stA;
+        delete stB;
+        delete skA;
+        delete skB;
+        delete sd;              /* 之前漏了：SkeletonData 每轮约 350 KB */
+
+        spine_heap_stats_t hs2;
+        spine_heap_get_stats(&hs2);
+
+        printf("[DUO] it%d after delete: heap used %lu (delta after load %ld)\r\n",
+               it + 1, (unsigned long)hs2.used_bytes,
+               (long)hs2.used_bytes - (long)hs0.used_bytes);
+    }
+
+    ltdc_set_framebuffer(bufs[0]);
+
+    printf("[DUO] ================================\r\n");
+    printf("[DUO] fps per iteration:\r\n");
+
+    for (int it = 0; it < iterations && it < 8; it++)
+    {
+        printf("[DUO]   it%d: %.1f fps (%.2f ms)\r\n", it + 1, 1000.0f / total_ms[it], total_ms[it]);
+    }
+
+    printf("[DUO] RESULT PASS\r\n");
+    return 0;
+}
+
+/*----------------------------------------------------------------- 帧缓冲写带宽基准 + MPU 属性切换 */
+
+#define FB_BW_BYTES (600u * 1024u)
+
+int g_fb_write_through = 0;
+
+extern "C" void fb_mpu_set(int mode)
+{
+    g_fb_write_through = (mode == 2);
+    uint32_t attr = (3u << 24);                  /* AP = full access, XN = 0 */
+
+    if (mode == 0)
+    {
+        attr |= (1u << 17) | (1u << 16);         /* write-back: C=1 B=1 */
+    }
+    else if (mode == 2)
+    {
+        attr |= (1u << 17);                      /* write-through: C=1 B=0 */
+    }
+    /* mode 1: non-cacheable, 无 C/B */
+
+    HAL_MPU_Disable();
+    MPU->RNR = 8u;
+    MPU->RBAR = 0xC0000000u;
+    MPU->RASR = (1u << 0) | (0x14u << 1) | attr; /* 2 MB */
+    MPU->RNR = 9u;
+    MPU->RBAR = 0xC1A00000u;
+    MPU->RASR = (1u << 0) | (0x13u << 1) | attr; /* 1 MB */
+    MPU->RNR = 10u;
+    MPU->RBAR = 0xC1B00000u;
+    MPU->RASR = (1u << 0) | (0x13u << 1) | attr; /* 1 MB */
+    HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
+
+    SCB_CleanInvalidateDCache();
+}
+
+static float fb_bw_fill32(void)
+{
+    volatile uint32_t *p = (volatile uint32_t *)FB_ADDR;
+    uint32_t n = FB_BW_BYTES / 4u;
+    uint32_t t0 = cyc_now();
+
+    for (uint32_t i = 0; i < n; i++)
+    {
+        p[i] = 0x12345678u;
+    }
+
+    uint32_t c = cyc_now() - t0;
+    SCB_CleanInvalidateDCache();
+    return (float)c / 480000.0f;
+}
+
+static float fb_bw_fill64(void)
+{
+    volatile uint64_t *p = (volatile uint64_t *)FB_ADDR;
+    uint32_t n = FB_BW_BYTES / 8u;
+    uint32_t t0 = cyc_now();
+
+    for (uint32_t i = 0; i < n; i++)
+    {
+        p[i] = 0x1234567812345678ull;
+    }
+
+    uint32_t c = cyc_now() - t0;
+    SCB_CleanInvalidateDCache();
+    return (float)c / 480000.0f;
+}
+
+static float fb_bw_clean(void)
+{
+    uint32_t t0 = cyc_now();
+
+    SCB_CleanInvalidateDCache_by_Addr((uint32_t *)FB_ADDR, FB_BW_BYTES);
+
+    return (float)(cyc_now() - t0) / 480000.0f;
+}
+
+extern "C" void fb_bench(void)
+{
+    const char *names[3] = { "write-back", "non-cacheable", "write-through" };
+
+    printf("\r\n[FB] framebuffer write benchmark (600 KB)\r\n");
+
+    for (int mode = 0; mode < 3; mode++)
+    {
+        fb_mpu_set(mode);
+
+        float ms32 = fb_bw_fill32();
+        float ms64 = fb_bw_fill64();
+        float clean = fb_bw_clean();
+
+        printf("[FB] %-13s 32bit %6.2f ms (%5.0f MB/s) | 64bit %6.2f ms (%5.0f MB/s) | clean %5.2f ms\r\n",
+               names[mode], (double)ms32, (double)(600.0f / ms32), (double)ms64,
+               (double)(600.0f / ms64), (double)clean);
+    }
+
+    fb_mpu_set(0);                               /* 恢复默认，供后续测试使用 */
+}
+
+/*----------------------------------------------------------------- 世界级重力 */
+
+#define GRAV_REG_MAX 32
+
+static spine::Skeleton *g_grav_reg[GRAV_REG_MAX];
+static int              g_grav_reg_count = 0;
+static float            g_world_gx = 0.0f;
+static float            g_world_gy = 1.0f;
+
+extern "C" void spine_set_gravity(spine::Skeleton *skel, float gx, float gy)
+{
+    if (skel != nullptr)
+    {
+        skel->setGravityX(gx);
+        skel->setGravityY(gy);
+    }
+}
+
+/** 世界重力：保存并立即同步到所有已注册骨架。 */
+extern "C" void spine_world_set_gravity(float gx, float gy)
+{
+    g_world_gx = gx;
+    g_world_gy = gy;
+
+    for (int i = 0; i < g_grav_reg_count; i++)
+    {
+        spine::Skeleton *sk = g_grav_reg[i];
+
+        if (sk != nullptr)
+        {
+            sk->setGravityX(gx);
+            sk->setGravityY(gy);
+        }
+    }
+}
+
+extern "C" float spine_world_get_gravity_x(void) { return g_world_gx; }
+extern "C" float spine_world_get_gravity_y(void) { return g_world_gy; }
+
+/** 注册骨架：立刻套用当前世界重力，之后世界重力变化会自动同步。 */
+extern "C" void spine_register_skeleton(void *skel)
+{
+    spine::Skeleton *sk = (spine::Skeleton *)skel;
+
+    if (sk == nullptr)
+    {
+        return;
+    }
+
+    for (int i = 0; i < g_grav_reg_count; i++)
+    {
+        if (g_grav_reg[i] == sk)
+        {
+            return;                     /* 已注册 */
+        }
+    }
+
+    if (g_grav_reg_count >= GRAV_REG_MAX)
+    {
+        printf("[GRAV] registry full (%d)\r\n", GRAV_REG_MAX);
+        return;
+    }
+
+    sk->setGravityX(g_world_gx);
+    sk->setGravityY(g_world_gy);
+    g_grav_reg[g_grav_reg_count++] = sk;
+}
+
+extern "C" void spine_unregister_skeleton(void *skel)
+{
+    spine::Skeleton *sk = (spine::Skeleton *)skel;
+
+    for (int i = 0; i < g_grav_reg_count; i++)
+    {
+        if (g_grav_reg[i] == sk)
+        {
+            for (int j = i; j < (g_grav_reg_count - 1); j++)
+            {
+                g_grav_reg[j] = g_grav_reg[j + 1];
+            }
+            g_grav_reg_count--;
+            g_grav_reg[g_grav_reg_count] = nullptr;
+            return;
+        }
+    }
+}
+
+extern "C" int spine_gravity_registry_count(void) { return g_grav_reg_count; }
+
+extern "C" void spine_dump_bones(spine::Skeleton *skel)
+{
+    spine::Array<spine::Bone *> &bones = skel->getBones();
+
+    for (size_t i = 0; i < bones.size(); i++)
+    {
+        printf("        bone[%2d] %s\r\n", (int)i, bones[i]->getData().getName().buffer());
+    }
+}
+
+/**
+ * 物理重力演示：给指定骨骼注入一个物理约束，然后让重力方向绕一圈，
+ * 观察该骨骼及其子链的形变。
+ *
+ * bone_name 为空时自动挑一个带子骨骼的骨骼。
+ */
+extern "C" uint8_t spine_gravity_test(const char *skel_path, const char *atlas_path,
+                                      const char *anim, int fps, int seconds,
+                                      int divisor, const char *bone_name)
+{
+    if (divisor < 1)
+    {
+        divisor = 1;
+    }
+
+    const int RW = SCR_W / divisor;
+    const int RH = SCR_H / divisor;
+
+    printf("\r\n[GRAV] gravity demo: %s | %d fps x %d s | render %dx%d\r\n",
+           (anim != nullptr) ? anim : "(no animation)", fps, seconds, RW, RH);
+
+    s_arena_used = 0;
+    s_verts = (raster_vertex_t *)arena_alloc(sizeof(raster_vertex_t) * SPINE_MAX_VERTS);
+
+    RawTextureLoader loader;
+    spine::Atlas atlas(atlas_path, &loader);
+
+    if (atlas.getPages().size() == 0)
+    {
+        printf("[GRAV] atlas load FAILED\r\n");
+        return 1;
+    }
+
+    for (size_t i = 0; i < atlas.getRegions().size(); i++)
+    {
+        spine::AtlasRegion *r = atlas.getRegions()[i];
+
+        if (r->getPage() != nullptr)
+        {
+            r->setRendererObject(r->getPage()->texture);
+        }
+    }
+
+    spine::AtlasAttachmentLoader attachment_loader(atlas);
+    spine::SkeletonBinary        binary(attachment_loader, false);
+    spine::SkeletonData         *sd = binary.readSkeletonDataFile(skel_path);
+
+    if (sd == nullptr)
+    {
+        printf("[GRAV] skeleton load FAILED\r\n");
+        return 2;
+    }
+
+    /* ---- 选一根骨骼挂物理约束 ---- */
+    spine::BoneData *target = nullptr;
+
+    if ((bone_name != nullptr) && (bone_name[0] != '\0'))
+    {
+        target = sd->findBone(spine::String(bone_name));
+    }
+
+    if (target == nullptr)
+    {
+        /* 选一个子骨骼最多的骨骼（通常是链条根部） */
+        spine::Array<spine::BoneData *> &bones = sd->getBones();
+        int best = 0;
+
+        for (size_t i = 0; i < bones.size(); i++)
+        {
+            int cnt = 0;
+
+            for (size_t j = 0; j < bones.size(); j++)
+            {
+                if (bones[j]->getParent() == bones[i])
+                {
+                    cnt++;
+                }
+            }
+
+            if (cnt > best)
+            {
+                best = cnt;
+                target = bones[i];
+            }
+        }
+    }
+
+    if (target == nullptr)
+    {
+        printf("[GRAV] no suitable bone\r\n");
+        return 3;
+    }
+
+    printf("[GRAV] physics bone: %s (children %d)\r\n",
+           target->getName().buffer(), 0);
+
+    /* 骨架自带的物理约束已经足够：不再注入，避免同一骨骼被两个约束驱动而发散。 */
+
+    spine::Skeleton skeleton(*sd);
+
+    printf("[GRAV] physics constraints in skeleton: %d\r\n",
+           (int)skeleton.getPhysicsConstraints().size());
+
+    /* 导出的物理约束默认 gravity=0 / 影响系数可能为 0，这里统一打开，
+     * 否则重力向量对约束没有任何作用。 */
+    {
+        spine::Array<spine::PhysicsConstraint *> &pcs = skeleton.getPhysicsConstraints();
+
+        for (size_t i = 0; i < pcs.size(); i++)
+        {
+            spine::PhysicsConstraintData &pd = pcs[i]->getData();
+
+            pd.setX(1.0f);
+            pd.setY(1.0f);
+            pd.setRotate(1.0f);
+
+            spine::PhysicsConstraintPose &pp = pcs[i]->getAppliedPose();
+
+            pp.setInertia(0.5f);
+            pp.setStrength(100.0f);
+            pp.setDamping(0.85f);
+            pp.setMassInverse(1.0f);
+            pp.setGravity(1.0f);
+            pp.setMix(1.0f);
+        }
+
+        if (pcs.size() > 0)
+        {
+            printf("[GRAV] constraint0 gravity=%.2f mix=%.2f x=%.2f\r\n",
+                   (double)pcs[0]->getAppliedPose().getGravity(),
+                   (double)pcs[0]->getAppliedPose().getMix(),
+                   (double)pcs[0]->getData().getX());
+        }
+    }
+
+    spine_register_skeleton(&skeleton);          /* 注册到世界重力 */
+
+    spine::Bone *probe_bone = skeleton.findBone(spine::String(target->getName().buffer()));
+    printf("[GRAV] probe bone: %s\r\n", (probe_bone != nullptr) ? "ok" : "null");
+
+    spine::AnimationStateData asd(*sd);
+    spine::AnimationState     state(asd);
+    spine::SkeletonRenderer   renderer;
+
+    skeleton.setupPose();
+    skeleton.updateWorldTransform(spine::Physics_Reset);
+
+    float wminx = 1e9f, wmaxx = -1e9f, wminy = 1e9f, wmaxy = -1e9f;
+    {
+        spine::RenderCommand *m = renderer.render(skeleton);
+
+        while (m != nullptr)
+        {
+            for (int i = 0; i < m->numVertices; i++)
+            {
+                float x = m->positions[2 * i + 0];
+                float y = m->positions[2 * i + 1];
+
+                if (x < wminx) { wminx = x; }
+                if (x > wmaxx) { wmaxx = x; }
+                if (y < wminy) { wminy = y; }
+                if (y > wmaxy) { wmaxy = y; }
+            }
+            m = m->next;
+        }
+    }
+
+    if ((wmaxx <= wminx) || (wmaxy <= wminy))
+    {
+        return 5;
+    }
+
+    float sx = ((float)RW - 40.0f / (float)divisor) / (wmaxx - wminx);
+    float sy = ((float)RH - 40.0f / (float)divisor) / (wmaxy - wminy);
+    float scale = (sx < sy) ? sx : sy;
+    float ox = ((float)RW - (wminx + wmaxx) * scale) * 0.5f;
+    float oy = 20.0f / (float)divisor - wminy * scale;
+
+    uint16_t *lows[3];
+    uint16_t *bufs[3] = { (uint16_t *)FB_ADDR, FB_BUF1, FB_BUF2 };
+
+    for (int i = 0; i < 3; i++)
+    {
+        lows[i] = (uint16_t *)arena_alloc((uint32_t)RW * RH * 2u);
+
+        raster_surface_t fs;
+
+        fs.px = bufs[i];
+        fs.w = SCR_W;
+        fs.h = SCR_H;
+        fs.stride = SCR_W;
+        fs.clip_x0 = 0;
+        fs.clip_y0 = 0;
+        fs.clip_x1 = SCR_W - 1;
+        fs.clip_y1 = SCR_H - 1;
+        raster_clear(&fs, 0x0861u);
+        raster_flush(bufs[i], SCR_W * SCR_H * 2);
+    }
+
+    raster_surface_t rs;
+    rs.w = RW;
+    rs.h = RH;
+    rs.stride = RW;
+    rs.clip_x0 = 0;
+    rs.clip_y0 = 0;
+    rs.clip_x1 = RW - 1;
+    rs.clip_y1 = RH - 1;
+    rs.px = lows[0];
+
+    for (int i = 0; i < 3; i++)
+    {
+        rs.px = lows[i];
+        raster_clear(&rs, 0x0861u);
+        raster_flush(lows[i], RW * RH * 2);
+    }
+
+    int pbx[3], pby[3], pbX[3], pbY[3];
+
+    for (int i = 0; i < 3; i++)
+    {
+        pbx[i] = 0; pby[i] = 0; pbX[i] = -1; pbY[i] = -1;
+    }
+
+
+    const bool has_anim = (anim != nullptr) && (anim[0] != 0);
+
+    if (has_anim)
+    {
+        state.setAnimation(0, spine::String(anim), true);
+    }
+    else
+    {
+        printf("[GRAV] no animation: static pose, gravity is the only motion\r\n");
+    }
+
+    const float dt = 1.0f / (float)fps;
+    int total_frames = fps * seconds;
+    int draw_idx = 1;
+    uint32_t t0 = HAL_GetTick();
+
+    ltdc_set_framebuffer(bufs[0]);
+
+    printf("[GRAV] sweeping gravity direction (2 turns over %d s)\r\n", seconds);
+
+    for (int f = 0; f < total_frames; f++)
+    {
+        /* 重力方向绕一圈（2 圈 / 全程）：spine 的 y 轴向下，(0,1) = 向下 */
+        float theta = 6.2831853f * 2.0f * (float)f / (float)total_frames;
+
+        spine_world_set_gravity(cosf(theta), sinf(theta));   /* 世界级：所有注册骨架一起变 */
+
+
+        if (has_anim)
+        {
+            state.update(dt);
+            state.apply(skeleton);
+        }
+
+        skeleton.update(dt);                     /* 推进 _time，物理约束靠它算 delta */
+        skeleton.updateWorldTransform(spine::Physics_Update);
+
+        uint16_t *dst = bufs[draw_idx];
+        rs.px = (divisor == 1) ? dst : lows[draw_idx];
+
+        spine::RenderCommand *cmd = renderer.render(skeleton);
+
+        int cbx0, cby0, cbx1, cby1;
+        commands_bbox(cmd, scale, ox, oy, &cbx0, &cby0, &cbx1, &cby1);
+
+        int dbx0 = (pbX[draw_idx] < 0) ? cbx0 : ((cbx0 < pbx[draw_idx]) ? cbx0 : pbx[draw_idx]);
+        int dby0 = (pbX[draw_idx] < 0) ? cby0 : ((cby0 < pby[draw_idx]) ? cby0 : pby[draw_idx]);
+        int dbx1 = (pbX[draw_idx] < 0) ? cbx1 : ((cbx1 > pbX[draw_idx]) ? cbx1 : pbX[draw_idx]);
+        int dby1 = (pbX[draw_idx] < 0) ? cby1 : ((cby1 > pbY[draw_idx]) ? cby1 : pbY[draw_idx]);
+
+        if (dbx0 < 0) { dbx0 = 0; }
+        if (dby0 < 0) { dby0 = 0; }
+        if (dbx1 > RW - 1) { dbx1 = RW - 1; }
+        if (dby1 > RH - 1) { dby1 = RH - 1; }
+
+        clear_rect(&rs, dbx0, dby0, dbx1, dby1, 0x0861u);
+        draw_commands(cmd, scale, ox, oy, &rs);
+
+        pbx[draw_idx] = cbx0;
+        pby[draw_idx] = cby0;
+        pbX[draw_idx] = cbx1;
+        pbY[draw_idx] = cby1;
+
+        if (divisor == 1)
+        {
+            if (!g_fb_write_through)
+            {
+                raster_flush(dst, SCR_W * SCR_H * 2);
+            }
+        }
+        else
+        {
+            /* 低分辨率缓冲只被 CPU 读（放大），从未被 DMA 访问 → 不必冲刷
+             * 帧缓冲在写穿模式下已直达 SDRAM → 也不必冲刷 */
+            raster_upscale2x(lows[draw_idx], RW, dst, SCR_W, dbx0, dby0, dbx1, dby1);
+        }
+
+        while ((LTDC->SRCR & LTDC_SRCR_VBR) != 0u)
+        {
+        }
+
+        ltdc_set_framebuffer(dst);
+        draw_idx = (draw_idx + 1) % 3;
+
+        if ((f % fps) == 0)
+        {
+            printf("[GRAV] t=%d.%02ds gravity=(%.2f, %.2f) dir=%d deg bone=(%.1f, %.1f) rot=%.1f\r\n",
+                   f / fps, f % fps,
+                   (double)skeleton.getGravityX(), (double)skeleton.getGravityY(),
+                   (int)(theta * 57.2958f) % 360,
+                   (double)((probe_bone != nullptr) ? probe_bone->getAppliedPose().getWorldX() : 0.0f),
+                   (double)((probe_bone != nullptr) ? probe_bone->getAppliedPose().getWorldY() : 0.0f),
+                   (double)((probe_bone != nullptr) ? probe_bone->getAppliedPose().getWorldRotationX() : 0.0f));
+        }
+    }
+
+    float ms = (float)(HAL_GetTick() - t0) / (float)total_frames;
+
+    printf("[GRAV] %.2f ms/frame (%.1f fps)\r\n", ms, 1000.0f / ms);
+    printf("[GRAV] RESULT PASS\r\n");
+    return 0;
+}

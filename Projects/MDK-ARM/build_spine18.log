@@ -1,0 +1,19 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_test.cpp(273): error: expected expression
+        printf("[SPN] arena too small
+               ^
+../../User/spine_test.cpp(280): error: use of undeclared identifier 'loader'
+    spine::Atlas atlas(atlas_path, &loader);
+                                    ^
+../../User/spine_test.cpp(364): error: expected '}'
+}
+ ^
+../../User/spine_test.cpp(256): note: to match this '{'
+{
+^
+3 errors generated.
+compiling spine_test.cpp...
+"..\..\Output\STM32H743.axf" - 3 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:02

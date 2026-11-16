@@ -1,0 +1,109 @@
+﻿
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 15 2026 10:10:18
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 15 2026 10:10:18
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 15 2026 10:10:18
+==============================================
+[1/5] MPU + SDRAM
+  addr scan : 2048 checkpoints over 32768 KB, 0 error(s)
+  pattern   : 64 KB x 5 patterns, total error(s) = 0
+[2/5] LCD (LTDC + DMA2D + SDRAM framebuffer)
+LCD ID:4384
+  panel id  : 4384, 800x480
+  pixel rb  : F800 OK (framebuffer @ 0xC0000000)
+[3/5] QSPI NOR flash
+ID:ef17
+  flash id  : EF17
+  rw verify : 4096 bytes @ 0x800000, 0 mismatch(es)
+[4/5] SD card (SDMMC1, 4-bit)
+  card      : 15801 MB, type=1, block=512 B
+  bus       : 4-bit, sweep 6/15/30 MHz
+  div=20 ( 6 MHz): OK   2767 KB/s  
+  div=8  (15 MHz): OK   6494 KB/s  
+  div=4  (30 MHz): OK   11764 KB/s  
+  stress    : 32 x 8 KB over the card, 0 error(s), 10308 KB/s
+  using     : 30 MHz, MBR sig=55AA
+[5/5] FATFS on SD volume 0:
+  volume    : FAT32, total 15784 MB, free 15783 MB
+   System Volume Information/  0 B
+   PAINT/  0 B
+   TEXT/  0 B
+  read      : 0:/PAINT/PAINT20241215001314.bmp -> 16 B, 42 4D 42 B8 ...
+  entries   : 3 listed, file read OK
+  write     : 512 B -> readback match, delete ok
+----------------------------------------------
+RESULT SDRAM=PASS LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+RESULT SDRAM=PASS LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+----------------------------------------------
+[TGX] starting 2D render test
+
+[TGX] 2D render self-test, framebuffer @ 0xC0000000
+[TGX] benchmarking...
+[TGX] fill   : 77.43 Mpx/s  (800x480 x10)
+[TGX] texquad: 2.49 Mpx/s  (800x480 x4, bilinear+alpha)
+[TGX] tris   : 2.06 Mpx/s  (16x12 grid, gradient triangles)
+[TGX] 565/ow : 4.69 Mpx/s
+[TGX] 32/ow  : 3.65 Mpx/s
+[TGX] 32/blend: 2.49 Mpx/s
+[TGX] 565 8KB : 4.68 Mpx/s  (texture fits in D-cache)
+[TGX] 60 fps budget @ tris rate: 34387 kpx per frame
+[TGX] 30 fps budget @ tris rate: 68773 kpx per frame
+
+[RASTR] minimal custom rasterizer probe
+[RASTR] quad opaque : 33.90 Mpx/s
+[RASTR] quad key    : 28.81 Mpx/s
+[RASTR] quad key+tint: 21.26 Mpx/s
+[RASTR] grid key    : 20.27 Mpx/s  (16x12, 768 tris)
+[RASTR] grid key+tint: 15.29 Mpx/s
+[RASTR] RESULT PASS
+
+[R2D] custom rasterizer: regression + benchmark
+  T1 coverage     : 0 uncovered px  OK
+  T2 seam         : 0 mismatched pairs  OK
+  T3 clip         : 367608 px painted  OK
+  T4 vtx colour   : 0 non-monotonic  OK
+  T5 blend modes  : 0 wrong  OK
+[R2D] quad 4444 opaque: 2.89 Mpx/s
+[R2D] quad 565 const : 8.22 Mpx/s
+[R2D] quad 565 vcol  : 2.91 Mpx/s
+[R2D] quad 4444 vcol : 1.53 Mpx/s
+[R2D] grid 565 vcol  : 2.81 Mpx/s
+[R2D] grid 4444 vcol : 1.50 Mpx/s
+[R2D] RESULT PASS (regressions 0)
+[TGX] RESULT PASS
+RESULT TGX=PASS
+----------------------------------------------
+heartbeat start
+alive 1
+alive 2
+alive 3
+alive 4
+alive 5
+alive 6
+alive 7
+alive 8
+alive 9
+alive 10
+alive 11
+alive 12
+alive 13
+alive 14
+alive 15
+alive 16
+alive 17
+alive 18
+alive 19
+alive 20
+a

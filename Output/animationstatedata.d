@@ -1,0 +1,36 @@
+../../output/animationstatedata.o: \
+  ../../Middlewares/SPINE/src/spine/AnimationStateData.cpp \
+  ../../Middlewares/SPINE/include\spine/AnimationStateData.h \
+  ../../Middlewares/SPINE/include\spine/Map.h \
+  ../../Middlewares/SPINE/include\spine/Array.h \
+  ../../Middlewares/SPINE/include\spine/Extension.h \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\stdlib.h \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\__config \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\string.h \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\string.h \
+  ../../Middlewares/SPINE/include\spine/dll.h \
+  ../../Middlewares/SPINE/include\spine/SpineObject.h \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\new \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\exception \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\cstddef \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\stddef.h \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\__nullptr \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\cstdlib \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\type_traits \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\stddef.h \
+  ../../Middlewares/SPINE/include\spine/SpineString.h \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\stdio.h \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\assert.h \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\stdint.h \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  ../../Middlewares/SPINE/include\spine/Animation.h \
+  ../../Middlewares/SPINE/include\spine/Color.h \
+  ../../Middlewares/SPINE/include\spine/MathUtil.h \
+  ../../Middlewares/SPINE/include\spine/Property.h \
+  ../../Middlewares/SPINE/include\spine/Timeline.h \
+  ../../Middlewares/SPINE/include\spine/RTTI.h \
+  ../../Middlewares/SPINE/include\spine/SkeletonData.h \
+  ../../Middlewares/SPINE/include\spine/ConstraintData.h \
+  ../../Middlewares/SPINE/include\spine/PosedData.h

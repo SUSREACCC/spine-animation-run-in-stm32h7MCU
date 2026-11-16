@@ -1,0 +1,10 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+linking...
+..\..\Output\STM32H743.axf: Warning: L6776W: The debug frame in .debug_frame(atlas.o) does not describe an executable section.
+..\..\Output\STM32H743.axf: Error: L6915E: Library reports error: __use_no_semihosting was requested, but _sys_open was referenced
+Not enough information to list load addresses in the image map.
+Finished: 1 information, 1 warning and 1 error messages.
+"..\..\Output\STM32H743.axf" - 1 Error(s), 1 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

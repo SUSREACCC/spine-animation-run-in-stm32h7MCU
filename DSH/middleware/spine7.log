@@ -1,0 +1,137 @@
+﻿
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 15 2026 13:38:48
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 15 2026 13:38:48
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 15 2026 13:38:48
+==============================================
+[1/5] MPU + SDRAM
+  addr scan : 2048 checkpoints over 32768 KB, 0 error(s)
+  pattern   : 64 KB x 5 patterns, total error(s) = 0
+[2/5] LCD (LTDC + DMA2D + SDRAM framebuffer)
+LCD ID:4384
+  panel id  : 4384, 800x480
+  pixel rb  : F800 OK (framebuffer @ 0xC0000000)
+[3/5] QSPI NOR flash
+ID:ef17
+  flash id  : EF17
+  rw verify : 4096 bytes @ 0x800000, 0 mismatch(es)
+[4/5] SD card (SDMMC1, 4-bit)
+  card      : 15801 MB, type=1, block=512 B
+  bus       : 4-bit, sweep 6/15/30 MHz
+  div=20 ( 6 MHz): OK   2768 KB/s  
+  div=8  (15 MHz): OK   6499 KB/s  
+  div=4  (30 MHz): OK   11783 KB/s  
+  stress    : 32 x 8 KB over the card, 0 error(s), 10319 KB/s
+  using     : 30 MHz, MBR sig=55AA
+[5/5] FATFS on SD volume 0:
+  volume    : FAT32, total 15784 MB, free 15783 MB
+   System Volume Information/  0 B
+   spineboy-pma.atlas   1652 B
+  read      : 0:/spineboy-pma.atlas -> 16 B, 73 70 69 6E ...
+   spineboy-pma.raw   524304 B
+   spineboy-pro.skel   65335 B
+  entries   : 4 listed, file read OK
+  write     : 512 B -> readback match, delete ok
+----------------------------------------------
+RESULT SDRAM=PASS LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+RESULT SDRAM=PASS LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+----------------------------------------------
+[TGX] starting 2D render test
+
+[TGX] 2D render self-test, framebuffer @ 0xC0000000
+[TGX] benchmarking...
+[TGX] fill   : 76.54 Mpx/s  (800x480 x10)
+[TGX] texquad: 3.64 Mpx/s  (800x480 x4, bilinear+alpha)
+[TGX] tris   : 3.09 Mpx/s  (16x12 grid, gradient triangles)
+[TGX] 565/ow : 4.98 Mpx/s
+[TGX] 32/ow  : 4.68 Mpx/s
+[TGX] 32/blend: 3.64 Mpx/s
+[TGX] 565 8KB : 4.97 Mpx/s  (texture fits in D-cache)
+[TGX] 60 fps budget @ tris rate: 51543 kpx per frame
+[TGX] 30 fps budget @ tris rate: 103082 kpx per frame
+
+[RASTR] minimal custom rasterizer probe
+[RASTR] quad opaque : 35.59 Mpx/s
+[RASTR] quad key    : 34.64 Mpx/s
+[RASTR] quad key+tint: 21.76 Mpx/s
+[RASTR] grid key    : 23.40 Mpx/s  (16x12, 768 tris)
+[RASTR] grid key+tint: 15.72 Mpx/s
+[RASTR] RESULT PASS
+
+[R2D] custom rasterizer: regression + benchmark
+  T1 coverage     : 0 uncovered px  OK
+  T2 seam         : 0 mismatched pairs  OK
+  T3 clip         : 367608 px painted  OK
+  T4 vtx colour   : 0 non-monotonic  OK
+  T5 blend modes  : 0 wrong  OK
+[R2D] quad 4444 opaque: 5.60 Mpx/s
+[R2D] quad 565 const tint : 9.13 Mpx/s
+[R2D] quad 4444 alpha-only: 4.45 Mpx/s
+[R2D] grid 4444 alpha-only: 4.15 Mpx/s
+[R2D] quad 1555 const tint: 11.20 Mpx/s
+[R2D] grid 1555 vcol      : 6.81 Mpx/s
+[R2D] quad 565 const : 27.69 Mpx/s
+[R2D] quad 565 vcol  : 6.26 Mpx/s
+[R2D] quad 4444 vcol : 3.90 Mpx/s
+[R2D] grid 565 vcol  : 5.50 Mpx/s
+[R2D] grid 4444 vcol : 3.51 Mpx/s
+[R2D] RESULT PASS (regressions 0)
+[TGX] RESULT PASS
+RESULT TGX=PASS
+----------------------------------------------
+
+[SPN] spine-cpp 4.3 integration test
+[SPN] texture /spine/spineboy-pma.raw : 1024x256 ARGB1555
+[SPN] skeleton 'spineboy-pro' bones=67 slots=52 anims=11 size=418x686
+[SPN] diag: cmds=30 verts=8280 nullTex=0 bbox=(230,476)-(607,881)
+[SPN] 30 frames, 7.12 ms/frame (140.5 fps), arena=688136 B
+[SPN] spine heap used=417032 peak=429216 allocs=4537 fails=0
+[SPN] RESULT PASS
+heartbeat start
+alive 1
+alive 2
+alive 3
+alive 4
+alive 5
+alive 6
+alive 7
+alive 8
+alive 9
+alive 10
+alive 11
+alive 12
+alive 13
+alive 14
+alive 15
+alive 16
+alive 17
+alive 18
+alive 19
+alive 20
+alive 21
+alive 22
+alive 23
+alive 24
+alive 25
+alive 26
+alive 27
+alive 28
+alive 29
+alive 30
+alive 31
+alive 32
+alive 33
+alive 34
+

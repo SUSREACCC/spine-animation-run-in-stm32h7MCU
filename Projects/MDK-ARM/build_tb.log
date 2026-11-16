@@ -1,0 +1,13 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_test.cpp(842): error: use of undeclared identifier 'commands_bbox'
+        commands_bbox(cmd_list, scale, ox, oy, &cbx0, &cby0, &cbx1, &cby1);
+        ^
+../../User/spine_test.cpp(849): error: use of undeclared identifier 'clear_rect'
+        clear_rect(&s_surf, dbx0, dby0, dbx1, dby1, 0x0861u);
+        ^
+2 errors generated.
+compiling spine_test.cpp...
+"..\..\Output\STM32H743.axf" - 2 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:03

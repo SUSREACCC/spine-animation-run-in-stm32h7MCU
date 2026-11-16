@@ -1,0 +1,37 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/raster_test.cpp(15): error: 'raster2d.h' file not found
+#include "raster2d.h"
+         ^~~~~~~~~~~~
+1 error generated.
+compiling raster_test.cpp...
+../../Middlewares/RASTER/raster2d.cpp(180): error: cannot assign to variable 'X1' with const-qualified type 'const int64_t' (aka 'const long long')
+        t = X1; X1 = X2; X2 = t;
+                ~~ ^
+../../Middlewares/RASTER/raster2d.cpp(165): note: variable 'X1' declared const here
+    const int64_t X1 = (int64_t)lrintf(bx * SUBPIXEL_ONE);
+    ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares/RASTER/raster2d.cpp(180): error: cannot assign to variable 'X2' with const-qualified type 'const int64_t' (aka 'const long long')
+        t = X1; X1 = X2; X2 = t;
+                         ~~ ^
+../../Middlewares/RASTER/raster2d.cpp(167): note: variable 'X2' declared const here
+    const int64_t X2 = (int64_t)lrintf(cx * SUBPIXEL_ONE);
+    ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares/RASTER/raster2d.cpp(181): error: cannot assign to variable 'Y1' with const-qualified type 'const int64_t' (aka 'const long long')
+        t = Y1; Y1 = Y2; Y2 = t;
+                ~~ ^
+../../Middlewares/RASTER/raster2d.cpp(166): note: variable 'Y1' declared const here
+    const int64_t Y1 = (int64_t)lrintf(by * SUBPIXEL_ONE);
+    ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../Middlewares/RASTER/raster2d.cpp(181): error: cannot assign to variable 'Y2' with const-qualified type 'const int64_t' (aka 'const long long')
+        t = Y1; Y1 = Y2; Y2 = t;
+                         ~~ ^
+../../Middlewares/RASTER/raster2d.cpp(168): note: variable 'Y2' declared const here
+    const int64_t Y2 = (int64_t)lrintf(cy * SUBPIXEL_ONE);
+    ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 errors generated.
+compiling raster2d.cpp...
+compiling tgx_selftest.cpp...
+"..\..\Output\STM32H743.axf" - 5 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:03

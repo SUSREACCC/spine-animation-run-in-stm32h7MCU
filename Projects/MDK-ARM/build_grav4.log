@@ -1,0 +1,17 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_test.cpp1585:42: error: no member named 'Physics_Setup' in namespace 'spine'; did you mean 'Physics_Reset'?
+    skeleton.updateWorldTransform(spine::Physics_Setup);
+                                  ~~~~~~~^~~~~~~~~~~~~
+                                         Physics_Reset
+../../Middlewares/SPINE/include\spine/Physics.h(40): note: 'Physics_Reset' declared here
+                Physics_Reset,
+                ^
+1 error generated.
+compiling spine_test.cpp...
+linking...
+..\..\Output\STM32H743.axf: error: L6002U: Could not open file ..\..\output\spine_test.o: No such file or directory
+Finished: 0 information, 0 warning, 0 error and 1 fatal error messages.
+"..\..\Output\STM32H743.axf" - 1 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

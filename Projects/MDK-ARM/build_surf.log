@@ -1,0 +1,13 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_test.cpp(437): error: no matching function for call to 'draw_commands'
+        draw_commands(cmd, scale, ox, oy);
+        ^~~~~~~~~~~~~
+../../User/spine_test.cpp(220): note: candidate function not viable: requires 5 arguments, but 4 were provided
+static void draw_commands(spine::RenderCommand *cmd, float scale, float ox, float oy,
+            ^
+1 error generated.
+compiling spine_test.cpp...
+"..\..\Output\STM32H743.axf" - 1 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

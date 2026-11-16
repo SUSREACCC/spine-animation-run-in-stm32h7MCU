@@ -1,0 +1,11 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/raster_test.cpp(464): error: use of undeclared identifier 'r_grid_alpha'
+    g_r2d_mpx = r_grid_alpha;   /* <U+6700><U+5177><U+4EE3><U+8868><U+6027><U+7684> spine <U+8D1F><U+8F7D> */
+                ^
+1 error generated.
+compiling raster_test.cpp...
+compiling tgx_selftest.cpp...
+"..\..\Output\STM32H743.axf" - 1 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:02
