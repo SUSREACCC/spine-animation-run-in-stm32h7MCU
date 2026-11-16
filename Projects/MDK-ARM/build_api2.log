@@ -1,0 +1,14 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+compiling spine_api.cpp...
+compiling spine_test.cpp...
+linking...
+..\..\Output\STM32H743.axf: Warning: L6776W: The debug frame in .debug_frame(animation.o) does not describe an executable section.
+..\..\Output\STM32H743.axf: Error: L6218E: Undefined symbol heap_alloc(unsigned) (referred from spine_api.o).
+..\..\Output\STM32H743.axf: Error: L6218E: Undefined symbol heap_free(void*) (referred from spine_api.o).
+Not enough information to list image symbols.
+Not enough information to list load addresses in the image map.
+Finished: 2 information, 1 warning and 2 error messages.
+"..\..\Output\STM32H743.axf" - 2 Error(s), 1 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:02

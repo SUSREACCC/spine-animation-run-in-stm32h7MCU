@@ -22,6 +22,7 @@
 #include <math.h>
 #include <string.h>
 #include "raster2d.h"
+#include "plat/plat.h"
 #include "./SYSTEM/sys/sys.h"
 
 #define COORD_CLAMP     2048.0f
@@ -762,7 +763,9 @@ extern "C" void raster_clear(const raster_surface_t *s, uint16_t color)
 
 extern "C" void raster_flush(uint16_t *fb, int bytes)
 {
-    SCB_CleanInvalidateDCache_by_Addr((uint32_t *)fb, bytes);
+    /* 交给平台层：H743 上是 SCB_CleanInvalidateDCache_by_Addr，
+     * 无 D-Cache 的平台可以为空实现。 */
+    plat_cache_clean(fb, (size_t)bytes);
 }
 
 extern "C" void raster_upscale2x(const uint16_t *src, int src_stride,

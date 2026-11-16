@@ -1,0 +1,38 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_platform.cpp(495): error: member access into incomplete type 'spine::AtlasPage'
+    page.texture = (void *)t;
+        ^
+../../Middlewares/SPINE/include\spine/TextureLoader.h(37): note: forward declaration of 'spine::AtlasPage'
+        class AtlasPage;
+              ^
+../../User/spine_platform.cpp(496): error: member access into incomplete type 'spine::AtlasPage'
+    page.width = t->w;
+        ^
+../../Middlewares/SPINE/include\spine/TextureLoader.h(37): note: forward declaration of 'spine::AtlasPage'
+        class AtlasPage;
+              ^
+../../User/spine_platform.cpp(497): error: member access into incomplete type 'spine::AtlasPage'
+    page.height = t->h;
+        ^
+../../Middlewares/SPINE/include\spine/TextureLoader.h(37): note: forward declaration of 'spine::AtlasPage'
+        class AtlasPage;
+              ^
+../../User/spine_platform.cpp(509): error: use of undeclared identifier 'RASTER_BLEND_ADD'
+        case spine::BlendMode_Additive: return RASTER_BLEND_ADD;
+                                               ^
+../../User/spine_platform.cpp(510): error: use of undeclared identifier 'RASTER_BLEND_MULTIPLY'
+        case spine::BlendMode_Multiply: return RASTER_BLEND_MULTIPLY;
+                                               ^
+../../User/spine_platform.cpp(511): error: use of undeclared identifier 'RASTER_BLEND_SCREEN'
+        case spine::BlendMode_Screen:   return RASTER_BLEND_SCREEN;
+                                               ^
+../../User/spine_platform.cpp(512): error: use of undeclared identifier 'RASTER_BLEND_NORMAL'
+        default:                        return RASTER_BLEND_NORMAL;
+                                               ^
+7 errors generated.
+compiling spine_platform.cpp...
+compiling spine_test.cpp...
+"..\..\Output\STM32H743.axf" - 7 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:02

@@ -12,6 +12,7 @@
                 "d:\\WorkSpace\\MDK\\H7spineRuntimeTest\\Middlewares\\SPINE\\include",
                 "d:\\WorkSpace\\MDK\\H7spineRuntimeTest\\Drivers\\CMSIS\\Device\\ST\\STM32H7xx\\Source\\Templates\\arm",
                 "d:\\WorkSpace\\MDK\\H7spineRuntimeTest\\Drivers\\CMSIS\\Device\\ST\\STM32H7xx\\Source\\Templates",
+                "d:\\WorkSpace\\MDK\\H7spineRuntimeTest\\User\\plat",
                 "d:\\WorkSpace\\MDK\\H7spineRuntimeTest\\Drivers\\SYSTEM\\delay",
                 "d:\\WorkSpace\\MDK\\H7spineRuntimeTest\\Drivers\\SYSTEM\\sys",
                 "d:\\WorkSpace\\MDK\\H7spineRuntimeTest\\Drivers\\SYSTEM\\usart",
@@ -25,7 +26,6 @@
                 "d:\\WorkSpace\\MDK\\H7spineRuntimeTest\\Drivers\\BSP\\SDMMC",
                 "d:\\WorkSpace\\MDK\\H7spineRuntimeTest\\Drivers\\BSP\\LED",
                 "d:\\WorkSpace\\MDK\\H7spineRuntimeTest\\Middlewares\\FATFS\\source",
-                "d:\\WorkSpace\\MDK\\H7spineRuntimeTest\\Middlewares\\TGX",
                 "d:\\WorkSpace\\MDK\\H7spineRuntimeTest\\Middlewares\\RASTER",
                 "d:\\WorkSpace\\MDK\\H7spineRuntimeTest\\Middlewares\\SPINE\\src\\spine"
             ],

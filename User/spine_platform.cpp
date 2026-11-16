@@ -11,6 +11,7 @@
 #include <stdio.h>
 
 #include "spine_platform.h"
+#include "plat/plat.h"
 
 extern "C"
 {
@@ -18,6 +19,8 @@ extern "C"
 #include "./FATFS/source/ff.h"
 }
 
+#include <spine/Atlas.h>
+#include "./RASTER/raster2d.h"
 #include <spine/Extension.h>
 #include <spine/SpineString.h>
 
@@ -44,10 +47,29 @@ uint32_t g_fails = 0;
 
 const uint32_t HDR = (uint32_t)((sizeof(Block) + 7u) & ~7u);
 
+static void *s_heap_base = nullptr;
+static size_t s_heap_size = 0;
+static void *s_arena_base = nullptr;
+static size_t s_arena_size = 0;
+
 void heap_init()
 {
-    g_head = (Block *)SPINE_HEAP_BASE;
-    g_head->size = SPINE_HEAP_SIZE - HDR;
+    /* 幂等：SpineMcuExtension 是惰性构造的，它的构造函数也会调用 heap_init。
+     * 若此时堆已经被用过（例如 API 层先分配了 asset 结构体），重置会丢弃
+     * 已有分配并导致两块内存重叠。 */
+    if (g_head != nullptr)
+    {
+        return;
+    }
+
+    /* 内存由平台层提供（plat_mem_pools），库内不含任何绝对地址 */
+    if (s_heap_base == nullptr)
+    {
+        plat_mem_pools(&s_heap_base, &s_heap_size, &s_arena_base, &s_arena_size);
+    }
+
+    g_head = (Block *)s_heap_base;
+    g_head->size = (uint32_t)(s_heap_size - HDR);
     g_head->next = nullptr;
     g_head->prev = nullptr;
     g_head->free = 1;
@@ -66,6 +88,8 @@ static inline Block *header_of(void *p)
 
 void *heap_alloc(size_t n)
 {
+    plat_os_mem_lock();
+
     if (g_head == nullptr)
     {
         heap_init();
@@ -113,6 +137,7 @@ void *heap_alloc(size_t n)
                 {
                     g_peak = g_used;
                 }
+                plat_os_mem_unlock();
                 return payload(b);
             }
         }
@@ -121,6 +146,7 @@ void *heap_alloc(size_t n)
     }
 
     g_fails++;
+    plat_os_mem_unlock();
     return nullptr;
 }
 
@@ -131,10 +157,13 @@ void heap_free(void *p)
         return;
     }
 
+    plat_os_mem_lock();
+
     Block *b = header_of(p);
 
     if (b->free != 0u)
     {
+        plat_os_mem_unlock();
         return;
     }
 
@@ -171,6 +200,7 @@ void heap_free(void *p)
     }
 
     g_rover = b;
+    plat_os_mem_unlock();
 }
 
 void *heap_realloc(void *p, size_t n)
@@ -252,8 +282,6 @@ public:
     /** 从 SD 卡（FatFs）整体读入一个文件，语义与 spine 默认实现一致：返回 malloc 区，调用方负责 free */
     char *_readFile(const spine::String &path, int *length) override
     {
-        FIL  fil;
-        UINT br = 0;
         char name[128];
         int  n = path.length();
 
@@ -268,22 +296,26 @@ public:
         }
         name[n] = '\0';
 
-        if (f_open(&fil, name, FA_READ) != FR_OK)
+        plat_file_t *pf = nullptr;
+
+        if (plat_file_open(&pf, name) != 0)
         {
             /* 回退：文件若放在卡根目录（而不是 /spine/ 下），用 basename 再试一次 */
             const char *base = strrchr(name, '/');
 
-            if ((base == nullptr) || (f_open(&fil, base + 1, FA_READ) != FR_OK))
+            if ((base == nullptr) || (plat_file_open(&pf, base + 1) != 0))
             {
                 return nullptr;
             }
         }
 
-        FSIZE_t sz = f_size(&fil);
+        size_t sz = 0;
 
-        if ((sz == 0) || (sz > (FSIZE_t)(4 * 1024 * 1024)))
+        plat_file_size(pf, &sz);
+
+        if ((sz == 0) || (sz > (size_t)(4 * 1024 * 1024)))
         {
-            f_close(&fil);
+            plat_file_close(pf);
             return nullptr;
         }
 
@@ -291,18 +323,22 @@ public:
 
         if (buf == nullptr)
         {
-            f_close(&fil);
+            plat_file_close(pf);
             return nullptr;
         }
 
-        if ((f_read(&fil, buf, (UINT)sz, &br) != FR_OK) || (br != (UINT)sz))
         {
-            heap_free(buf);
-            f_close(&fil);
-            return nullptr;
+            size_t got = 0;
+
+            if ((plat_file_read(pf, buf, sz, &got) != 0) || (got != sz))
+            {
+                heap_free(buf);
+                plat_file_close(pf);
+                return nullptr;
+            }
         }
 
-        f_close(&fil);
+        plat_file_close(pf);
 
         *length = (int)sz;
         return buf;
@@ -316,6 +352,10 @@ struct BufferForExtension
 };
 
 }  /* namespace */
+
+/* 包装：把匿名 namespace 内的分配器暴露给其它模块 */
+void *spine_heap_alloc(size_t n) { return heap_alloc(n); }
+void  spine_heap_free(void *p) { heap_free(p); }
 
 /* spine-cpp 要求由平台提供此函数 */
 namespace spine
@@ -358,4 +398,166 @@ extern "C" uint32_t spine_heap_block_count(void)
         n++;
     }
     return n;
+}
+
+/*----------------------------------------------------------------- 资源区（bump 分配） */
+
+static uint32_t s_arena_used = 0;
+
+void *spine_arena_alloc(uint32_t bytes)
+{
+    bytes = (bytes + 3u) & ~3u;
+
+    if (s_arena_base == nullptr)
+    {
+        plat_mem_pools(&s_heap_base, &s_heap_size, &s_arena_base, &s_arena_size);
+    }
+
+    if ((s_arena_used + bytes) > s_arena_size)
+    {
+        return nullptr;
+    }
+
+    void *p = (void *)((uint8_t *)s_arena_base + s_arena_used);
+
+    s_arena_used += bytes;
+    return p;
+}
+
+void spine_arena_reset(void)
+{
+    s_arena_used = 0;
+}
+
+uint32_t spine_arena_used(void)
+{
+    return s_arena_used;
+}
+
+/*----------------------------------------------------------------- 纹理加载 */
+
+const RawTexture *spine_load_raw_texture(const char *raw_path)
+{
+    plat_file_t *pf = nullptr;
+    uint8_t      hdr[16];
+    size_t       got = 0;
+
+    if (plat_file_open(&pf, raw_path) != 0)
+    {
+        const char *base = strrchr(raw_path, '/');
+
+        if ((base == nullptr) || (plat_file_open(&pf, base + 1) != 0))
+        {
+            printf("[SPN] cannot open %s\r\n", raw_path);
+            return nullptr;
+        }
+    }
+
+    if ((plat_file_read(pf, hdr, 16, &got) != 0) || (got != 16) || (memcmp(hdr, "R2DT", 4) != 0))
+    {
+        plat_file_close(pf);
+        printf("[SPN] bad header in %s\r\n", raw_path);
+        return nullptr;
+    }
+
+    uint16_t w     = (uint16_t)(hdr[4] | (hdr[5] << 8));
+    uint16_t h     = (uint16_t)(hdr[6] | (hdr[7] << 8));
+    uint16_t fmt   = (uint16_t)(hdr[8] | (hdr[9] << 8));
+    uint32_t bytes = (uint32_t)hdr[12] | ((uint32_t)hdr[13] << 8) |
+                     ((uint32_t)hdr[14] << 16) | ((uint32_t)hdr[15] << 24);
+
+    if (((fmt != 1u) && (fmt != 2u)) || (bytes != (uint32_t)w * h * 2u) ||
+        (w > PLAT_TEXTURE_MAX_W) || (h > PLAT_TEXTURE_MAX_H))
+    {
+        plat_file_close(pf);
+        printf("[SPN] unsupported raw texture %s (fmt=%u bytes=%lu)\r\n",
+               raw_path, fmt, (unsigned long)bytes);
+        return nullptr;
+    }
+
+    RawTexture *t = (RawTexture *)spine_arena_alloc(sizeof(RawTexture));
+
+    if (t == nullptr)
+    {
+        plat_file_close(pf);
+        return nullptr;
+    }
+
+    uint16_t *px = (uint16_t *)spine_arena_alloc(bytes);
+
+    if (px == nullptr)
+    {
+        plat_file_close(pf);
+        printf("[SPN] arena full for %s (%lu bytes)\r\n", raw_path, (unsigned long)bytes);
+        return nullptr;
+    }
+
+    if ((plat_file_read(pf, px, bytes, &got) != 0) || (got != bytes))
+    {
+        plat_file_close(pf);
+        printf("[SPN] short read in %s\r\n", raw_path);
+        return nullptr;
+    }
+
+    plat_file_close(pf);
+
+    t->w = w;
+    t->h = h;
+    t->fmt = fmt;
+    t->px = px;
+
+    printf("[SPN] texture %s : %ux%u %s\r\n", raw_path, w, h,
+           (fmt == 2u) ? "ARGB4444" : "ARGB1555");
+    return t;
+}
+
+void RawTextureLoader::load(spine::AtlasPage &page, const spine::String &path)
+{
+    char raw[128];
+    int  n = path.length();
+
+    if ((n <= 0) || (n >= 120))
+    {
+        return;
+    }
+
+    const char *base = path.buffer();
+    const char *slash = strrchr(base, '/');
+    const char *name = slash ? (slash + 1) : base;
+
+    snprintf(raw, sizeof(raw), "%s%s", TEXTURE_DIR, name);
+
+    char *dot = strrchr(raw, '.');
+
+    if (dot != nullptr)
+    {
+        strcpy(dot, ".raw");
+    }
+
+    const RawTexture *t = spine_load_raw_texture(raw);
+
+    if (t == nullptr)
+    {
+        return;
+    }
+
+    page.texture = (void *)t;
+    page.width = t->w;
+    page.height = t->h;
+}
+
+void RawTextureLoader::unload(void *texture)
+{
+    (void)texture;
+}
+
+uint8_t spine_blend_of(spine::BlendMode m)
+{
+    switch (m)
+    {
+        case spine::BlendMode_Additive: return RASTER_BLEND_ADD;
+        case spine::BlendMode_Multiply: return RASTER_BLEND_MULTIPLY;
+        case spine::BlendMode_Screen:   return RASTER_BLEND_SCREEN;
+        default:                        return RASTER_BLEND_NORMAL;
+    }
 }

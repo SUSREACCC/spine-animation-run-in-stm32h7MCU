@@ -1223,3 +1223,101 @@ packed = (a<<48)|(a<<32)|(b<<16)|b  → 输出 [b,b,a,a]（每对源像素颠倒
 
 全分辨率双角色 57.95 ms / 17.3 fps（draw 48.49）
 半分辨率双角色 33.54 ms / 29.8 fps（draw 22.01 + present 5.47）
+
+---
+
+## 2026-11-16 20:00 — API 规范化（资产/实例/每帧绘制）
+
+### 新增文件
+
+- User/spine_api.h —— C 接口（资产、实例、绘制、世界重力）
+- User/spine_api.cpp —— 实现
+
+### 分层调整
+
+把 RawTexture / load_raw_texture / RawTextureLoader / blend_of / arena 从 spine_test.cpp
+移到 spine_platform.cpp/.h（平台层），测试文件只留基准与演示。
+
+### 两个 bug
+
+1. **heap_init 非幂等**：SpineMcuExtension 惰性构造时构造函数调 heap_init() 重置整个堆，
+   导致先分配的 asset 结构体被后分配的对象覆盖 → 虚表损坏 → HardFault(PC=0x28)。
+   修复：heap_init 幂等。
+2. **半分辨率变换未除 divisor**：实例 position/scale 是屏幕像素，画进 1/divisor 的缓冲
+   需乘 1/divisor，否则位置尺寸 ×2 且脏矩形错误。修复：新增 g_d.inv_divisor。
+
+### 验证
+
+[API] asset loaded: 7 animations | 1 textures
+[API] bounds=(-755,-1809)-(577,556) scale=0.093
+[API] 300 frames | 19.71 ms/frame (50.7 fps) | instances=2 queue=2
+[API] after free: instances=0
+[API] RESULT PASS
+
+画面：左右两个角色（左 swing 原色、右 wing-flap 带冷色 tint），位置正确。
+
+---
+
+## 2026-11-16 22:00 — 可移植封装（平台抽象层）
+
+### 新增
+
+- User/plat/plat_cfg.h —— 屏幕/缓冲/对齐/能力开关
+- User/plat/plat.h —— 六组共 17 个接口
+- User/plat/plat_stm32h7.c —— H743 实现（内存池/文件系统/LTDC/缓存/时间/日志/MPU）
+
+### 改造
+
+| 文件 | 改动 |
+|---|---|
+| spine_platform.cpp | 写死地址 -> plat_mem_pools；FatFs -> plat_file_* |
+| spine_api.cpp | LTDC 寄存器 -> plat_fb_present；cache 判断 -> plat_fb_need_cache_clean |
+| raster2d.cpp | SCB_CleanInvalidateDCache -> plat_cache_clean |
+| spine_test.cpp | fb_mpu_set -> plat_fb_set_cache_mode |
+
+### 接线时踩的坑
+
+_readFile 只替换了打开部分，读取部分仍用未初始化的 FIL -> HardFault（PC 在异常处理区）。
+补全后才通过。**教训：分步替换一个函数时必须整函数替换，不能只换一半。**
+
+### 验证（封装前后一致）
+
+| 测试 | 封装前 | 封装后 |
+|---|---|---|
+| 全分辨率双角色 | 57.85 / 17.3 fps | 57.89 / 17.3 fps |
+| 半分辨率双角色 | 33.46 / 29.9 fps | 33.65 / 29.7 fps |
+| API 双实例 | 19.71 / 50.7 fps | 19.80 / 50.5 fps |
+
+驱动/光栅/TGX 自检全 PASS，API RESULT PASS。
+
+---
+
+## 2026-11-16 23:30 — RTOS 适配（宏开关）
+
+### plat_cfg.h 新增
+
+PLAT_USE_RTOS       0 = 裸机 / 1 = RTOS
+PLAT_ENABLE_MEM_LOCK 1 = 分配器加递归互斥
+
+### plat.h 新增
+
+- plat_init()（RTOS 下建信号量、打开 LTDC 重装中断）
+- plat_fb_wait_ready()
+- plat_os_* 钩子：sem_create/take/give_isr、delay_ms、tick_ms、mem_lock
+- 裸机时全部为空宏，库代码无条件调用即可
+
+### plat_stm32h7.c
+
+- 等 vsync：裸机轮询 / RTOS 等信号量（让出 CPU）
+- delay / now_ms：按宏切换 HAL 或 OS
+- RTOS 下定义 LTDC_IRQHandler（RRIF -> give semaphore）
+- 分配器：heap_alloc/free 内部加锁（裸机为空）
+
+### 新增模板
+
+User/plat/plat_os_freertos.c.template —— FreeRTOS 适配，改名即用
+
+### 验证
+
+裸机模式真机验证：duo 57.87 / 33.57 ms，API 加载正常，与封装前一模一样。
+RTOS 模式未编译验证（工程里还没有 FreeRTOS），需接入后实测。

@@ -865,3 +865,287 @@ packed = a | (a << 16) | (b << 32) | (b << 48);
 |---|---|---|
 | 扫描线游程长度 | 全为 2 | **0% 奇数长度** ✓ |
 | 偶数列与右邻列相同 | 100% | **100.0%** ✓ |
+
+## 对外 API（已规范化）
+
+### 分层
+
+| 层 | 文件 | 职责 |
+|---|---|---|
+| **API 层** | `User/spine_api.h` / `.cpp` | 资产、实例、每帧绘制调度（本文档重点） |
+| 平台层 | `User/spine_platform.h` / `.cpp` | 分配器、资源区、纹理加载、FatFs、混合模式映射 |
+| 光栅层 | `Middlewares/RASTER/raster2d.*` | 扫描线光栅器（与平台无关） |
+| 动画层 | `Middlewares/SPINE` | spine-cpp 4.3 |
+
+测试/基准代码（`spine_test.cpp`）不再承担生产职责，只保留基准与演示。
+
+### 完整接口
+
+```c
+/* ---- 资产：加载一次，可被多个实例共享 ---- */
+spine_asset_t *spine_asset_load(const char *skel_path, const char *atlas_path);
+void           spine_asset_free(spine_asset_t *asset);
+int            spine_asset_anim_count(spine_asset_t *asset);
+const char    *spine_asset_anim_name(spine_asset_t *asset, int index);
+uint32_t       spine_asset_texture_bytes(spine_asset_t *asset);
+
+/* ---- 实例 ---- */
+spine_instance_t *spine_instance_create(spine_asset_t *asset);
+void              spine_instance_destroy(spine_instance_t *in);
+
+void spine_instance_play(spine_instance_t *in, const char *anim, int loop, int track);
+void spine_instance_stop(spine_instance_t *in, int track);
+void spine_instance_set_speed(spine_instance_t *in, float speed, int track);
+void spine_instance_set_time(spine_instance_t *in, float seconds, int track);
+
+void spine_instance_set_position(spine_instance_t *in, float x, float y);   /* 屏幕像素 */
+void spine_instance_set_scale(spine_instance_t *in, float scale);           /* 世界单位->像素 */
+void spine_instance_set_flip(spine_instance_t *in, int flip_x, int flip_y);
+void spine_instance_set_tint(spine_instance_t *in, uint32_t rgba8888);
+void spine_instance_set_alpha(spine_instance_t *in, uint8_t alpha);
+
+void spine_instance_update(spine_instance_t *in, float dt);                 /* 动画 + 物理 */
+int  spine_instance_get_bounds(spine_instance_t *in,
+                               float *x0, float *y0, float *x1, float *y1); /* 屏幕包围盒 */
+
+/* ---- 绘制 ---- */
+void spine_draw_begin(int divisor);                  /* 1=全分辨率 2=半分辨率 */
+void spine_instance_draw(spine_instance_t *in);      /* 调用顺序 = 层级 */
+void spine_draw_end(void);
+int  spine_draw_queue_count(void);
+
+/* ---- 世界重力 ---- */
+void  spine_world_set_gravity(float gx, float gy);
+float spine_world_get_gravity_x(void);
+float spine_world_get_gravity_y(void);
+int   spine_world_instance_count(void);
+```
+
+### 调用序列
+
+```c
+spine_asset_t *asset = spine_asset_load("/spine/hero.skel", "/spine/hero.atlas");
+spine_instance_t *hero  = spine_instance_create(asset);
+spine_instance_t *enemy = spine_instance_create(asset);      /* 同一资产，独立状态 */
+
+spine_instance_play(hero,  "swing",     1, 0);
+spine_instance_play(enemy, "wing-flap", 1, 0);
+
+/* 用包围盒把角色摆到想要的位置 */
+float x0, y0, x1, y1;
+spine_instance_get_bounds(hero, &x0, &y0, &x1, &y1);
+float s  = 220.0f / (y1 - y0);
+float cx = (x0 + x1) * 0.5f, cy = (y0 + y1) * 0.5f;
+spine_instance_set_scale(hero, s);
+spine_instance_set_position(hero, 210.0f - cx * s, 250.0f - cy * s);
+
+while (1) {
+    float dt = frame_dt();
+    spine_instance_update(hero,  dt);
+    spine_instance_update(enemy, dt);
+
+    spine_draw_begin(2);                  /* 半分辨率 */
+    spine_instance_draw(hero);
+    spine_instance_draw(enemy);           /* 后画 = 在上层 */
+    spine_draw_end();
+}
+```
+
+### 实测（真机，celestial-circus，两个实例）
+
+```
+[API] asset loaded: 7 animations | 1 textures
+[API] animations: eyeblink eyeblink-long stars swing wind-idle wing-flap wings-and-feet
+[API] texture bytes: 1048576
+[API] bounds=(-755,-1809)-(577,556) scale=0.093
+[API] 300 frames | 19.71 ms/frame (50.7 fps) | instances=2 queue=2
+[API] after free: instances=0
+[API] RESULT PASS
+```
+
+### 集成时踩的两个坑（都已修）
+
+#### 1) `heap_init()` 非幂等 → 同一块内存分配两次 → HardFault
+
+`SpineMcuExtension` 是**惰性构造**的，其构造函数里调用 `heap_init()`。
+API 层若先用 `spine_heap_alloc` 分配了 asset 结构体，随后第一次 `new` spine 对象
+触发扩展构造 → `heap_init()` **重置整个堆** → asset 所在块被判为空闲 → 下一个对象
+拿到**同一地址**，把 asset 覆盖 → 虚表被打坏 → 跳到 PC=0x28 的 HardFault。
+
+修复：`heap_init()` 幂等（`g_head != nullptr` 直接返回）。
+
+> 旧测试代码第一次分配就是 spine 对象，扩展先初始化，所以这个 bug 被掩盖了很久。
+
+#### 2) 半分辨率下实例变换没除以 divisor
+
+实例的 `position/scale` 是**屏幕像素**，但绘制目标是 `1/divisor` 大小的低分辨率缓冲。
+不换算的话，角色位置和尺寸都会 ×2，且脏矩形算在屏幕空间 → 只画出一部分。
+
+修复：`draw_one` 与 bbox 累加都乘 `1/divisor`（新增 `g_d.inv_divisor`）。
+`get_bounds` 仍返回**屏幕坐标**（对调用者最直观）。
+
+## 平台抽象层（PAL）：换平台只需重写一个文件
+
+### 文件
+
+| 文件 | 内容 |
+|---|---|
+| `User/plat/plat_cfg.h` | 屏幕尺寸、缓冲数、对齐、能力开关（**移植时改这个**） |
+| `User/plat/plat.h` | 六组接口声明（库与硬件之间唯一的耦合面） |
+| `User/plat/plat_stm32h7.c` | H743 实现（**换平台时重写这个**） |
+
+### 六组接口
+
+```c
+/* 1. 内存：库内分配器可移植，平台只提供两段内存 */
+void plat_mem_pools(void **heap, size_t *heap_size,
+                    void **arena, size_t *arena_size);
+
+/* 2. 文件系统 */
+int  plat_file_open(plat_file_t **f, const char *path);
+int  plat_file_read(plat_file_t *f, void *buf, size_t bytes, size_t *got);
+int  plat_file_size(plat_file_t *f, size_t *bytes);
+void plat_file_close(plat_file_t *f);
+
+/* 3. 显示 */
+int   plat_display_w(void);
+int   plat_display_h(void);
+int   plat_fb_count(void);
+void *plat_fb_addr(int index);
+void  plat_fb_present(void *fb);
+void  plat_fb_set_cache_mode(int mode);     /* 0=写回 1=非缓存 2=写穿 */
+int   plat_fb_need_cache_clean(void);
+
+/* 4. 缓存 */
+void plat_cache_clean(void *addr, size_t bytes);
+void plat_cache_invalidate(void *addr, size_t bytes);
+
+/* 5. 时间 */
+uint32_t plat_now_ms(void);
+uint64_t plat_now_us(void);
+void     plat_delay_ms(uint32_t ms);
+
+/* 6. 日志 */
+void plat_log(const char *fmt, ...);
+```
+
+共 **17 个函数**，全部是"每帧 / 每纹理"级别调用，**没有一个在每像素循环里**。
+
+### 改造后库内的依赖情况
+
+| 文件 | 之前 | 现在 |
+|---|---|---|
+| `spine_platform.cpp` | 写死 `0xC0200000` / `0xC0A00000`、FatFs `f_open/f_read` | `plat_mem_pools` / `plat_file_*` |
+| `spine_api.cpp` | `LTDC->CFBAR`、`SRCR=VBR`、`while(VBR)` | `plat_fb_present` |
+| `raster2d.cpp` | `SCB_CleanInvalidateDCache_by_Addr` | `plat_cache_clean` |
+| `spine_test.cpp` | MPU 配置 | `plat_fb_set_cache_mode` |
+
+库里已**没有任何绝对地址、没有寄存器访问、没有文件系统 API**。
+
+### 验证：封装前后性能完全一致
+
+| 测试 | 封装前 | 封装后 |
+|---|---|---|
+| 全分辨率双角色 | 57.85 ms / 17.3 fps | **57.89 ms / 17.3 fps** |
+| 半分辨率双角色 | 33.46 ms / 29.9 fps | **33.65 ms / 29.7 fps** |
+| API 双实例 | 19.71 ms / 50.7 fps | **19.80 ms / 50.5 fps** |
+| 加载 | 320 / 263 ms | 319.9 / 263.1 ms |
+| 驱动 + 光栅 + TGX 自检 | 全 PASS | 全 PASS |
+
+### 移植到新平台的步骤
+
+1. 复制 `plat_cfg.h`，改屏幕尺寸 / 缓冲数 / 对齐
+2. 新写 `plat_<platform>.c`，实现那 17 个函数
+3. 把新文件加进工程
+4. **库代码一行不改**
+
+ESP32-P4 的对应实现要点：
+
+| 接口 | P4 上怎么做 |
+|---|---|
+| `plat_mem_pools` | `heap_caps_malloc(MALLOC_CAP_SPIRAM)` 拿池 |
+| `plat_file_*` | VFS `fopen/fread` |
+| `plat_fb_*` | `esp_lcd_rgb_panel` 的 `num_fbs` + vsync 回调 |
+| `plat_cache_*` | `esp_cache_msync(..., C2M)` |
+| `plat_now_us` | `esp_timer_get_time()` |
+| `plat_fb_set_cache_mode` | 空实现（ESP 无 MPU 帧缓冲属性） |
+
+## RTOS 适配（PLAT_USE_RTOS 宏开关）
+
+### 一套代码两种模式
+
+`plat_cfg.h` 里：
+
+```c
+#define PLAT_USE_RTOS           0    /* 0 = 裸机，1 = RTOS */
+#define PLAT_ENABLE_MEM_LOCK    0    /* 1 = 多任务共享 spine 堆时打开 */
+```
+
+**裸机时所有 OS 钩子都是空宏**，库代码可以无条件调用，不需要 `#if`：
+
+```c
+#define plat_os_mem_lock()    do { } while (0)
+#define plat_os_sem_take(s, ms)  do { } while (0)
+```
+
+### 两种模式的差异
+
+| 行为 | 裸机（PLAT_USE_RTOS=0） | RTOS（=1） |
+|---|---|---|
+| 等垂直回扫 | `while (SRCR & VBR) {}` 轮询占满 CPU | 等 LTDC 重装中断的信号量，**让出 CPU** |
+| 延时 | `HAL_Delay` 忙等 | `vTaskDelay` |
+| 毫秒时基 | `HAL_GetTick` | `xTaskGetTickCount` |
+| 分配器 | 无锁 | `PLAT_ENABLE_MEM_LOCK` 时用递归互斥 |
+
+### RTOS 下必须做的三件事
+
+#### 1) HAL 时基挪出 SysTick
+
+FreeRTOS 独占 SysTick。若 HAL 还用 SysTick，`HAL_Delay` / `HAL_GetTick` 会与调度冲突
+（表现为随机卡死或延时不准）。
+
+> CubeMX：`SYS → Timebase Source` 改成 **TIM6** 或 **TIM7**。
+
+#### 2) 加入 OS 适配文件
+
+把 `User/plat/plat_os_freertos.c.template` 改名为 `plat_os_freertos.c` 加入工程，
+并把 `PLAT_USE_RTOS` 改成 1。它实现 `plat_os_sem_*` / `plat_os_delay_ms` /
+`plat_os_tick_ms` / `plat_os_mem_lock`。
+
+#### 3) LTDC 中断不要重复定义
+
+`plat_stm32h7.c` 在 RTOS 模式下已经定义了 `LTDC_IRQHandler`（寄存器重装中断 →
+给信号量）。工程里不要再定义同名函数。
+
+### 任务划分建议
+
+```
+┌────────────────────────────────────────────┐
+│  Render Task    优先级 高                   │
+│    update(dt) → draw_begin/draw/end        │
+│    （draw_end 里等 vsync 会让出 CPU）       │
+├────────────────────────────────────────────┤
+│  Loader Task    优先级 低                   │
+│    spine_asset_load()（SD 读较慢，别占着渲染）│
+├────────────────────────────────────────────┤
+│  GUI / 逻辑 Task 优先级 中                  │
+└────────────────────────────────────────────┘
+```
+
+**内存所有权规则（二选一）：**
+
+| 方案 | 说明 |
+|---|---|
+| **推荐**：加载只在 Loader 任务、渲染只在 Render 任务，用队列交接 | 零锁开销 |
+| 允许多任务调用 spine API | 打开 `PLAT_ENABLE_MEM_LOCK = 1`（递归互斥，每次分配多几微秒） |
+
+### 已验证 / 未验证
+
+| 项 | 状态 |
+|---|---|
+| 裸机模式（PLAT_USE_RTOS=0） | ✅ 真机验证，性能与封装前完全一致（57.87 / 33.57 ms） |
+| RTOS 模式（PLAT_USE_RTOS=1） | ⚠️ 代码路径已写好并加了宏隔离，但**工程里还没有 FreeRTOS**，未编译验证 |
+| LTDC 重装中断 → 信号量 | ⚠️ 同上，需要接入 FreeRTOS 后实测 |
+
+> 打开 RTOS 前建议先做一件事：确认 `LTDC->ISR` 的 `RRIF` 位确实会置位
+> （用轮询版跑一帧，读一次 ISR，即可验证中断源可用）。

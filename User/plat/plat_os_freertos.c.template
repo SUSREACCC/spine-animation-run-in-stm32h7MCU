@@ -1,0 +1,104 @@
+/**
+ ****************************************************************************************************
+ * @file        plat_os_freertos.c.template
+ * @brief       FreeRTOS 适配：实现 plat.h 里的 plat_os_* 钩子
+ *
+ * 用法：
+ *   1. 把本文件改名为 plat_os_freertos.c 并加入工程
+ *   2. 在 plat_cfg.h 里把 PLAT_USE_RTOS 改成 1
+ *   3. 如果需要多任务共享 spine 堆，再把 PLAT_ENABLE_MEM_LOCK 改成 1
+ *
+ * 关键点：
+ *   - HAL 时基必须挪出 SysTick（FreeRTOS 要独占 SysTick），
+ *     在 CubeMX 里把 Timebase Source 改成 TIM6/TIM7，
+ *     否则 HAL_Delay/HAL_GetTick 与 RTOS 调度冲突。
+ *   - LTDC 重装中断（LTDC_IRQHandler）已在 plat_stm32h7.c 里定义，
+ *     工程里不要再重复定义。
+ ****************************************************************************************************
+ */
+
+#include "plat.h"
+
+/* FreeRTOS 头（按工程实际路径调整） */
+#include "FreeRTOS.h"
+#include "task.h"
+#include "semphr.h"
+
+plat_sem_t plat_os_sem_create(int ready)
+{
+    SemaphoreHandle_t s = xSemaphoreCreateBinary();
+
+    if ((s != NULL) && ready)
+    {
+        xSemaphoreGive(s);
+    }
+
+    return (plat_sem_t)s;
+}
+
+void plat_os_sem_take(plat_sem_t s, uint32_t timeout_ms)
+{
+    if (s == NULL)
+    {
+        return;
+    }
+
+    /* 在中断里不能 take；这里只给任务用 */
+    if (xPortIsInsideInterrupt())
+    {
+        return;
+    }
+
+    (void)xSemaphoreTake((SemaphoreHandle_t)s, pdMS_TO_TICKS(timeout_ms));
+}
+
+void plat_os_sem_give_isr(plat_sem_t s)
+{
+    BaseType_t woken = pdFALSE;
+
+    if (s == NULL)
+    {
+        return;
+    }
+
+    xSemaphoreGiveFromISR((SemaphoreHandle_t)s, &woken);
+    portYIELD_FROM_ISR(woken);
+}
+
+void plat_os_delay_ms(uint32_t ms)
+{
+    vTaskDelay(pdMS_TO_TICKS(ms));
+}
+
+uint32_t plat_os_tick_ms(void)
+{
+    return (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS);
+}
+
+#if PLAT_ENABLE_MEM_LOCK
+
+/* 递归互斥：同一任务在解析过程中可能嵌套分配 */
+static SemaphoreHandle_t s_mem_mutex = NULL;
+
+void plat_os_mem_lock(void)
+{
+    if (s_mem_mutex == NULL)
+    {
+        s_mem_mutex = xSemaphoreCreateRecursiveMutex();
+    }
+
+    if (s_mem_mutex != NULL)
+    {
+        (void)xSemaphoreTakeRecursive(s_mem_mutex, portMAX_DELAY);
+    }
+}
+
+void plat_os_mem_unlock(void)
+{
+    if (s_mem_mutex != NULL)
+    {
+        (void)xSemaphoreGiveRecursive(s_mem_mutex);
+    }
+}
+
+#endif /* PLAT_ENABLE_MEM_LOCK */

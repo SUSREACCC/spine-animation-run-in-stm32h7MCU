@@ -1,0 +1,97 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_test.cpp(66): error: use of undeclared identifier 's_arena_used'
+    uint16_t *p = (uint16_t *)(ARENA_BASE + s_arena_used);
+                                            ^
+../../User/spine_test.cpp(68): error: unknown type name 's_arena_used'
+    s_arena_used += bytes;
+    ^
+../../User/spine_test.cpp(68): error: expected unqualified-id
+    s_arena_used += bytes;
+                 ^
+../../User/spine_test.cpp(69): error: expected unqualified-id
+    return p;
+    ^
+../../User/spine_test.cpp(70): error: extraneous closing brace ('}')
+}
+^
+../../User/spine_test.cpp(73): error: expected unqualified-id
+    if ((f_read(&fil, hdr, 16, &br) != FR_OK) || (br != 16) || (memcmp(hdr, "R2DT", 4) != 0))
+    ^
+../../User/spine_test.cpp(80): error: use of undeclared identifier 'hdr'
+    uint16_t w = (uint16_t)(hdr[4] | (hdr[5] << 8));
+                            ^
+../../User/spine_test.cpp(80): error: use of undeclared identifier 'hdr'
+    uint16_t w = (uint16_t)(hdr[4] | (hdr[5] << 8));
+                                      ^
+../../User/spine_test.cpp(81): error: use of undeclared identifier 'hdr'
+    uint16_t h = (uint16_t)(hdr[6] | (hdr[7] << 8));
+                            ^
+../../User/spine_test.cpp(81): error: use of undeclared identifier 'hdr'
+    uint16_t h = (uint16_t)(hdr[6] | (hdr[7] << 8));
+                                      ^
+../../User/spine_test.cpp(82): error: use of undeclared identifier 'hdr'
+    uint16_t fmt = (uint16_t)(hdr[8] | (hdr[9] << 8));
+                              ^
+../../User/spine_test.cpp(82): error: use of undeclared identifier 'hdr'
+    uint16_t fmt = (uint16_t)(hdr[8] | (hdr[9] << 8));
+                                        ^
+../../User/spine_test.cpp(83): error: use of undeclared identifier 'hdr'
+    uint32_t bytes = (uint32_t)hdr[12] | ((uint32_t)hdr[13] << 8) | ((uint32_t)hdr[14] << 16) | ((uint32_t)hdr[15] << 24);
+                               ^
+../../User/spine_test.cpp(83): error: use of undeclared identifier 'hdr'
+    uint32_t bytes = (uint32_t)hdr[12] | ((uint32_t)hdr[13] << 8) | ((uint32_t)hdr[14] << 16) | ((uint32_t)hdr[15] << 24);
+                                                    ^
+../../User/spine_test.cpp(83): error: use of undeclared identifier 'hdr'
+    uint32_t bytes = (uint32_t)hdr[12] | ((uint32_t)hdr[13] << 8) | ((uint32_t)hdr[14] << 16) | ((uint32_t)hdr[15] << 24);
+                                                                               ^
+../../User/spine_test.cpp(83): error: use of undeclared identifier 'hdr'
+    uint32_t bytes = (uint32_t)hdr[12] | ((uint32_t)hdr[13] << 8) | ((uint32_t)hdr[14] << 16) | ((uint32_t)hdr[15] << 24);
+                                                                                                           ^
+../../User/spine_test.cpp(85): error: expected unqualified-id
+    if (((fmt != 1u) && (fmt != 2u)) || (bytes != (uint32_t)w * h * 2u))
+    ^
+../../User/spine_test.cpp(94): error: expected unqualified-id
+    if (t == nullptr)
+    ^
+../../User/spine_test.cpp(102): error: expected unqualified-id
+    if (px == nullptr)
+    ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling spine_test.cpp...
+../../User/spine_platform.cpp(495): error: member access into incomplete type 'spine::AtlasPage'
+    page.texture = (void *)t;
+        ^
+../../Middlewares/SPINE/include\spine/TextureLoader.h(37): note: forward declaration of 'spine::AtlasPage'
+        class AtlasPage;
+              ^
+../../User/spine_platform.cpp(496): error: member access into incomplete type 'spine::AtlasPage'
+    page.width = t->w;
+        ^
+../../Middlewares/SPINE/include\spine/TextureLoader.h(37): note: forward declaration of 'spine::AtlasPage'
+        class AtlasPage;
+              ^
+../../User/spine_platform.cpp(497): error: member access into incomplete type 'spine::AtlasPage'
+    page.height = t->h;
+        ^
+../../Middlewares/SPINE/include\spine/TextureLoader.h(37): note: forward declaration of 'spine::AtlasPage'
+        class AtlasPage;
+              ^
+../../User/spine_platform.cpp(509): error: use of undeclared identifier 'RASTER_BLEND_ADD'
+        case spine::BlendMode_Additive: return RASTER_BLEND_ADD;
+                                               ^
+../../User/spine_platform.cpp(510): error: use of undeclared identifier 'RASTER_BLEND_MULTIPLY'
+        case spine::BlendMode_Multiply: return RASTER_BLEND_MULTIPLY;
+                                               ^
+../../User/spine_platform.cpp(511): error: use of undeclared identifier 'RASTER_BLEND_SCREEN'
+        case spine::BlendMode_Screen:   return RASTER_BLEND_SCREEN;
+                                               ^
+../../User/spine_platform.cpp(512): error: use of undeclared identifier 'RASTER_BLEND_NORMAL'
+        default:                        return RASTER_BLEND_NORMAL;
+                                               ^
+7 errors generated.
+compiling spine_platform.cpp...
+"..\..\Output\STM32H743.axf" - 26 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:02

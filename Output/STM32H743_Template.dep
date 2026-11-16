@@ -324,7 +324,7 @@ I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_usb.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd_ex.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_hcd.h)(0x643388D1)
-F (..\..\User\selftest.c)(0x6AF994A9)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -O1 -ffunction-sections -w -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers -I ../../Middlewares -I ../../User -I ../../Middlewares/SPINE/include-I./RTE/_Template-ID:/MDK5/ARM/CMSIS/Include-ID:/MDK5/ARM/PACK/Keil/STM32H7xx_DFP/4.1.3/Drivers/CMSIS/Device/ST/STM32H7xx/Include-D__UVISION_VERSION="524" -DSTM32H743xx -DSTM32H743xx -DUSE_HAL_DRIVER -DSPINE_NO_FILE_IO-o ../../output/selftest.o -MD)
+F (..\..\User\selftest.c)(0x6AFA994C)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -O1 -ffunction-sections -w -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers -I ../../Middlewares -I ../../User -I ../../Middlewares/SPINE/include-I./RTE/_Template-ID:/MDK5/ARM/CMSIS/Include-ID:/MDK5/ARM/PACK/Keil/STM32H7xx_DFP/4.1.3/Drivers/CMSIS/Device/ST/STM32H7xx/Include-D__UVISION_VERSION="524" -DSTM32H743xx -DSTM32H743xx -DUSE_HAL_DRIVER -DSPINE_NO_FILE_IO-o ../../output/selftest.o -MD)
 I (..\..\Drivers\.\SYSTEM\sys\sys.h)(0x6AF90E57)
 I (..\..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h7xx.h)(0x643388D1)
 I (..\..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h743xx.h)(0x643388D1)
@@ -446,40 +446,19 @@ I (..\..\Drivers\.\BSP\SDMMC\sdmmc_sdcard.h)(0x6AF90E57)
 I (..\..\Middlewares\.\FATFS\source\ff.h)(0x6AF90E57)
 I (..\..\Middlewares\.\FATFS\source\ffconf.h)(0x6AF90E57)
 I (D:\MDK5\ARM\ARMCLANG\include\string.h)(0x588CAFD2)
-I (..\..\User\tgx_selftest.h)(0x6AF91190)
-I (..\..\User\spine_test.h)(0x6AF99184)
+I (..\..\User\spine_test.h)(0x6AFA814B)
+I (..\..\User\spine_api.h)(0x6AFA8122)
+I (..\..\User\plat\plat.h)(0x6AFA8EC5)
+I (..\..\User\plat\plat_cfg.h)(0x6AFA8EB6)
 I (..\..\User\selftest.h)(0x6AF819C4)
-F (..\..\User\tgx_selftest.cpp)(0x6AF94294)(-xc++ -std=gnu++11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -O1 -ffunction-sections -w -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers -I ../../Middlewares -I ../../User -I ../../Middlewares/SPINE/include -std=c++1z -O3 -fno-exceptions -fno-rtti-I./RTE/_Template-ID:/MDK5/ARM/CMSIS/Include-ID:/MDK5/ARM/PACK/Keil/STM32H7xx_DFP/4.1.3/Drivers/CMSIS/Device/ST/STM32H7xx/Include-D__UVISION_VERSION="524" -DSTM32H743xx -DSTM32H743xx -DUSE_HAL_DRIVER -DSPINE_NO_FILE_IO-o ../../output/tgx_selftest.o -MD)
-I (..\..\Middlewares\.\TGX\tgx.h)(0x6AF93151)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdlib.h)(0x563E4BB6)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\__config)(0x58B875EA)
-I (D:\MDK5\ARM\ARMCLANG\include\stdlib.h)(0x588CAFDA)
-I (..\..\Middlewares\.\TGX\Misc.h)(0x6AF9111D)
-I (..\..\Middlewares\.\TGX\tgx_config.h)(0x6AF9111D)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdint.h)(0x57E9B0FE)
-I (D:\MDK5\ARM\ARMCLANG\include\stdint.h)(0x588CAFD2)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\math.h)(0x58A9C1F2)
-I (D:\MDK5\ARM\ARMCLANG\include\math.h)(0x58A47FFE)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\type_traits)(0x58B808AE)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\cstddef)(0x589D0B74)
-I (D:\MDK5\ARM\ARMCLANG\include\stddef.h)(0x588CAFD2)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\__nullptr)(0x586D95D2)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\string.h)(0x56BD28DE)
+F (..\..\User\plat\plat_stm32h7.c)(0x6AFA8ED0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -O1 -ffunction-sections -w -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers -I ../../Middlewares -I ../../User -I ../../Middlewares/SPINE/include-I./RTE/_Template-ID:/MDK5/ARM/CMSIS/Include-ID:/MDK5/ARM/PACK/Keil/STM32H7xx_DFP/4.1.3/Drivers/CMSIS/Device/ST/STM32H7xx/Include-D__UVISION_VERSION="524" -DSTM32H743xx -DSTM32H743xx -DUSE_HAL_DRIVER -DSPINE_NO_FILE_IO-o ../../output/plat_stm32h7.o -MD)
 I (D:\MDK5\ARM\ARMCLANG\include\string.h)(0x588CAFD2)
-I (..\..\Middlewares\.\TGX\Vec2.h)(0x6AF9111D)
-I (..\..\Middlewares\.\TGX\Vec3.h)(0x6AF9111D)
-I (..\..\Middlewares\.\TGX\Vec4.h)(0x6AF9111E)
-I (..\..\Middlewares\.\TGX\Box2.h)(0x6AF9111E)
-I (..\..\Middlewares\.\TGX\Color.h)(0x6AF9111E)
-I (..\..\Middlewares\.\TGX\Color.inl)(0x6AF9111E)
-I (..\..\Middlewares\.\TGX\Fonts.h)(0x6AF9111E)
-I (..\..\Middlewares\.\TGX\Image.h)(0x6AF9111E)
-I (..\..\Middlewares\.\TGX\ShaderParams.h)(0x6AF9111E)
-I (..\..\Middlewares\.\TGX\Shaders.h)(0x6AF93151)
-I (..\..\Middlewares\.\TGX\Rasterizer.h)(0x6AF9111E)
-I (..\..\Middlewares\.\TGX\bseg.h)(0x6AF9111E)
-I (..\..\Middlewares\.\TGX\Image.inl)(0x6AF9111E)
-I (..\..\User\tgx_selftest.h)(0x6AF91190)
+I (D:\MDK5\ARM\ARMCLANG\include\stdio.h)(0x588CAFD2)
+I (D:\MDK5\ARM\ARMCLANG\include\stdarg.h)(0x588CAFD0)
+I (..\..\User\plat\plat.h)(0x6AFA8EC5)
+I (D:\MDK5\ARM\ARMCLANG\include\stdint.h)(0x588CAFD2)
+I (D:\MDK5\ARM\ARMCLANG\include\stddef.h)(0x588CAFD2)
+I (..\..\User\plat\plat_cfg.h)(0x6AFA8EB6)
 I (..\..\Drivers\.\SYSTEM\sys\sys.h)(0x6AF90E57)
 I (..\..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h7xx.h)(0x643388D1)
 I (..\..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h743xx.h)(0x643388D1)
@@ -495,7 +474,7 @@ I (..\..\User\stm32h7xx_hal_conf.h)(0x643388CF)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_rcc.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_def.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h)(0x643388D1)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stddef.h)(0x589D0B74)
+I (D:\MDK5\ARM\ARMCLANG\include\math.h)(0x58A47FFE)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_rcc_ex.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_gpio.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_gpio_ex.h)(0x643388D1)
@@ -584,14 +563,12 @@ I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_usb.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd_ex.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_hcd.h)(0x643388D1)
-I (..\..\User\raster_probe.h)(0x6AF936B2)
-I (..\..\User\raster_test.h)(0x6AF938E4)
-I (..\..\Drivers\.\BSP\LCD\lcd.h)(0x6AF90E57)
-I (..\..\Drivers\.\BSP\LCD\ltdc.h)(0x6AF90E57)
-I (..\..\Drivers\.\SYSTEM\usart\usart.h)(0x6AF90E57)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdio.h)(0x561C442A)
-I (D:\MDK5\ARM\ARMCLANG\include\stdio.h)(0x588CAFD2)
 I (..\..\Drivers\.\SYSTEM\delay\delay.h)(0x6AF90E57)
+I (..\..\Drivers\.\BSP\LCD\lcd.h)(0x6AF90E57)
+I (D:\MDK5\ARM\ARMCLANG\include\stdlib.h)(0x588CAFDA)
+I (..\..\Drivers\.\BSP\LCD\ltdc.h)(0x6AF90E57)
+I (..\..\Middlewares\.\FATFS\source\ff.h)(0x6AF90E57)
+I (..\..\Middlewares\.\FATFS\source\ffconf.h)(0x6AF90E57)
 F (..\..\User\raster_probe.cpp)(0x6AF936B0)(-xc++ -std=gnu++11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -O1 -ffunction-sections -w -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers -I ../../Middlewares -I ../../User -I ../../Middlewares/SPINE/include -std=c++1z -O3 -fno-exceptions -fno-rtti-I./RTE/_Template-ID:/MDK5/ARM/CMSIS/Include-ID:/MDK5/ARM/PACK/Keil/STM32H7xx_DFP/4.1.3/Drivers/CMSIS/Device/ST/STM32H7xx/Include-D__UVISION_VERSION="524" -DSTM32H743xx -DSTM32H743xx -DUSE_HAL_DRIVER -DSPINE_NO_FILE_IO-o ../../output/raster_probe.o -MD)
 I (D:\MDK5\ARM\ARMCLANG\include\libcxx\math.h)(0x58A9C1F2)
 I (D:\MDK5\ARM\ARMCLANG\include\libcxx\__config)(0x58B875EA)
@@ -839,13 +816,13 @@ I (..\..\Drivers\.\SYSTEM\usart\usart.h)(0x6AF90E57)
 I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdio.h)(0x561C442A)
 I (D:\MDK5\ARM\ARMCLANG\include\stdio.h)(0x588CAFD2)
 I (..\..\Drivers\.\SYSTEM\delay\delay.h)(0x6AF90E57)
-F (..\..\User\spine_platform.cpp)(0x6AF97152)(-xc++ -std=gnu++11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -O1 -ffunction-sections -w -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers -I ../../Middlewares -I ../../User -I ../../Middlewares/SPINE/include -std=c++1z -O3 -fno-exceptions -fno-rtti-I./RTE/_Template-ID:/MDK5/ARM/CMSIS/Include-ID:/MDK5/ARM/PACK/Keil/STM32H7xx_DFP/4.1.3/Drivers/CMSIS/Device/ST/STM32H7xx/Include-D__UVISION_VERSION="524" -DSTM32H743xx -DSTM32H743xx -DUSE_HAL_DRIVER -DSPINE_NO_FILE_IO-o ../../output/spine_platform.o -MD)
+F (..\..\User\spine_platform.cpp)(0x6AFA8EDB)(-xc++ -std=gnu++11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -O1 -ffunction-sections -w -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers -I ../../Middlewares -I ../../User -I ../../Middlewares/SPINE/include -std=c++1z -O3 -fno-exceptions -fno-rtti-I./RTE/_Template-ID:/MDK5/ARM/CMSIS/Include-ID:/MDK5/ARM/PACK/Keil/STM32H7xx_DFP/4.1.3/Drivers/CMSIS/Device/ST/STM32H7xx/Include-D__UVISION_VERSION="524" -DSTM32H743xx -DSTM32H743xx -DUSE_HAL_DRIVER -DSPINE_NO_FILE_IO-o ../../output/spine_platform.o -MD)
 I (D:\MDK5\ARM\ARMCLANG\include\libcxx\string.h)(0x56BD28DE)
 I (D:\MDK5\ARM\ARMCLANG\include\libcxx\__config)(0x58B875EA)
 I (D:\MDK5\ARM\ARMCLANG\include\string.h)(0x588CAFD2)
 I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdio.h)(0x561C442A)
 I (D:\MDK5\ARM\ARMCLANG\include\stdio.h)(0x588CAFD2)
-I (..\..\User\spine_platform.h)(0x6AF97101)
+I (..\..\User\spine_platform.h)(0x6AFA8174)
 I (..\..\Drivers\.\SYSTEM\sys\sys.h)(0x6AF90E57)
 I (..\..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h7xx.h)(0x643388D1)
 I (..\..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h743xx.h)(0x643388D1)
@@ -958,24 +935,42 @@ I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_usb.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd_ex.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_hcd.h)(0x643388D1)
-I (..\..\Middlewares\.\FATFS\source\ff.h)(0x6AF90E57)
-I (..\..\Middlewares\.\FATFS\source\ffconf.h)(0x6AF90E57)
-I (..\..\Middlewares\SPINE\include\spine\Extension.h)(0x6AF94422)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdlib.h)(0x563E4BB6)
-I (D:\MDK5\ARM\ARMCLANG\include\stdlib.h)(0x588CAFDA)
-I (..\..\Middlewares\SPINE\include\spine\dll.h)(0x6AF94423)
-I (..\..\Middlewares\SPINE\include\spine\SpineString.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\TextureLoader.h)(0x6AF94423)
 I (..\..\Middlewares\SPINE\include\spine\SpineObject.h)(0x6AF94423)
 I (D:\MDK5\ARM\ARMCLANG\include\libcxx\new)(0x589E7D16)
 I (D:\MDK5\ARM\ARMCLANG\include\libcxx\exception)(0x58A8786A)
 I (D:\MDK5\ARM\ARMCLANG\include\libcxx\cstdlib)(0x5866FE3A)
-F (..\..\User\spine_test.cpp)(0x6AF992DF)(-xc++ -std=gnu++11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -O1 -ffunction-sections -w -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers -I ../../Middlewares -I ../../User -I ../../Middlewares/SPINE/include-I./RTE/_Template-ID:/MDK5/ARM/CMSIS/Include-ID:/MDK5/ARM/PACK/Keil/STM32H7xx_DFP/4.1.3/Drivers/CMSIS/Device/ST/STM32H7xx/Include-D__UVISION_VERSION="524" -DSTM32H743xx -DSTM32H743xx -DUSE_HAL_DRIVER -DSPINE_NO_FILE_IO-o ../../output/spine_test.o -MD)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdlib.h)(0x563E4BB6)
+I (D:\MDK5\ARM\ARMCLANG\include\stdlib.h)(0x588CAFDA)
+I (..\..\Middlewares\SPINE\include\spine\dll.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\SpineString.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Extension.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\BlendMode.h)(0x6AF94423)
+I (..\..\User\plat\plat.h)(0x6AFA8EC5)
+I (..\..\User\plat\plat_cfg.h)(0x6AFA8EB6)
+I (..\..\Middlewares\.\FATFS\source\ff.h)(0x6AF90E57)
+I (..\..\Middlewares\.\FATFS\source\ffconf.h)(0x6AF90E57)
+I (..\..\Middlewares\SPINE\include\spine\Atlas.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\Array.h)(0x6AF94423)
+I (D:\MDK5\ARM\ARMCLANG\include\assert.h)(0x58937040)
+I (..\..\Middlewares\SPINE\include\spine\HasRendererObject.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\TextureRegion.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\RTTI.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\MeshAttachment.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\Color.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\MathUtil.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Sequence.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\VertexAttachment.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Attachment.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\RegionAttachment.h)(0x6AF94423)
+I (..\..\Middlewares\.\RASTER\raster2d.h)(0x6AF95C92)
+F (..\..\User\spine_test.cpp)(0x6AFA8BC8)(-xc++ -std=gnu++11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -O1 -ffunction-sections -w -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers -I ../../Middlewares -I ../../User -I ../../Middlewares/SPINE/include-I./RTE/_Template-ID:/MDK5/ARM/CMSIS/Include-ID:/MDK5/ARM/PACK/Keil/STM32H7xx_DFP/4.1.3/Drivers/CMSIS/Device/ST/STM32H7xx/Include-D__UVISION_VERSION="524" -DSTM32H743xx -DSTM32H743xx -DUSE_HAL_DRIVER -DSPINE_NO_FILE_IO-o ../../output/spine_test.o -MD)
 I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdio.h)(0x561C442A)
 I (D:\MDK5\ARM\ARMCLANG\include\libcxx\__config)(0x58B875EA)
 I (D:\MDK5\ARM\ARMCLANG\include\stdio.h)(0x588CAFD2)
 I (D:\MDK5\ARM\ARMCLANG\include\libcxx\string.h)(0x56BD28DE)
 I (D:\MDK5\ARM\ARMCLANG\include\string.h)(0x588CAFD2)
-I (..\..\User\spine_test.h)(0x6AF99184)
+I (..\..\User\spine_test.h)(0x6AFA814B)
 I (..\..\Drivers\.\SYSTEM\sys\sys.h)(0x6AF90E57)
 I (..\..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h7xx.h)(0x643388D1)
 I (..\..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h743xx.h)(0x643388D1)
@@ -1088,25 +1083,29 @@ I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_usb.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd_ex.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_hcd.h)(0x643388D1)
-I (..\..\User\spine_platform.h)(0x6AF97101)
+I (..\..\User\spine_platform.h)(0x6AFA8174)
+I (..\..\Middlewares\SPINE\include\spine\TextureLoader.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\SpineObject.h)(0x6AF94423)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\new)(0x589E7D16)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\exception)(0x58A8786A)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\cstdlib)(0x5866FE3A)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdlib.h)(0x563E4BB6)
+I (D:\MDK5\ARM\ARMCLANG\include\stdlib.h)(0x588CAFDA)
+I (..\..\Middlewares\SPINE\include\spine\dll.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\SpineString.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Extension.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\BlendMode.h)(0x6AF94423)
+I (..\..\User\plat\plat.h)(0x6AFA8EC5)
+I (..\..\User\plat\plat_cfg.h)(0x6AFA8EB6)
 I (..\..\Drivers\.\SYSTEM\usart\usart.h)(0x6AF90E57)
 I (..\..\Drivers\.\SYSTEM\delay\delay.h)(0x6AF90E57)
 I (..\..\Drivers\.\BSP\LCD\lcd.h)(0x6AF90E57)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdlib.h)(0x563E4BB6)
-I (D:\MDK5\ARM\ARMCLANG\include\stdlib.h)(0x588CAFDA)
 I (..\..\Drivers\.\BSP\LCD\ltdc.h)(0x6AF90E57)
 I (..\..\Middlewares\.\RASTER\raster2d.h)(0x6AF95C92)
 I (..\..\Middlewares\.\FATFS\source\ff.h)(0x6AF90E57)
 I (..\..\Middlewares\.\FATFS\source\ffconf.h)(0x6AF90E57)
 I (..\..\Middlewares\SPINE\include\spine\Atlas.h)(0x6AF94422)
 I (..\..\Middlewares\SPINE\include\spine\Array.h)(0x6AF94423)
-I (..\..\Middlewares\SPINE\include\spine\Extension.h)(0x6AF94422)
-I (..\..\Middlewares\SPINE\include\spine\dll.h)(0x6AF94423)
-I (..\..\Middlewares\SPINE\include\spine\SpineObject.h)(0x6AF94423)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\new)(0x589E7D16)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\exception)(0x58A8786A)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\cstdlib)(0x5866FE3A)
-I (..\..\Middlewares\SPINE\include\spine\SpineString.h)(0x6AF94423)
 I (D:\MDK5\ARM\ARMCLANG\include\assert.h)(0x58937040)
 I (..\..\Middlewares\SPINE\include\spine\HasRendererObject.h)(0x6AF94423)
 I (..\..\Middlewares\SPINE\include\spine\TextureRegion.h)(0x6AF94423)
@@ -1144,7 +1143,6 @@ I (..\..\Middlewares\SPINE\include\spine\ArrayUtils.h)(0x6AF94423)
 I (..\..\Middlewares\SPINE\include\spine\Interpolation.h)(0x6AF94423)
 I (..\..\Middlewares\SPINE\include\spine\Slot.h)(0x6AF94423)
 I (..\..\Middlewares\SPINE\include\spine\SlotData.h)(0x6AF94423)
-I (..\..\Middlewares\SPINE\include\spine\BlendMode.h)(0x6AF94423)
 I (..\..\Middlewares\SPINE\include\spine\SlotPose.h)(0x6AF94423)
 I (..\..\Middlewares\SPINE\include\spine\Pose.h)(0x6AF94423)
 I (..\..\Middlewares\SPINE\include\spine\AnimationStateData.h)(0x6AF94423)
@@ -1160,7 +1158,196 @@ I (..\..\Middlewares\SPINE\include\spine\Bone.h)(0x6AF94422)
 I (..\..\Middlewares\SPINE\include\spine\PhysicsConstraintData.h)(0x6AF94423)
 I (..\..\Middlewares\SPINE\include\spine\PhysicsConstraintPose.h)(0x6AF94423)
 I (..\..\Middlewares\SPINE\include\spine\PhysicsConstraint.h)(0x6AF94422)
+F (..\..\User\spine_api.cpp)(0x6AFA8BAC)(-xc++ -std=gnu++11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -O1 -ffunction-sections -w -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers -I ../../Middlewares -I ../../User -I ../../Middlewares/SPINE/include-I./RTE/_Template-ID:/MDK5/ARM/CMSIS/Include-ID:/MDK5/ARM/PACK/Keil/STM32H7xx_DFP/4.1.3/Drivers/CMSIS/Device/ST/STM32H7xx/Include-D__UVISION_VERSION="524" -DSTM32H743xx -DSTM32H743xx -DUSE_HAL_DRIVER -DSPINE_NO_FILE_IO-o ../../output/spine_api.o -MD)
+I (..\..\User\spine_api.h)(0x6AFA8122)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdint.h)(0x57E9B0FE)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\__config)(0x58B875EA)
+I (D:\MDK5\ARM\ARMCLANG\include\stdint.h)(0x588CAFD2)
+I (..\..\User\spine_platform.h)(0x6AFA8174)
+I (..\..\Drivers\.\SYSTEM\sys\sys.h)(0x6AF90E57)
+I (..\..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h7xx.h)(0x643388D1)
+I (..\..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h743xx.h)(0x643388D1)
+I (..\..\Drivers\CMSIS\Include\core_cm7.h)(0x643388D1)
+I (..\..\Drivers\CMSIS\Include\cmsis_version.h)(0x643388D1)
+I (..\..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x6AF9109F)
+I (..\..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x643388D1)
+I (D:\MDK5\ARM\ARMCLANG\include\arm_compat.h)(0x57FC022C)
+I (..\..\Drivers\CMSIS\Include\mpu_armv7.h)(0x643388D1)
+I (..\..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\system_stm32h7xx.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal.h)(0x643388D1)
+I (..\..\User\stm32h7xx_hal_conf.h)(0x643388CF)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_rcc.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_def.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h)(0x643388D1)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stddef.h)(0x589D0B74)
+I (D:\MDK5\ARM\ARMCLANG\include\stddef.h)(0x588CAFD2)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\__nullptr)(0x586D95D2)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\math.h)(0x58A9C1F2)
+I (D:\MDK5\ARM\ARMCLANG\include\math.h)(0x58A47FFE)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\type_traits)(0x58B808AE)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\cstddef)(0x589D0B74)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_rcc_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_gpio.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_gpio_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_dma.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_dma_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_mdma.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_hash.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_dcmi.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_dma2d.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_dsi.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_dfsdm.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_dts.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_eth.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_eth_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_exti.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_cortex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_adc.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_adc.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_adc_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_fdcan.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_cec.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_comp.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_cordic.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_crc.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_crc_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_cryp.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_dac.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_dac_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_flash.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_flash_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_gfxmmu.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_fmac.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_hrtim.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_hsem.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_sram.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_fmc.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_nor.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_nand.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_i2c.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_i2c_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_i2s.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_iwdg.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_jpeg.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_mdios.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_mmc.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_sdmmc.h)(0x6AF81E68)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_mmc_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_lptim.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_ltdc.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_ltdc_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_opamp.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_opamp_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_ospi.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_otfdec.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pssi.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pwr.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pwr_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_qspi.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_ramecc.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_rng.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_rtc.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_rtc_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_sai.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_sai_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_sd.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_delayblock.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_sd_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_sdram.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_spi.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_spi_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_spdifrx.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_swpmi.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_tim.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_tim_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_uart.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_uart_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_usart.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_usart_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_irda.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_irda_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_smartcard.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_smartcard_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_smbus.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_wwdg.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_usb.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd_ex.h)(0x643388D1)
+I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_hcd.h)(0x643388D1)
 I (..\..\Middlewares\SPINE\include\spine\TextureLoader.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\SpineObject.h)(0x6AF94423)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\new)(0x589E7D16)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\exception)(0x58A8786A)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\cstdlib)(0x5866FE3A)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdlib.h)(0x563E4BB6)
+I (D:\MDK5\ARM\ARMCLANG\include\stdlib.h)(0x588CAFDA)
+I (..\..\Middlewares\SPINE\include\spine\dll.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\SpineString.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Extension.h)(0x6AF94422)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\string.h)(0x56BD28DE)
+I (D:\MDK5\ARM\ARMCLANG\include\string.h)(0x588CAFD2)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdio.h)(0x561C442A)
+I (D:\MDK5\ARM\ARMCLANG\include\stdio.h)(0x588CAFD2)
+I (..\..\Middlewares\SPINE\include\spine\BlendMode.h)(0x6AF94423)
+I (..\..\User\plat\plat.h)(0x6AFA8EC5)
+I (..\..\User\plat\plat_cfg.h)(0x6AFA8EB6)
+I (..\..\Drivers\.\BSP\LCD\lcd.h)(0x6AF90E57)
+I (..\..\Drivers\.\BSP\LCD\ltdc.h)(0x6AF90E57)
+I (..\..\Middlewares\.\RASTER\raster2d.h)(0x6AF95C92)
+I (..\..\Middlewares\SPINE\include\spine\Atlas.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\Array.h)(0x6AF94423)
+I (D:\MDK5\ARM\ARMCLANG\include\assert.h)(0x58937040)
+I (..\..\Middlewares\SPINE\include\spine\HasRendererObject.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\TextureRegion.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\RTTI.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\MeshAttachment.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\Color.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\MathUtil.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Sequence.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\VertexAttachment.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Attachment.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\RegionAttachment.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\AtlasAttachmentLoader.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\AttachmentLoader.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\SkeletonBinary.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Inherit.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\BoneTimeline.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\CurveTimeline.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Timeline.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Property.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\SkeletonData.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\ConstraintData.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\PosedData.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Skeleton.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Physics.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\Update.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Posed.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Constraint.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\PosedActive.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\DrawOrder.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\Animation.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\Map.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\AnimationState.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Pool.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\ArrayUtils.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Interpolation.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Slot.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\SlotData.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\SlotPose.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Pose.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\AnimationStateData.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\SkeletonRenderer.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\BlockAllocator.h)(0x6AF94423)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\cstdint)(0x551CD06A)
+I (..\..\Middlewares\SPINE\include\spine\SkeletonClipping.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Triangulator.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\Bone.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\BoneData.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\BonePose.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\BoneLocal.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\PhysicsConstraint.h)(0x6AF94422)
+I (..\..\Middlewares\SPINE\include\spine\PhysicsConstraintData.h)(0x6AF94423)
+I (..\..\Middlewares\SPINE\include\spine\PhysicsConstraintPose.h)(0x6AF94423)
 F (..\..\Drivers\SYSTEM\delay\delay.c)(0x6AF90E57)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -O1 -ffunction-sections -w -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers -I ../../Middlewares -I ../../User -I ../../Middlewares/SPINE/include-I./RTE/_Template-ID:/MDK5/ARM/CMSIS/Include-ID:/MDK5/ARM/PACK/Keil/STM32H7xx_DFP/4.1.3/Drivers/CMSIS/Device/ST/STM32H7xx/Include-D__UVISION_VERSION="524" -DSTM32H743xx -DSTM32H743xx -DUSE_HAL_DRIVER -DSPINE_NO_FILE_IO-o ../../output/delay.o -MD)
 I (..\..\Drivers\.\SYSTEM\sys\sys.h)(0x6AF90E57)
 I (..\..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h7xx.h)(0x643388D1)
@@ -5364,43 +5551,7 @@ I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_usb.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_pcd_ex.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_hcd.h)(0x643388D1)
 I (..\..\Drivers\.\BSP\NORFLASH\norflash.h)(0x6AF90E57)
-F (..\..\Middlewares\TGX\Color.cpp)(0x6AF9111E)(-xc++ -std=gnu++11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -O1 -ffunction-sections -w -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers -I ../../Middlewares -I ../../User -I ../../Middlewares/SPINE/include -std=c++1z -O3 -fno-exceptions -fno-rtti-I./RTE/_Template-ID:/MDK5/ARM/CMSIS/Include-ID:/MDK5/ARM/PACK/Keil/STM32H7xx_DFP/4.1.3/Drivers/CMSIS/Device/ST/STM32H7xx/Include-D__UVISION_VERSION="524" -DSTM32H743xx -DSTM32H743xx -DUSE_HAL_DRIVER -DSPINE_NO_FILE_IO-o ../../output/color.o -MD)
-I (..\..\Middlewares\TGX\Color.h)(0x6AF9111E)
-I (..\..\Middlewares\TGX\Misc.h)(0x6AF9111D)
-I (..\..\Middlewares\TGX\tgx_config.h)(0x6AF9111D)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdint.h)(0x57E9B0FE)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\__config)(0x58B875EA)
-I (D:\MDK5\ARM\ARMCLANG\include\stdint.h)(0x588CAFD2)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\math.h)(0x58A9C1F2)
-I (D:\MDK5\ARM\ARMCLANG\include\math.h)(0x58A47FFE)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\type_traits)(0x58B808AE)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\cstddef)(0x589D0B74)
-I (D:\MDK5\ARM\ARMCLANG\include\stddef.h)(0x588CAFD2)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\__nullptr)(0x586D95D2)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\string.h)(0x56BD28DE)
-I (D:\MDK5\ARM\ARMCLANG\include\string.h)(0x588CAFD2)
-I (..\..\Middlewares\TGX\Vec3.h)(0x6AF9111D)
-I (..\..\Middlewares\TGX\Vec2.h)(0x6AF9111D)
-I (..\..\Middlewares\TGX\Vec4.h)(0x6AF9111E)
-I (..\..\Middlewares\TGX\Color.inl)(0x6AF9111E)
-F (..\..\Middlewares\TGX\Fonts.cpp)(0x6AF9111E)(-xc++ -std=gnu++11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -O1 -ffunction-sections -w -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers -I ../../Middlewares -I ../../User -I ../../Middlewares/SPINE/include -std=c++1z -O3 -fno-exceptions -fno-rtti-I./RTE/_Template-ID:/MDK5/ARM/CMSIS/Include-ID:/MDK5/ARM/PACK/Keil/STM32H7xx_DFP/4.1.3/Drivers/CMSIS/Device/ST/STM32H7xx/Include-D__UVISION_VERSION="524" -DSTM32H743xx -DSTM32H743xx -DUSE_HAL_DRIVER -DSPINE_NO_FILE_IO-o ../../output/fonts.o -MD)
-I (..\..\Middlewares\TGX\Fonts.h)(0x6AF9111E)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdint.h)(0x57E9B0FE)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\__config)(0x58B875EA)
-I (D:\MDK5\ARM\ARMCLANG\include\stdint.h)(0x588CAFD2)
-I (..\..\Middlewares\TGX\Misc.h)(0x6AF9111D)
-I (..\..\Middlewares\TGX\tgx_config.h)(0x6AF9111D)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\math.h)(0x58A9C1F2)
-I (D:\MDK5\ARM\ARMCLANG\include\math.h)(0x58A47FFE)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\type_traits)(0x58B808AE)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\cstddef)(0x589D0B74)
-I (D:\MDK5\ARM\ARMCLANG\include\stddef.h)(0x588CAFD2)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\__nullptr)(0x586D95D2)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\string.h)(0x56BD28DE)
-I (D:\MDK5\ARM\ARMCLANG\include\string.h)(0x588CAFD2)
-I (..\..\Middlewares\TGX\Vec2.h)(0x6AF9111D)
-I (..\..\Middlewares\TGX\Box2.h)(0x6AF9111E)
-F (..\..\Middlewares\RASTER\raster2d.cpp)(0x6AF9941B)(-xc++ -std=gnu++11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -O1 -ffunction-sections -w -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers -I ../../Middlewares -I ../../User -I ../../Middlewares/SPINE/include -std=c++1z -O3 -fno-exceptions -fno-rtti-I./RTE/_Template-ID:/MDK5/ARM/CMSIS/Include-ID:/MDK5/ARM/PACK/Keil/STM32H7xx_DFP/4.1.3/Drivers/CMSIS/Device/ST/STM32H7xx/Include-D__UVISION_VERSION="524" -DSTM32H743xx -DSTM32H743xx -DUSE_HAL_DRIVER -DSPINE_NO_FILE_IO-o ../../output/raster2d.o -MD)
+F (..\..\Middlewares\RASTER\raster2d.cpp)(0x6AFA8BAA)(-xc++ -std=gnu++11 --target=arm-arm-none-eabi -mcpu=cortex-m7 -mfpu=fpv5-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -O1 -ffunction-sections -w -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/CMSIS/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers -I ../../Middlewares -I ../../User -I ../../Middlewares/SPINE/include -std=c++1z -O3 -fno-exceptions -fno-rtti-I./RTE/_Template-ID:/MDK5/ARM/CMSIS/Include-ID:/MDK5/ARM/PACK/Keil/STM32H7xx_DFP/4.1.3/Drivers/CMSIS/Device/ST/STM32H7xx/Include-D__UVISION_VERSION="524" -DSTM32H743xx -DSTM32H743xx -DUSE_HAL_DRIVER -DSPINE_NO_FILE_IO-o ../../output/raster2d.o -MD)
 I (D:\MDK5\ARM\ARMCLANG\include\libcxx\math.h)(0x58A9C1F2)
 I (D:\MDK5\ARM\ARMCLANG\include\libcxx\__config)(0x58B875EA)
 I (D:\MDK5\ARM\ARMCLANG\include\math.h)(0x58A47FFE)
@@ -5413,6 +5564,9 @@ I (D:\MDK5\ARM\ARMCLANG\include\string.h)(0x588CAFD2)
 I (..\..\Middlewares\RASTER\raster2d.h)(0x6AF95C92)
 I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stdint.h)(0x57E9B0FE)
 I (D:\MDK5\ARM\ARMCLANG\include\stdint.h)(0x588CAFD2)
+I (..\..\User\plat\plat.h)(0x6AFA8EC5)
+I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stddef.h)(0x589D0B74)
+I (..\..\User\plat\plat_cfg.h)(0x6AFA8EB6)
 I (..\..\Drivers\.\SYSTEM\sys\sys.h)(0x6AF90E57)
 I (..\..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h7xx.h)(0x643388D1)
 I (..\..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h743xx.h)(0x643388D1)
@@ -5428,7 +5582,6 @@ I (..\..\User\stm32h7xx_hal_conf.h)(0x643388CF)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_rcc.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_def.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h)(0x643388D1)
-I (D:\MDK5\ARM\ARMCLANG\include\libcxx\stddef.h)(0x589D0B74)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_rcc_ex.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_gpio.h)(0x643388D1)
 I (..\..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_gpio_ex.h)(0x643388D1)

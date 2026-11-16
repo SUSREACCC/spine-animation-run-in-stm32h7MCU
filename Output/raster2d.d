@@ -10,8 +10,9 @@
   D:\MDK5\ARM\ARMCLANG\Bin\..\include\string.h \
   ../../Middlewares/RASTER/raster2d.h \
   D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\stdint.h \
-  D:\MDK5\ARM\ARMCLANG\Bin\..\include\stdint.h \
-  ../../Drivers\./SYSTEM/sys/sys.h \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\stdint.h ../../User\plat/plat.h \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\stddef.h \
+  ../../User\plat/plat_cfg.h ../../Drivers\./SYSTEM/sys/sys.h \
   ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include\stm32h7xx.h \
   ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h \
   ../../Drivers/CMSIS/Include\core_cm7.h \
@@ -26,7 +27,6 @@
   ../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_rcc.h \
   ../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h \
   ../../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h \
-  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\stddef.h \
   ../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc_ex.h \
   ../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_gpio.h \
   ../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio_ex.h \

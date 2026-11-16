@@ -22,6 +22,7 @@
 
 #include "spine_test.h"
 #include "spine_platform.h"
+#include "plat/plat.h"
 
 extern "C"
 {
@@ -55,165 +56,21 @@ extern "C"
 #define FB_ADDR     0xC0000000u
 #define ARENA_BASE  SPINE_ARENA_BASE
 
-#define TEXTURE_DIR "/spine/"
 #define SPINE_MAX_VERTS 8192
 
 /*----------------------------------------------------------------- 原始纹理 */
 
-struct RawTexture
-{
-    uint16_t        w;
-    uint16_t        h;
-    uint16_t        fmt;        /* 1 = ARGB1555, 2 = ARGB4444（来自 .raw 文件头） */
-    const uint16_t *px;
-};
 
-static uint32_t s_arena_used = 0;
 
-static uint16_t *arena_alloc(uint32_t bytes)
-{
-    bytes = (bytes + 3u) & ~3u;
 
-    if ((s_arena_used + bytes) > SPINE_ARENA_SIZE)
-    {
-        return nullptr;
-    }
-
-    uint16_t *p = (uint16_t *)(ARENA_BASE + s_arena_used);
-
-    s_arena_used += bytes;
-    return p;
-}
-
-static const RawTexture *load_raw_texture(const char *raw_path)
-{
-    FIL     fil;
-    UINT    br = 0;
-    uint8_t hdr[16];
-
-    if ((f_open(&fil, raw_path, FA_READ) != FR_OK) &&
-        ((strrchr(raw_path, '/') == nullptr) ||
-         (f_open(&fil, strrchr(raw_path, '/') + 1, FA_READ) != FR_OK)))
-    {
-        printf("[SPN] cannot open %s\r\n", raw_path);
-        return nullptr;
-    }
-
-    if ((f_read(&fil, hdr, 16, &br) != FR_OK) || (br != 16) || (memcmp(hdr, "R2DT", 4) != 0))
-    {
-        f_close(&fil);
-        printf("[SPN] bad header in %s\r\n", raw_path);
-        return nullptr;
-    }
-
-    uint16_t w = (uint16_t)(hdr[4] | (hdr[5] << 8));
-    uint16_t h = (uint16_t)(hdr[6] | (hdr[7] << 8));
-    uint16_t fmt = (uint16_t)(hdr[8] | (hdr[9] << 8));
-    uint32_t bytes = (uint32_t)hdr[12] | ((uint32_t)hdr[13] << 8) | ((uint32_t)hdr[14] << 16) | ((uint32_t)hdr[15] << 24);
-
-    if (((fmt != 1u) && (fmt != 2u)) || (bytes != (uint32_t)w * h * 2u))
-    {
-        f_close(&fil);
-        printf("[SPN] unsupported raw texture %s (fmt=%u bytes=%lu)\r\n", raw_path, fmt, (unsigned long)bytes);
-        return nullptr;
-    }
-
-    RawTexture *t = (RawTexture *)arena_alloc(sizeof(RawTexture));
-
-    if (t == nullptr)
-    {
-        f_close(&fil);
-        return nullptr;
-    }
-
-    uint16_t *px = arena_alloc(bytes);
-
-    if (px == nullptr)
-    {
-        f_close(&fil);
-        return nullptr;
-    }
-
-    if ((f_read(&fil, px, bytes, &br) != FR_OK) || (br != bytes))
-    {
-        f_close(&fil);
-        printf("[SPN] short read in %s\r\n", raw_path);
-        return nullptr;
-    }
-
-    f_close(&fil);
-
-    t->w = w;
-    t->h = h;
-    t->fmt = fmt;
-    t->px = px;
-
-    printf("[SPN] texture %s : %ux%u %s\r\n", raw_path, w, h,
-           (fmt == 2u) ? "ARGB4444" : "ARGB1555");
-    return t;
-}
 
 /*----------------------------------------------------------------- TextureLoader */
 
-class RawTextureLoader : public spine::TextureLoader
-{
-public:
-    void load(spine::AtlasPage &page, const spine::String &path) override
-    {
-        char raw[128];
-        int  n = path.length();
-
-        if ((n <= 0) || (n >= 120))
-        {
-            return;
-        }
-
-        /* 把 "xxx.png" 换成 "/spine/xxx.raw" */
-        const char *base = path.buffer();
-        const char *slash = strrchr(base, '/');
-        const char *name = slash ? (slash + 1) : base;
-
-        snprintf(raw, sizeof(raw), "%s%s", TEXTURE_DIR, name);
-
-        char *dot = strrchr(raw, '.');
-
-        if (dot != nullptr)
-        {
-            strcpy(dot, ".raw");
-        }
-
-        const RawTexture *t = load_raw_texture(raw);
-
-        if (t == nullptr)
-        {
-            return;
-        }
-
-        page.texture = (void *)t;
-        page.width = t->w;
-        page.height = t->h;
-    }
-
-    void unload(void *texture) override
-    {
-        (void)texture;
-    }
-};
 
 /*----------------------------------------------------------------- 渲染 */
 
 static raster_surface_t s_surf;
 
-static inline uint8_t blend_of(spine::BlendMode m)
-{
-    switch (m)
-    {
-        case spine::BlendMode_Additive: return RASTER_BLEND_ADD;
-        case spine::BlendMode_Multiply: return RASTER_BLEND_MULTIPLY;
-        case spine::BlendMode_Screen:   return RASTER_BLEND_SCREEN;
-        default:                        return RASTER_BLEND_NORMAL;
-    }
-}
 
 static raster_vertex_t *s_verts = nullptr;
 
@@ -307,7 +164,7 @@ static void draw_commands(spine::RenderCommand *cmd, float scale, float ox, floa
             }
 
             raster_mesh(surf, &rt, verts, n, cmd->indices, cmd->numIndices,
-                        (raster_blend_t)blend_of(cmd->blendMode), 255);
+                        (raster_blend_t)spine_blend_of(cmd->blendMode), 255);
         }
 
         cmd = cmd->next;
@@ -331,8 +188,8 @@ extern "C" uint8_t spine_test_run(const char *skel_path, const char *atlas_path,
     s_surf.clip_x1 = SCR_W - 1;
     s_surf.clip_y1 = SCR_H - 1;
 
-    s_arena_used = 0;
-    s_verts = (raster_vertex_t *)arena_alloc(sizeof(raster_vertex_t) * SPINE_MAX_VERTS);
+    spine_arena_reset();
+    s_verts = (raster_vertex_t *)spine_arena_alloc(sizeof(raster_vertex_t) * SPINE_MAX_VERTS);
 
     if (s_verts == nullptr)
     {
@@ -465,7 +322,7 @@ extern "C" uint8_t spine_test_run(const char *skel_path, const char *atlas_path,
     printf("[SPN] diag: cmds=%d verts=%d nullTex=%d bbox=(%.0f,%.0f)-(%.0f,%.0f)\r\n",
            g_cmds, g_verts, g_nulltex, g_minx, g_miny, g_maxx, g_maxy);
     printf("[SPN] %d frames, %.2f ms/frame (%.1f fps), arena=%lu B\r\n",
-           frames, ms, (ms > 0.0f) ? (1000.0f / ms) : 0.0f, (unsigned long)s_arena_used);
+           frames, ms, (ms > 0.0f) ? (1000.0f / ms) : 0.0f, (unsigned long)spine_arena_used());
 
     spine_heap_stats_t st;
     spine_heap_get_stats(&st);
@@ -492,8 +349,8 @@ extern "C" uint8_t spine_anim_sheet(const char *skel_path, const char *atlas_pat
     s_surf.clip_x1 = SCR_W - 1;
     s_surf.clip_y1 = SCR_H - 1;
 
-    s_arena_used = 0;
-    s_verts = (raster_vertex_t *)arena_alloc(sizeof(raster_vertex_t) * SPINE_MAX_VERTS);
+    spine_arena_reset();
+    s_verts = (raster_vertex_t *)spine_arena_alloc(sizeof(raster_vertex_t) * SPINE_MAX_VERTS);
 
     if (s_verts == nullptr)
     {
@@ -769,8 +626,8 @@ extern "C" uint8_t spine_play(const char *skel_path, const char *atlas_path,
     printf("\r\n[SPN] playback: %s @ %d fps for %d s | render %dx%d (1/%d pixels)\r\n",
            anim, fps, seconds, RW, RH, divisor * divisor);
 
-    s_arena_used = 0;
-    s_verts = (raster_vertex_t *)arena_alloc(sizeof(raster_vertex_t) * SPINE_MAX_VERTS);
+    spine_arena_reset();
+    s_verts = (raster_vertex_t *)spine_arena_alloc(sizeof(raster_vertex_t) * SPINE_MAX_VERTS);
 
     if (s_verts == nullptr)
     {
@@ -860,7 +717,7 @@ extern "C" uint8_t spine_play(const char *skel_path, const char *atlas_path,
 
     for (int i = 0; i < 3; i++)
     {
-        lows[i] = (uint16_t *)arena_alloc((uint32_t)RW * RH * 2u);
+        lows[i] = (uint16_t *)spine_arena_alloc((uint32_t)RW * RH * 2u);
 
         if (lows[i] == nullptr)
         {
@@ -1136,12 +993,12 @@ extern "C" uint8_t spine_play_duo(const char *skel_path, const char *atlas_path,
         uint32_t t_load0 = DWT->CYCCNT;
 
         /* 每次迭代都重新从文件加载 */
-        s_arena_used = 0;
-        s_verts = (raster_vertex_t *)arena_alloc(sizeof(raster_vertex_t) * SPINE_MAX_VERTS);
+        spine_arena_reset();
+        s_verts = (raster_vertex_t *)spine_arena_alloc(sizeof(raster_vertex_t) * SPINE_MAX_VERTS);
 
         for (int i = 0; i < 3; i++)
         {
-            lows[i] = (uint16_t *)arena_alloc((uint32_t)RW * RH * 2u);
+            lows[i] = (uint16_t *)spine_arena_alloc((uint32_t)RW * RH * 2u);
         }
 
         if ((s_verts == nullptr) || (lows[0] == nullptr) || (lows[1] == nullptr) || (lows[2] == nullptr))
@@ -1212,8 +1069,6 @@ extern "C" uint8_t spine_play_duo(const char *skel_path, const char *atlas_path,
         spine::AnimationState *stA = new spine::AnimationState(asdA);
         spine::AnimationState *stB = new spine::AnimationState(asdB);
 
-        spine_register_skeleton(skA);            /* 加入世界重力注册表 */
-        spine_register_skeleton(skB);
 
         skA->setupPose();
         skA->updateWorldTransform(spine::Physics_Update);
@@ -1412,8 +1267,6 @@ extern "C" uint8_t spine_play_duo(const char *skel_path, const char *atlas_path,
                (double)wall_ms, tag,
                (unsigned long)hs1.used_bytes, (unsigned long)hs1.fail_count);
 
-        spine_unregister_skeleton(skA);
-        spine_unregister_skeleton(skB);
 
         delete stA;
         delete stB;
@@ -1451,32 +1304,8 @@ int g_fb_write_through = 0;
 
 extern "C" void fb_mpu_set(int mode)
 {
+    plat_fb_set_cache_mode(mode);       /* 帧缓冲缓存属性由平台层管理 */
     g_fb_write_through = (mode == 2);
-    uint32_t attr = (3u << 24);                  /* AP = full access, XN = 0 */
-
-    if (mode == 0)
-    {
-        attr |= (1u << 17) | (1u << 16);         /* write-back: C=1 B=1 */
-    }
-    else if (mode == 2)
-    {
-        attr |= (1u << 17);                      /* write-through: C=1 B=0 */
-    }
-    /* mode 1: non-cacheable, 无 C/B */
-
-    HAL_MPU_Disable();
-    MPU->RNR = 8u;
-    MPU->RBAR = 0xC0000000u;
-    MPU->RASR = (1u << 0) | (0x14u << 1) | attr; /* 2 MB */
-    MPU->RNR = 9u;
-    MPU->RBAR = 0xC1A00000u;
-    MPU->RASR = (1u << 0) | (0x13u << 1) | attr; /* 1 MB */
-    MPU->RNR = 10u;
-    MPU->RBAR = 0xC1B00000u;
-    MPU->RASR = (1u << 0) | (0x13u << 1) | attr; /* 1 MB */
-    HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
-
-    SCB_CleanInvalidateDCache();
 }
 
 static float fb_bw_fill32(void)
@@ -1542,16 +1371,9 @@ extern "C" void fb_bench(void)
     fb_mpu_set(0);                               /* 恢复默认，供后续测试使用 */
 }
 
-/*----------------------------------------------------------------- 世界级重力 */
+/*----------------------------------------------------------------- 重力（演示用） */
 
-#define GRAV_REG_MAX 32
-
-static spine::Skeleton *g_grav_reg[GRAV_REG_MAX];
-static int              g_grav_reg_count = 0;
-static float            g_world_gx = 0.0f;
-static float            g_world_gy = 1.0f;
-
-extern "C" void spine_set_gravity(spine::Skeleton *skel, float gx, float gy)
+static void set_skel_gravity(spine::Skeleton *skel, float gx, float gy)
 {
     if (skel != nullptr)
     {
@@ -1560,76 +1382,6 @@ extern "C" void spine_set_gravity(spine::Skeleton *skel, float gx, float gy)
     }
 }
 
-/** 世界重力：保存并立即同步到所有已注册骨架。 */
-extern "C" void spine_world_set_gravity(float gx, float gy)
-{
-    g_world_gx = gx;
-    g_world_gy = gy;
-
-    for (int i = 0; i < g_grav_reg_count; i++)
-    {
-        spine::Skeleton *sk = g_grav_reg[i];
-
-        if (sk != nullptr)
-        {
-            sk->setGravityX(gx);
-            sk->setGravityY(gy);
-        }
-    }
-}
-
-extern "C" float spine_world_get_gravity_x(void) { return g_world_gx; }
-extern "C" float spine_world_get_gravity_y(void) { return g_world_gy; }
-
-/** 注册骨架：立刻套用当前世界重力，之后世界重力变化会自动同步。 */
-extern "C" void spine_register_skeleton(void *skel)
-{
-    spine::Skeleton *sk = (spine::Skeleton *)skel;
-
-    if (sk == nullptr)
-    {
-        return;
-    }
-
-    for (int i = 0; i < g_grav_reg_count; i++)
-    {
-        if (g_grav_reg[i] == sk)
-        {
-            return;                     /* 已注册 */
-        }
-    }
-
-    if (g_grav_reg_count >= GRAV_REG_MAX)
-    {
-        printf("[GRAV] registry full (%d)\r\n", GRAV_REG_MAX);
-        return;
-    }
-
-    sk->setGravityX(g_world_gx);
-    sk->setGravityY(g_world_gy);
-    g_grav_reg[g_grav_reg_count++] = sk;
-}
-
-extern "C" void spine_unregister_skeleton(void *skel)
-{
-    spine::Skeleton *sk = (spine::Skeleton *)skel;
-
-    for (int i = 0; i < g_grav_reg_count; i++)
-    {
-        if (g_grav_reg[i] == sk)
-        {
-            for (int j = i; j < (g_grav_reg_count - 1); j++)
-            {
-                g_grav_reg[j] = g_grav_reg[j + 1];
-            }
-            g_grav_reg_count--;
-            g_grav_reg[g_grav_reg_count] = nullptr;
-            return;
-        }
-    }
-}
-
-extern "C" int spine_gravity_registry_count(void) { return g_grav_reg_count; }
 
 extern "C" void spine_dump_bones(spine::Skeleton *skel)
 {
@@ -1662,8 +1414,8 @@ extern "C" uint8_t spine_gravity_test(const char *skel_path, const char *atlas_p
     printf("\r\n[GRAV] gravity demo: %s | %d fps x %d s | render %dx%d\r\n",
            (anim != nullptr) ? anim : "(no animation)", fps, seconds, RW, RH);
 
-    s_arena_used = 0;
-    s_verts = (raster_vertex_t *)arena_alloc(sizeof(raster_vertex_t) * SPINE_MAX_VERTS);
+    spine_arena_reset();
+    s_verts = (raster_vertex_t *)spine_arena_alloc(sizeof(raster_vertex_t) * SPINE_MAX_VERTS);
 
     RawTextureLoader loader;
     spine::Atlas atlas(atlas_path, &loader);
@@ -1776,8 +1528,6 @@ extern "C" uint8_t spine_gravity_test(const char *skel_path, const char *atlas_p
         }
     }
 
-    spine_register_skeleton(&skeleton);          /* 注册到世界重力 */
-
     spine::Bone *probe_bone = skeleton.findBone(spine::String(target->getName().buffer()));
     printf("[GRAV] probe bone: %s\r\n", (probe_bone != nullptr) ? "ok" : "null");
 
@@ -1824,7 +1574,7 @@ extern "C" uint8_t spine_gravity_test(const char *skel_path, const char *atlas_p
 
     for (int i = 0; i < 3; i++)
     {
-        lows[i] = (uint16_t *)arena_alloc((uint32_t)RW * RH * 2u);
+        lows[i] = (uint16_t *)spine_arena_alloc((uint32_t)RW * RH * 2u);
 
         raster_surface_t fs;
 
@@ -1890,7 +1640,7 @@ extern "C" uint8_t spine_gravity_test(const char *skel_path, const char *atlas_p
         /* 重力方向绕一圈（2 圈 / 全程）：spine 的 y 轴向下，(0,1) = 向下 */
         float theta = 6.2831853f * 2.0f * (float)f / (float)total_frames;
 
-        spine_world_set_gravity(cosf(theta), sinf(theta));   /* 世界级：所有注册骨架一起变 */
+        set_skel_gravity(&skeleton, cosf(theta), sinf(theta));
 
 
         if (has_anim)

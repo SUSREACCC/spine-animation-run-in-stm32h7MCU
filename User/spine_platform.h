@@ -42,4 +42,43 @@ uint32_t spine_heap_block_count(void);
 }
 #endif
 
+#ifdef __cplusplus
+
+#include <spine/TextureLoader.h>
+#include <spine/BlendMode.h>
+
+#define TEXTURE_DIR "/spine/"
+
+/* 原始纹理（png_to_raw.py 生成，16 字节头 + ARGB1555/4444 像素） */
+struct RawTexture
+{
+    uint16_t        w;
+    uint16_t        h;
+    uint16_t        fmt;        /* 1 = ARGB1555, 2 = ARGB4444 */
+    const uint16_t *px;
+};
+
+/* spine 堆（first-fit）：长期存活的对象（资产/实例/缓冲） */
+void *spine_heap_alloc(uint32_t bytes);
+void  spine_heap_free(void *p);
+
+/* 资源区（bump 分配）：纹理、顶点缓冲等生命周期 = 一次加载 */
+void    *spine_arena_alloc(uint32_t bytes);
+void     spine_arena_reset(void);
+uint32_t spine_arena_used(void);
+
+const RawTexture *spine_load_raw_texture(const char *raw_path);
+
+class RawTextureLoader : public spine::TextureLoader
+{
+public:
+    void load(spine::AtlasPage &page, const spine::String &path) override;
+    void unload(void *texture) override;
+};
+
+/* spine 混合模式 -> raster2d 混合模式 */
+uint8_t spine_blend_of(spine::BlendMode m);
+
+#endif /* __cplusplus */
+
 #endif

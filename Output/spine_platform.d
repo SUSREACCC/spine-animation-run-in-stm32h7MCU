@@ -116,14 +116,31 @@
   ../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h \
   ../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h \
   ../../Drivers/STM32H7xx_HAL_Driver/Inc\stm32h7xx_hal_hcd.h \
-  ../../Middlewares\./FATFS/source/ff.h \
-  ../../Middlewares\./FATFS/source/ffconf.h \
-  ../../Middlewares/SPINE/include\spine/Extension.h \
+  ../../Middlewares/SPINE/include\spine/TextureLoader.h \
+  ../../Middlewares/SPINE/include\spine/SpineObject.h \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\new \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\exception \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\cstdlib \
   D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\stdlib.h \
   D:\MDK5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
   ../../Middlewares/SPINE/include\spine/dll.h \
   ../../Middlewares/SPINE/include\spine/SpineString.h \
-  ../../Middlewares/SPINE/include\spine/SpineObject.h \
-  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\new \
-  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\exception \
-  D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\cstdlib
+  ../../Middlewares/SPINE/include\spine/Extension.h \
+  ../../Middlewares/SPINE/include\spine/BlendMode.h \
+  ../../User/plat/plat.h ../../User/plat/plat_cfg.h \
+  ../../Middlewares\./FATFS/source/ff.h \
+  ../../Middlewares\./FATFS/source/ffconf.h \
+  ../../Middlewares/SPINE/include\spine/Atlas.h \
+  ../../Middlewares/SPINE/include\spine/Array.h \
+  D:\MDK5\ARM\ARMCLANG\Bin\..\include\assert.h \
+  ../../Middlewares/SPINE/include\spine/HasRendererObject.h \
+  ../../Middlewares/SPINE/include\spine/TextureRegion.h \
+  ../../Middlewares/SPINE/include\spine/RTTI.h \
+  ../../Middlewares/SPINE/include\spine/MeshAttachment.h \
+  ../../Middlewares/SPINE/include\spine/Color.h \
+  ../../Middlewares/SPINE/include\spine/MathUtil.h \
+  ../../Middlewares/SPINE/include\spine/Sequence.h \
+  ../../Middlewares/SPINE/include\spine/VertexAttachment.h \
+  ../../Middlewares/SPINE/include\spine/Attachment.h \
+  ../../Middlewares/SPINE/include\spine/RegionAttachment.h \
+  ../../Middlewares\./RASTER/raster2d.h

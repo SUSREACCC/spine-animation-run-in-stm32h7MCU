@@ -1,0 +1,247 @@
+﻿
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 16 2026 12:32:34
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 16 2026 12:32:34
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 16 2026 12:32:34
+==============================================
+[1/5] MPU + SDRAM
+  addr scan : 2048 checkpoints over 32768 KB, 0 error(s)
+  pattern   : 64 KB x 5 patterns, total error(s) = 0
+[2/5] LCD (LTDC + DMA2D + SDRAM framebuffer)
+LCD ID:4384
+  panel id  : 4384, 800x480
+  pixel rb  : F800 OK (framebuffer @ 0xC0000000)
+[3/5] QSPI NOR flash
+ID:ef17
+  flash id  : EF17
+  rw verify : 4096 bytes @ 0x800000, 0 mismatch(es)
+[4/5] SD card (SDMMC1, 4-bit)
+  card      : 15801 MB, type=1, block=512 B
+  bus       : 4-bit, sweep 6/15/30 MHz
+  div=20 ( 6 MHz): OK   2769 KB/s  
+  div=8  (15 MHz): OK   6486 KB/s  
+  div=4  (30 MHz): OK   11744 KB/s  
+  stress    : 32 x 8 KB over the card, 0 error(s), 10171 KB/s
+  using     : 30 MHz, MBR sig=55AA
+[5/5] FATFS on SD volume 0:
+  volume    : FAT32, total 15784 MB, free 15782 MB
+   System Volume Information/  0 B
+   spineboy-pma.atlas   1652 B
+  read      : 0:/spineboy-pma.atlas -> 16 B, 73 70 69 6E ...
+   spineboy-pma.raw   524304 B
+   spineboy-pro.skel   65335 B
+   celestial-circus-pro.skel   53305 B
+   celestial-circus-pro.atlas   2249 B
+   celestial-circus-pro.raw   1048592 B
+  entries   : 7 listed, file read OK
+  write     : 512 B -> readback match, delete ok
+----------------------------------------------
+RESULT SDRAM=PASS LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+RESULT SDRAM=PASS LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+----------------------------------------------
+[TGX] starting 2D render test
+
+[TGX] 2D render self-test, framebuffer @ 0xC0000000
+[TGX] benchmarking...
+[TGX] fill   : 76.65 Mpx/s  (800x480 x10)
+[TGX] texquad: 3.64 Mpx/s  (800x480 x4, bilinear+alpha)
+[TGX] tris   : 3.08 Mpx/s  (16x12 grid, gradient triangles)
+[TGX] 565/ow : 5.03 Mpx/s
+[TGX] 32/ow  : 4.34 Mpx/s
+[TGX] 32/blend: 3.64 Mpx/s
+[TGX] 565 8KB : 5.02 Mpx/s  (texture fits in D-cache)
+[TGX] 60 fps budget @ tris rate: 51399 kpx per frame
+[TGX] 30 fps budget @ tris rate: 102796 kpx per frame
+
+[RASTR] minimal custom rasterizer probe
+[RASTR] quad opaque : 35.58 Mpx/s
+[RASTR] quad key    : 34.62 Mpx/s
+[RASTR] quad key+tint: 21.76 Mpx/s
+[RASTR] grid key    : 23.39 Mpx/s  (16x12, 768 tris)
+[RASTR] grid key+tint: 15.73 Mpx/s
+[RASTR] RESULT PASS
+
+[R2D] custom rasterizer: regression + benchmark
+  T1 coverage     : 0 uncovered px  OK
+  T2 seam         : 0 mismatched pairs  OK
+  T3 clip         : 367608 px painted  OK
+  T4 vtx colour   : 0 non-monotonic  OK
+  T5 blend modes  : 0 wrong  OK
+[R2D] quad 4444 opaque: 6.02 Mpx/s
+[R2D] quad 565 const tint : 9.13 Mpx/s
+[R2D] quad 4444 alpha-only: 4.44 Mpx/s
+[R2D] grid 4444 alpha-only: 4.06 Mpx/s
+[R2D] quad 1555 const tint: 16.43 Mpx/s
+[R2D] grid 1555 vcol      : 6.85 Mpx/s
+[R2D] quad 565 const : 27.54 Mpx/s
+[R2D] quad 565 vcol  : 6.34 Mpx/s
+[R2D] quad 4444 vcol : 4.13 Mpx/s
+[R2D] grid 565 vcol  : 5.57 Mpx/s
+[R2D] grid 4444 vcol : 3.68 Mpx/s
+[R2D] RESULT PASS (regressions 0)
+[TGX] RESULT PASS
+RESULT TGX=PASS
+----------------------------------------------
+
+[FB] framebuffer write benchmark (600 KB)
+[FB] write-back    32bit   4.16 ms (  144 MB/s) | 64bit   3.53 ms (  170 MB/s) | clean  0.28 ms
+[FB] non-cacheable 32bit   4.11 ms (  146 MB/s) | 64bit   3.58 ms (  168 MB/s) | clean  0.28 ms
+[FB] write-through 32bit   3.83 ms (  157 MB/s) | 64bit   3.87 ms (  155 MB/s) | clean  0.28 ms
+
+[SPN] animation contact sheet
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x512 ARGB1555
+[SPN] 7 animations:
+        [ 0] eyeblink
+        [ 1] eyeblink-long
+        [ 2] stars
+        [ 3] swing
+        [ 4] wind-idle
+        [ 5] wing-flap
+        [ 6] wings-and-feet
+[SPN] probe: uv=(498.9,403.0)px texel=0000 a=0 rgb555=(0,0,0) tint=FFFFFFFF
+[SPN] rt.fmt=1 w=1024 h=512 px=c0a2800c
+[SPN] sheet: 7 cells rendered in 76.64 ms (13.0 fps for whole sheet)
+[SPN] RESULT PASS
+
+[GRAV] gravity demo: (no animation) | 60 fps x 10 s | render 800x480
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x512 ARGB1555
+[GRAV] physics bone: hair-back (children 0)
+[GRAV] physics constraints in skeleton: 30
+[GRAV] constraint0 gravity=1.00 mix=1.00 x=1.00
+[GRAV] probe bone: ok
+[GRAV] no animation: static pose, gravity is the only motion
+[GRAV] sweeping gravity direction (2 turns over 10 s)
+[GRAV] t=0.00s gravity=(1.00, 0.00) dir=0 deg bone=(-79.3, -851.4) rot=90.0
+[GRAV] t=1.00s gravity=(0.31, 0.95) dir=72 deg bone=(-161.0, -776.4) rot=90.0
+[GRAV] t=2.00s gravity=(-0.81, 0.59) dir=144 deg bone=(-162.1, -775.8) rot=90.0
+[GRAV] t=3.00s gravity=(-0.81, -0.59) dir=216 deg bone=(-162.1, -775.8) rot=90.0
+[GRAV] t=4.00s gravity=(0.31, -0.95) dir=288 deg bone=(-162.1, -775.8) rot=90.0
+[GRAV] t=5.00s gravity=(1.00, 0.00) dir=0 deg bone=(-167.5, -774.2) rot=90.1
+[GRAV] t=6.00s gravity=(0.31, 0.95) dir=72 deg bone=(-167.8, -774.1) rot=90.0
+[GRAV] t=7.00s gravity=(-0.81, 0.59) dir=144 deg bone=(-167.8, -774.1) rot=90.0
+[GRAV] t=8.00s gravity=(-0.81, -0.59) dir=216 deg bone=(-167.8, -774.1) rot=90.0
+[GRAV] t=9.00s gravity=(0.31, -0.95) dir=288 deg bone=(-167.8, -774.1) rot=90.0
+[GRAV] 26.96 ms/frame (37.1 fps)
+[GRAV] RESULT PASS
+
+[DUO] 2 characters, render 800x480, 60 fps, 4 s x 2 iters
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x512 ARGB1555
+[DUO] it1 load 319.9 ms | 57.89 ms/frame (17.3 fps) | anim 1.02 build 4.06 clear 4.00 draw 48.47 present 0.35 wait 0.00 setfb 0.00 | sum 57.89 wall 57.89 | heap 930752 fails 0
+[DUO] it1 after delete: heap used 610752 (delta after load -134320)
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x512 ARGB1555
+[DUO] it2 load 263.1 ms | 57.91 ms/frame (17.3 fps) | anim 1.02 build 4.11 clear 3.96 draw 48.47 present 0.35 wait 0.00 setfb 0.00 | sum 57.91 wall 57.91 | heap 930952 fails 0
+[DUO] it2 after delete: heap used 610736 (delta after load -134536)
+[DUO] ================================
+[DUO] fps per iteration:
+[DUO]   it1: 17.3 fps (57.89 ms)
+[DUO]   it2: 17.3 fps (57.91 ms)
+[DUO] RESULT PASS
+
+[DUO] 2 characters, render 400x240, 60 fps, 4 s x 2 iters
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x512 ARGB1555
+[DUO] it1 load 263.9 ms | 33.65 ms/frame (29.7 fps) | anim 1.01 build 4.11 clear 0.94 draw 22.12 present 5.47 wait 0.00 setfb 0.00 | sum 33.65 wall 33.65 | heap 930952 fails 0
+[DUO] it1 after delete: heap used 610736 (delta after load -134536)
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x512 ARGB1555
+[DUO] it2 load 264.5 ms | 33.64 ms/frame (29.7 fps) | anim 1.01 build 4.11 clear 0.94 draw 22.12 present 5.46 wait 0.00 setfb 0.00 | sum 33.64 wall 33.65 | heap 930952 fails 0
+[DUO] it2 after delete: heap used 610736 (delta after load -134536)
+[DUO] ================================
+[DUO] fps per iteration:
+[DUO]   it1: 29.7 fps (33.65 ms)
+[DUO]   it2: 29.7 fps (33.64 ms)
+[DUO] RESULT PASS
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x512 ARGB1555
+[API] asset loaded: /spine/celestial-circus-pro.skel | 7 animations | 1 textures
+[API] animations: eyeblink eyeblink-long stars swing wind-idle wing-flap wings-and-feet
+[API] texture bytes: 1048576
+[API] bounds=(-755,-1809)-(577,556) scale=0.093
+[API] 300 frames | 19.80 ms/frame (50.5 fps) | instances=2 queue=2
+[API] after free: instances=0
+[API] RESULT PASS
+heartbeat start
+alive 1
+alive 2
+alive 3
+alive 4
+alive 5
+alive 6
+alive 7
+alive 8
+alive 9
+alive 10
+alive 11
+alive 12
+alive 13
+alive 14
+alive 15
+alive 16
+alive 17
+alive 18
+alive 19
+alive 20
+alive 21
+alive 22
+alive 23
+alive 24
+alive 25
+alive 26
+alive 27
+alive 28
+alive 29
+alive 30
+alive 31
+alive 32
+alive 33
+alive 34
+alive 35
+alive 36
+alive 37
+alive 38
+alive 39
+alive 40
+alive 41
+alive 42
+alive 43
+alive 44
+alive 45
+alive 46
+alive 47
+alive 48
+alive 49
+alive 50
+alive 51
+alive 52
+alive 53
+alive 54
+alive 55
+alive 56
+alive 57
+alive 58
+alive 59
+alive 60
+alive 61
+alive 62
+alive 63
+alive 64
+alive 65
+alive 66
+alive 67
+alive 68
+alive 69
+alive 70
+alive 71
+alive 72
+alive 73
+alive 74
+
