@@ -144,6 +144,9 @@ void spine_instance_draw(spine_instance_t *in);
 /** 结束一帧：清脏矩形 -> 光栅化 -> 放大 -> 切换缓冲 */
 void spine_draw_end(void);
 
+/** 下一帧整屏重画（用于切场景 / 上电首帧，清掉上轮的残留像素） */
+void spine_draw_force_full(void);
+
 /** 当前帧已排队的实例数（诊断用） */
 int spine_draw_queue_count(void);
 
@@ -155,6 +158,117 @@ int spine_draw_queue_count(void);
 void  spine_world_set_gravity(float gx, float gy);
 float spine_world_get_gravity_x(void);
 float spine_world_get_gravity_y(void);
+
+/*==================================================================================================
+ * 覆盖层（HUD / UI / 调试）
+ *
+ * 与 spine 层画进同一块渲染目标，因此：
+ *   - 跟随三缓冲，不会闪烁
+ *   - 坐标用屏幕像素，半分辨率时自动按 divisor 展开（每个字形像素变成 divisor×divisor 块）
+ *   - 会扩展脏矩形，保证被放大与清除
+ *
+ * 用法：spine_draw_begin() 之后、spine_draw_end() 之前调用（顺序无所谓，
+ *       覆盖层总是画在所有 spine 实例之上）。
+ *=================================================================================================*/
+
+/** 实心矩形（屏幕像素，闭区间） */
+void spine_overlay_rect(int x0, int y0, int x1, int y1, uint16_t color565);
+
+/** 矩形边框 */
+void spine_overlay_frame(int x0, int y0, int x1, int y1, int thick, uint16_t color565);
+
+/** 16 px 高 ASCII 文本（复用板级 asc2_1608 字库） */
+void spine_overlay_text(int x, int y, const char *ascii, uint16_t color565);
+
+/** 本帧已排队的覆盖层操作数（诊断） */
+int spine_overlay_count(void);
+
+/*==================================================================================================
+ * IK 约束（运行时驱动）
+ *
+ * 坐标一律是**骨架世界坐标**（spine 单位），不是屏幕像素。
+ * 目标在下一帧的 update() 里生效（会先跑动画 apply，再写目标，最后解算 IK）。
+ *=================================================================================================*/
+
+/** IK 约束数量 */
+int spine_instance_ik_count(spine_instance_t *in);
+
+/** 第 index 个 IK 约束的名字（找不到返回 NULL） */
+const char *spine_instance_ik_name(spine_instance_t *in, int index);
+
+/** 该 IK 链有几根骨骼（通常 1 或 2） */
+int spine_instance_ik_bone_count(spine_instance_t *in, const char *ik_name);
+
+/** 设置 IK 目标位置（骨架世界坐标）。返回 1 = 成功 */
+int spine_instance_set_ik_target(spine_instance_t *in, const char *ik_name,
+                                 float world_x, float world_y);
+
+/** 读取 IK 目标当前的世界坐标。返回 1 = 成功 */
+int spine_instance_get_ik_target(spine_instance_t *in, const char *ik_name,
+                                 float *world_x, float *world_y);
+
+/** 读取 IK 链末端的实际世界坐标（用于判定 IK 是否真的跟随）。返回 1 = 成功 */
+int spine_instance_get_ik_tip(spine_instance_t *in, const char *ik_name,
+                              float *world_x, float *world_y);
+
+/** 读取 IK 混入（0..1） */
+float spine_instance_ik_mix(spine_instance_t *in, const char *ik_name);
+
+/** 读取求解器实际使用的 mix（applied pose，诊断用） */
+float spine_instance_ik_mix_applied(spine_instance_t *in, const char *ik_name);
+
+/** 设置 IK 混入（0 = 关闭该约束，1 = 全量）。返回 1 = 成功 */
+int spine_instance_set_ik_mix(spine_instance_t *in, const char *ik_name, float mix);
+
+/** 清掉所有待应用的 IK 目标覆盖，并把目标骨骼还原到覆盖前的姿态
+ *  （否则动画不驱动该骨骼时，偏移会永久保留，表现为运动范围整体平移） */
+/**
+ * 丢弃 IK 目标覆盖，但**保留目标骨骼当前姿态**（不还原）。
+ *
+ * 用途：配合"两段动画 + 过渡"的复位方案 ——
+ *   按下 play(交互动画, 腿无时间轴) + set_ik_mix(1.0) + 每帧 set_ik_target
+ *   松开 play(正常动画, mix) + release_ik_keep_pose()
+ * 这样正常动画里目标骨骼的 timeline 会从"手指最后的位置"平滑过渡回正常目标，
+ * 不需要运行时代码做插值。
+ *
+ * 与 spine_instance_clear_ik() 的区别：
+ *   clear_ik()            还原目标骨骼到首次覆盖前的姿态（交互彻底结束时用）
+ *   release_ik_keep_pose() 不还原，留给动画混合接管
+ *
+ * 注意：如果正常动画**不驱动**目标骨骼，目标会停在手指最后的位置，
+ *       腿会一直偏向那里（这时应该用 clear_ik()）。
+ */
+void spine_instance_release_ik_keep_pose(spine_instance_t *in);
+
+void spine_instance_clear_ik(spine_instance_t *in);
+
+/*==================================================================================================
+ * 动画衔接（过渡时长 / 排队 / 进度接回）
+ *
+ * 默认 defaultMix = 0，即 play() 切换动画是硬切；先 set_default_mix() 才有过渡。
+ *=================================================================================================*/
+
+/** 设置默认过渡时长（秒）。0 = 硬切 */
+void spine_instance_set_default_mix(spine_instance_t *in, float seconds);
+
+/** 设置 from -> to 的过渡时长（秒）。两个动画都要存在，否则返回 0 */
+int spine_instance_set_mix(spine_instance_t *in, const char *from, const char *to, float seconds);
+
+
+/** 读取动画总时长（秒）*/
+float spine_instance_anim_duration(spine_instance_t *in, int track);
+
+/** 读取实际动画时间（秒）：循环会在 [0,duration) 回绕，单次播放停在末尾 */
+float spine_instance_anim_time(spine_instance_t *in, int track);
+
+/** 读取当前播放进度（秒）*/
+float spine_instance_get_time(spine_instance_t *in, int track);
+
+/** 读取当前动画名；该轨没有动画时返回 NULL */
+const char *spine_instance_current_anim(spine_instance_t *in, int track);
+
+/** 跳到指定进度并保留时间缩放（切换动画后接回原进度用）。返回 1 = 成功 */
+int spine_instance_seek(spine_instance_t *in, float seconds, int track);
 
 /** 已注册实例数（诊断用；实例创建时自动注册，销毁时自动注销） */
 int spine_world_instance_count(void);

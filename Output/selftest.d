@@ -117,5 +117,9 @@
   ../../Middlewares\./FATFS/source/ff.h \
   ../../Middlewares\./FATFS/source/ffconf.h \
   D:\MDK5\ARM\ARMCLANG\Bin\..\include\string.h ../../User/spine_test.h \
-  ../../User/spine_api.h ../../User/plat/plat.h \
-  ../../User/plat/plat_cfg.h ../../User/selftest.h
+  ../../User/spine_api.h ../../User/spine_demo.h ../../User/plat/plat.h \
+  ../../User/plat/plat_cfg.h ../../User/selftest.h ../../User/test_cfg.h \
+  ../../Drivers\./BSP/TOUCH/touch.h ../../Drivers\./BSP/TOUCH/gt9xxx.h \
+  ../../Drivers\./BSP/TOUCH/ft5206.h ../../User/spine_ik_test.h \
+  ../../User/spine_anim_test.h ../../User/spine_anim_seq.h \
+  ../../User/spine_ik_interactive.h

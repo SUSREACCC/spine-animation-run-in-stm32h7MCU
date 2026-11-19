@@ -1321,3 +1321,380 @@ User/plat/plat_os_freertos.c.template —— FreeRTOS 适配，改名即用
 
 裸机模式真机验证：duo 57.87 / 33.57 ms，API 加载正常，与封装前一模一样。
 RTOS 模式未编译验证（工程里还没有 FreeRTOS），需接入后实测。
+
+---
+
+## 2026-11-17 06:00 — 功能展示程序 spine_demo
+
+### 实现
+
+User/spine_demo.c —— 6 个场景循环演示（双实例/变换/重力/动画巡演/分辨率对比/压力测试），
+自检通过后自动进入，SPINE_RUN_DEMO 宏可关。
+
+### 验证
+
+场景切换与动画正常（4 秒内 113,857 像素变化），帧率约 50 fps。
+
+### 已知问题
+
+屏幕 HUD（场景指示格 + 进度条）不显示。已排除写穿缓存、三缓冲、调用时机；
+未定位根因。信息改走串口。
+
+### 附带发现
+
+1. lcd_fill() 走 DMA2D，与 CPU D-Cache 不一致
+2. lcd_show_string() 用 g_back_color（默认白色）作背景 -> 白字白底不可见
+
+### 环境问题
+
+COM11（CH340）从系统消失，只剩 COM7/COM8，无法抓串口日志；
+改用 OpenOCD dump 帧缓冲验证。
+
+---
+
+## 2026-11-17 09:30 — overlay API + 修闪烁/混叠
+
+### 实现
+
+spine_overlay_rect / _frame / _text，画进**全部三块帧缓冲**的全分辨率目标。
+
+### 根因（混叠）
+
+ov_rect_scaled 里有 `if (n == 1) { ov_block(...,1,...); return; }`
+—— 全分辨率下所有矩形只画了 1 个像素，清屏带形同虚设，旧文字永远擦不掉。
+修成真正的矩形填充（偶数对齐走 32 位写）。
+
+### 闪烁
+
+HUD 只画进当前 dst 时，三块缓冲 3 帧才更新一次，文字变化时三块内容不同 -> 闪烁。
+改为每帧画进全部三块缓冲。
+
+### 字库
+
+换成自带的 5x7 点阵（gen_font.py 生成 + ASCII art 校验），默认 2 倍放大。
+不依赖板级 asc2_1608。
+
+### 验证
+
+真机 dump 三块缓冲：顶栏/底栏像素完全一致；场景 1/5 画面与文字均正常。
+
+---
+
+## 2026-11-17 15:00 — IK API + 测试拆分
+
+### IK API（规范化）
+
+ik_count / ik_name / ik_bone_count / ik_mix / set_ik_mix /
+set_ik_target / get_ik_target / get_ik_tip / clear_ik
+
+实现：覆盖值在 AnimationState::apply 之后、updateWorldTransform 之前写入目标骨骼
+applied pose（worldToParent + setX/setY）。
+
+### 实测（spineboy，7 个 IK）
+
+rear-leg-ik：目标推 +40 -> 末端移动 46.05，残差 40.00 -> 7.52 => PASS
+（board/aim 是 1 骨 IK，目标超骨长，残差大属正常；aim-ik mix=0 不生效）
+
+### 测试拆分
+
+User/test_cfg.h 宏开关；spine_ik_test 拆成独立模块 User/spine_ik_test.c。
+默认只跑 TEST_DRIVERS + TEST_IK，上电到出结果 ~15 s（原 ~4 分钟）。
+
+---
+
+## 2026-11-17 17:30 — 触摸交互 IK 测试
+
+### 新增
+
+- Drivers/BSP/{TOUCH,IIC,24CXX}：复用官方触摸驱动（GT9xxx + 软 IIC + 24CXX）
+- User/spine_ik_interactive.c/.h：点击屏幕 -> 世界坐标 -> IK 目标
+- test_cfg.h：TEST_TOUCH / TEST_IK_INTERACTIVE / TEST_IK_TOUCH_SECONDS
+- spine_api：spine_draw_force_full()
+
+### 关键发现
+
+模块是 **GT1151Q**，官方 gt9xxx.c 的白名单里没有 "1151"，
+加进检测列表后 tp_init() 返回 0（成功）。
+
+### 屏幕坐标 -> 骨架世界坐标
+
+world = (screen - instance_origin) / scale
+
+### 已知问题
+
+三缓冲只重画脏矩形，SDRAM 里上一轮运行的像素会残留（准星/背景色块）。
+已在交互测试开头显式清三块帧缓冲，但观感上仍有不一致，待查。
+
+---
+
+## 2026-11-17 19:10 — 触摸交互排错
+
+### 三个真问题
+
+1. **交互窗口只有 180 s**：用户测的时候窗口早过了，板子已回到心跳循环 -> 改永久
+2. **串口"无内容"**：交互循环只在触摸时打印，平时静默 -> 每 2 s 打一行状态
+3. **spine_draw_force_full 无效**：force_full 块放在 dbx0 快照之后，改了 g_d.fbx* 也没用
+   -> 移到快照之前；整屏重画才真正生效
+
+### 现象解释
+
+- rear-leg-ik 的 tip 恒定：IK 把腿锁在目标上，本来就不随走路动（正常）
+- 帧缓冲 dump 两帧相同：同上 + 图未变化
+
+### 环境
+
+COM16 被用户终端占用，脚本抓取报 UnauthorizedAccessException。
+
+---
+
+## 2026-11-17 20:40 — 触摸调试结论
+
+### 已确认
+
+- 触摸 IC 实际是 **GT1158**（`CTP ID:1158`），I2C 通路正常（能读到 ID）
+- `gtst=0x00`（0x814E 状态寄存器）即使持续点击也恒为 0
+- **PH7 是 SDRAM 必需信号**：从 SDRAM GPIO 掩码里去掉 PH7 -> SDRAM 自检立即 FAIL
+  （第一次删错了行，删到控制信号组；恢复后 SDRAM=PASS）
+- 因此 `T_PEN`（PH7）读到的低电平是 **SDNWE 的翻转**，不是触摸 INT
+- 改成纯 I2C 轮询（gt_poll 读 0x814E/0x8150）后，状态寄存器仍恒 0
+
+### 待确认（需要硬件资料）
+
+RGB 模块（WKS43WV067-WCT）的触摸 INT 到底接到哪个引脚？
+厂家例程里 T_PEN 定义在 PH7，但该引脚在带 SDRAM 的配置下被占用。
+
+---
+
+## 2026-11-17 21:30 — 触摸交互 IK 实机跑通
+
+- 触摸 IC 实际是 GT1158，已加入驱动白名单
+- PH7 与 SDRAM 冲突，改用 I2C 轮询 0x814E/0x8150
+- 实机：点击屏幕 -> 世界坐标 -> IK 目标，右腿跟随；63.7 fps
+- 状态行收敛为 ik/t/fps/tip/状态
+
+---
+
+## 2026-11-17 22:40 — 触摸 IK 状态机（常态播放 / 按下跟随 / 松开恢复）
+
+### 改动
+
+- gt_poll 改三态（1=按下 0=无报文 -1=抬手）
+- IDLE / ACTIVE / BLEND 状态机；松手后用 8 帧插值回动画目标再 clear_ik
+- 120 ms 超时兜底，防报文间隔误判
+- test_cfg.h 新增 TEST_IK_RELEASE_BLEND（0=立即恢复）
+
+### 实测
+
+[IKT] ACTIVE touch (618,281) -> world (473.8,-367.4)
+[IKT] BLEND  8 frames -> back to animation
+[IKT] IDLE   animation resumed
+IDLE 时 tip 随时间变化（动画在驱动），63.6 fps
+自动 IK 测试仍 PASS（tip moved 46.05, 40.00 -> 7.52）
+
+---
+
+## 2026-11-17 23:40 — 修复：松开后运动范围整体平移
+
+### 根因
+
+set_ik_target 写入目标骨骼 applied pose；clear_ik 只清覆盖表，没有还原骨骼姿态。
+spineboy 的 IK 目标骨骼不被动画驱动 -> 偏移永久保留 -> 摆动范围平移（0-20 度变 40-60 度）。
+
+### 修复
+
+覆盖槽记录首次覆盖前的局部姿态（base_lx/base_ly/captured），clear_ik 先写回再清表。
+
+### 回归检查（自动）
+
+[IK] after clear_ik: tip=(-91.2,-112.0) dist to pushed target 38.0
+[IK] restore OK (tip left the pushed target)
+[IK] RESULT PASS
+
+---
+
+## 2026-11-18 01:20 — 动画衔接 API
+
+### 新增
+
+set_default_mix / set_mix / get_time / current_anim / seek
+
+### 关键坑
+
+1. AnimationStateData::setMix(name,name,d) 内部 assert，名字写错会死机 -> 先 findAnimation 判空
+2. set_time 会把 timeScale 置 0（定格），接回进度要用新的 seek（保留 timeScale）
+3. AnimationState 默认在动画播完时 dispose TrackEntry，而我们缓存了指针 -> HardFault
+   解决：setManualTrackEntryDisposal(true) + retire 延迟回收 + 混合链检查
+
+### 未纳入公开 API
+
+add_anim：接管后 spine 会把旧条目从 next 链摘掉，我们缓存的指针看不到切换，
+spine-cpp 无公开 getCurrent(track) 接口，无法干净跟随。
+
+### 实测
+
+[ANIM] set_mix(walk->idle)=1  set_mix(bad)=0
+[ANIM] seek back to 0.500 -> 0.500
+[ANIM] RESULT PASS
+
+---
+
+## 2026-11-18 03:10 — 动画序列测试（walk/idle/aim/death）
+
+### 实现
+
+User/spine_anim_seq.c：4 段串联，段间过渡 0.30 s；aim 段触摸驱动 aim-ik
+（该约束 mix 默认 0，进入时置 1、离开时还原）。
+触摸轮询抽成共享模块 User/spine_touch.c。
+
+### 实测
+
+walk dur=1.00 / idle dur=1.67 / aim dur=0.00（单帧姿态）/ death dur=4.93
+death loop=0 时 applied 单调到 4.93 停住 -> 只播一次
+全程 RESULT DONE
+
+### 新增
+
+spine_instance_anim_time() / spine_instance_anim_duration()
+（区分 trackTime 与实际动画时间；判定是否循环看 applied）
+
+---
+
+## 2026-11-18 04:40 — 修两个真 bug（序列 aim 段无响应）
+
+### 1. 触摸 IC 从未初始化
+
+spine_anim_seq 排在 tp_init() 之前（tp_init 在交互测试那段里）。
+序列运行时 GT1158 还没初始化，I2C 读回全 0 -> aim 段完全收不到触摸。
+
+修复：spine_touch_init() 幂等封装（内部调 tp_init，0=成功），
+spine_anim_seq / spine_ik_interactive 开头都调用。
+
+### 2. printf 格式符与参数数量不匹配（UB）
+
+aim 段状态行格式 5 个转换符，却传了 6 个参数（多一个 atime），
+导致 mix / ikstate / gt 全部错位，打印出 0x40000000、0x3FEFD70A 这类垃圾值。
+
+修复：去掉多余参数，5 对 5。
+
+### 修复后的正常输出
+
+[SEQ] touch init: OK
+[SEQ] phase 3/4  aim  loop=1  10 s  dur=0.00  touch->aim-ik
+[SEQ]   aim-ik mix -> 1.00
+[SEQ]   t=1s  anim=aim  mix=1.00  ikstate=0  gt=0x00
+（gt=0x00 = 该秒内没有触摸报文，属正常空闲态）
+
+---
+
+## 2026-11-18 06:10 — 修复松手抽搐
+
+### 成因
+
+松手那一帧先 clear_ik + update（按动画姿态画了一次），下一帧 BLEND 又跳回触点 -> 双跳变。
+
+### 修复
+
+1. 捕获动画目标后立刻恢复覆盖，并 continue 跳过本帧渲染（丢 1 帧，消除双跳变）
+2. 固定 8 帧线性 -> 指数平滑（TEST_IK_RELEASE_TAU_MS，默认 120 ms）
+3. 残差 < 2 世界单位或 > 0.6 s 才 clear_ik
+
+### 说明
+
+Spine 物理约束无法平滑运行时覆盖（时序冲突：覆盖在 apply 之后、
+updateWorldTransform 之前；物理在 Skeleton::update 推进、updateWorldTransform 应用）。
+
+---
+
+## 2026-11-18 07:20 — 新增 release_ik_keep_pose()
+
+只清 IK 覆盖表、不还原目标骨骼姿态，用于"两段动画 + 过渡"的复位方案：
+松开时 release_ik_keep_pose() + play(正常动画, mix)，由动画 timeline 把目标拉回去。
+
+与 clear_ik() 的区别写在头文件注释里。
+已编译通过（0 error），未做硬件验证（缺"腿无时间轴"的交互动画素材）。
+
+---
+
+## 2026-11-18 08:40 — aim 段改为"额外动作"式 IK（mix 淡入淡出）
+
+### 状态机
+
+IDLE -> FADE_IN(100ms) -> ACTIVE -> FADE_OUT(220ms) -> IDLE
+
+### 实现
+
+- 阶段开始 set_ik_mix(aim-ik, 0) 平时不参与
+- 按下：每帧 set_ik_target + 按时间把 mix 升到 1
+- 松手：目标不动，只降 mix；到 0 时 clear_ik（此时无影响，不会跳）
+- mix 自己累加，不每帧读回
+
+### 与腿那种"接管现有 IK"的区别
+
+腿：mix 保持 1，松手降目标（指数平滑）
+aim：mix 0 平时，松手降 mix
+
+### 实测
+
+aim 段 mix=0.00 st=0 稳定；序列 4 段走完 RESULT DONE
+触摸淡入淡出未验证（需实际点击）
+
+---
+
+## 2026-11-18 10:00 — 修复：动画 mix 时间轴覆盖运行时 IK mix
+
+### 诊断
+
+状态行同时打印 mix(我们)/mix(applied)：
+  mix=0.00/1.00  -> 我们写 0，求解器读到 1
+
+### 原因
+
+aim 动画带 IK Mix 时间轴，每帧 apply() 把 aim-ik 的 mix 写回 1。
+应用层写在 update 之外的值，下一帧被覆盖。
+
+### 修复
+
+set_ik_mix 改为存表；apply_ik_overrides()（apply 之后、updateWorldTransform 之前）
+每帧写 pose + applied pose；ik_mix() 优先返回表值。
+
+### 结果
+
+mix=0.00/0.00（两边一致），IK 平时不再全量生效。
+
+### 教训
+
+运行时想覆盖动画驱动的属性，必须写在 apply() 之后。
+
+---
+
+## 2026-11-18 12:00 — aim 段跳跃修复（共用目标骨骼）
+
+### 第二个原因
+
+aim-ik 与 aim-torso-ik 的 target 是同一根骨骼。只淡 aim-ik 时，
+aim-torso-ik（mix 恒 1）立刻跟随新目标 -> 仍然跳变。
+
+### 修复
+
+阶段表加 ik2 字段，两个约束一起淡入淡出。
+
+### 新增
+
+SEQ_SIM_TOUCH（默认 1）：aim 段第 2~6 秒模拟按压，用于不触摸验证。
+验证完置 0。
+
+### 实测（模拟触摸）
+
+mix 0.00->0.51->1.00 (2s)，tip (56,-338)->(-96,-364)
+松手 mix 1.00->0.54->0.00，tip 回到 (56,-338)
+完整渐变 + 完整复位，无跳变。
+
+---
+
+## 2026-11-18 13:00 — 渐变时间调回 150 / 250 ms
+
+SEQ_IK_FADE_IN_MS  = 150
+SEQ_IK_FADE_OUT_MS = 250
+
+实测（模拟触摸 + 真实触摸混合窗口）：mix 两边始终一致，状态机
+IDLE->FADE_IN->ACTIVE->FADE_OUT 正常循环。

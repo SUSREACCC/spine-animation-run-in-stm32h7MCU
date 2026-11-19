@@ -14,6 +14,7 @@
 extern "C" {
 #endif
 
+
 /* 返回 0 表示成功 */
 uint8_t spine_test_run(const char *skel_path, const char *atlas_path, const char *anim, int frames);
 

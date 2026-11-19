@@ -1,0 +1,83 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+compiling spine_anim_test.c...
+../../User/spine_anim_seq.c(156): error: use of undeclared identifier 'dur'
+                   p + 1, SEQ_PHASES, ph->anim, ph->loop, ph->seconds, (double)dur,
+                                                                               ^
+../../User/spine_anim_seq.c(174): error: use of undeclared identifier 't_start'; did you mean '_sqrt'?
+            if ((now - t_start) >= (uint32_t)ph->seconds * 1000u)
+                       ^~~~~~~
+                       _sqrt
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\math.h(380): note: '_sqrt' declared here
+    _ARMABI_INLINE double _sqrt(double __x) { return sqrt(__x); }
+                          ^
+../../User/spine_anim_seq.c(174): error: invalid operands to binary expression ('uint32_t' (aka 'unsigned int') and 'double (*)(double)')
+            if ((now - t_start) >= (uint32_t)ph->seconds * 1000u)
+                 ~~~ ^ ~~~~~~~
+../../User/spine_anim_seq.c(174): error: use of undeclared identifier 'ph'
+            if ((now - t_start) >= (uint32_t)ph->seconds * 1000u)
+                                             ^
+../../User/spine_anim_seq.c(180): error: use of undeclared identifier 'ph'
+            if (ph->ik != 0)
+                ^
+../../User/spine_anim_seq.c(212): error: use of undeclared identifier 'ph'
+                        if (spine_instance_set_ik_target(in, ph->ik, wx, wy) != 0)
+                                                             ^
+../../User/spine_anim_seq.c(233): error: use of undeclared identifier 'ph'
+                    spine_instance_get_ik_target(in, ph->ik, &ik.anim_wx, &ik.anim_wy);
+                                                     ^
+../../User/spine_anim_seq.c(249): error: use of undeclared identifier 'ph'
+                    spine_instance_set_ik_target(in, ph->ik,
+                                                     ^
+../../User/spine_anim_seq.c(268): error: use of undeclared identifier 't_start'; did you mean '_sqrt'?
+                int left = ph->seconds - (int)((now - t_start) / 1000u);
+                                                      ^~~~~~~
+                                                      _sqrt
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\math.h(380): note: '_sqrt' declared here
+    _ARMABI_INLINE double _sqrt(double __x) { return sqrt(__x); }
+                          ^
+../../User/spine_anim_seq.c(268): error: invalid operands to binary expression ('uint32_t' (aka 'unsigned int') and 'double (*)(double)')
+                int left = ph->seconds - (int)((now - t_start) / 1000u);
+                                                ~~~ ^ ~~~~~~~
+../../User/spine_anim_seq.c(268): error: use of undeclared identifier 'ph'
+                int left = ph->seconds - (int)((now - t_start) / 1000u);
+                           ^
+../../User/spine_anim_seq.c(272): error: use of undeclared identifier 'ph'
+                         (ph->loop != 0) ? "" : " once",
+                          ^
+../../User/spine_anim_seq.c(273): error: use of undeclared identifier 'ph'
+                         (ph->ik != 0) ? ((ik.state == SEQ_IK_ACTIVE) ? " TOUCH" : " TAP") : "");
+                          ^
+../../User/spine_anim_seq.c(271): error: use of undeclared identifier 'ph'
+                         ph->anim, left,
+                         ^
+../../User/spine_anim_seq.c(282): error: use of undeclared identifier 't_last_report'
+            if ((now - t_last_report) >= 1000u)
+                       ^
+../../User/spine_anim_seq.c(286): error: use of undeclared identifier 't_last_report'
+                t_last_report = now;
+                ^
+../../User/spine_anim_seq.c(290): error: use of undeclared identifier 't_start'; did you mean '_sqrt'?
+                       (int)((now - t_start) / 1000u),
+                                    ^~~~~~~
+                                    _sqrt
+D:\MDK5\ARM\ARMCLANG\Bin\..\include\math.h(380): note: '_sqrt' declared here
+    _ARMABI_INLINE double _sqrt(double __x) { return sqrt(__x); }
+                          ^
+../../User/spine_anim_seq.c(290): error: invalid operands to binary expression ('uint32_t' (aka 'unsigned int') and 'double (*)(double)')
+                       (int)((now - t_start) / 1000u),
+                              ~~~ ^ ~~~~~~~
+../../User/spine_anim_seq.c(297): error: use of undeclared identifier 'ph'
+        if (ph->ik != 0)
+            ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling spine_anim_seq.c...
+compiling spine_ik_test.c...
+compiling spine_demo.c...
+compiling spine_ik_interactive.c...
+compiling selftest.c...
+compiling spine_api.cpp...
+"..\..\Output\STM32H743.axf" - 19 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:02

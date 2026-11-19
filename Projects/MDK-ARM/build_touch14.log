@@ -1,0 +1,10 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+compiling spine_ik_interactive.c...
+linking...
+..\..\Output\STM32H743.axf: Warning: L6776W: The debug frame in .debug_frame(spine_api.o) does not describe an executable section.
+Program Size: Code=534368 RO-data=33544 RW-data=252 ZI-data=2096516  
+Finished: 0 information, 1 warning and 0 error messages.
+FromELF: creating hex file...
+"..\..\Output\STM32H743.axf" - 0 Error(s), 1 Warning(s).
+Build Time Elapsed:  00:00:07

@@ -1,0 +1,19 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_anim_seq.c(60): error: redefinition of enumerator 'SEQ_IK_IDLE'
+enum { SEQ_IK_IDLE = 0, SEQ_IK_FADE_IN, SEQ_IK_ACTIVE, SEQ_IK_FADE_OUT };
+       ^
+../../User/spine_anim_seq.c(35): note: previous definition is here
+enum { SEQ_IK_IDLE = 0, SEQ_IK_ACTIVE, SEQ_IK_BLEND };
+       ^
+../../User/spine_anim_seq.c(60): error: redefinition of enumerator 'SEQ_IK_ACTIVE'
+enum { SEQ_IK_IDLE = 0, SEQ_IK_FADE_IN, SEQ_IK_ACTIVE, SEQ_IK_FADE_OUT };
+                                        ^
+../../User/spine_anim_seq.c(35): note: previous definition is here
+enum { SEQ_IK_IDLE = 0, SEQ_IK_ACTIVE, SEQ_IK_BLEND };
+                        ^
+2 errors generated.
+compiling spine_anim_seq.c...
+"..\..\Output\STM32H743.axf" - 2 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:02

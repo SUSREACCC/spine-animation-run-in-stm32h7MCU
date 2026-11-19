@@ -1,0 +1,14 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_ik_interactive.c(193): error: expected ')'
+            printf(IKT_TAG "%s  t=%lus  %s
+                           ^
+../../User/spine_ik_interactive.c(193): note: to match this '('
+            printf(IKT_TAG "%s  t=%lus  %s
+                  ^
+1 error generated.
+compiling spine_ik_interactive.c...
+compiling spine_api.cpp...
+"..\..\Output\STM32H743.axf" - 1 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

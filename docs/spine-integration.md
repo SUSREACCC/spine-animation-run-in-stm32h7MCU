@@ -1149,3 +1149,628 @@ FreeRTOS 独占 SysTick。若 HAL 还用 SysTick，`HAL_Delay` / `HAL_GetTick` �
 
 > 打开 RTOS 前建议先做一件事：确认 `LTDC->ISR` 的 `RRIF` 位确实会置位
 > （用轮询版跑一帧，读一次 ISR，即可验证中断源可用）。
+
+## 功能展示程序（spine_demo）
+
+### 用法
+
+自检全部通过后自动进入循环演示（`selftest.c` 末尾）：
+
+```c
+#if SPINE_RUN_DEMO
+    spine_demo_run();      /* 不返回 */
+#endif
+```
+
+开关在 `User/spine_demo.h`：`#define SPINE_RUN_DEMO 1`。
+设为 0 则恢复原来的"打印心跳"模式。
+
+### 六个场景（循环，约 90 秒一轮）
+
+| # | 场景 | 演示内容 | 时长 |
+|---|---|---|---|
+| 1 | 双实例 | 两个角色不同动画（swing / wing-flap）+ tint | 6 s |
+| 2 | 变换组合 | 正常 / 水平翻转 / 半透明(alpha=110) / 着色 | 5 s |
+| 3 | 重力旋转 | 重力绕一圈，物理驱动形变 | 7 s |
+| 4 | 动画巡演 | 依次播放骨架里的每个动画 | 3 s × N |
+| 5 | 分辨率对比 | 同一场景先全分辨率再半分辨率，打印两者 fps | 6 s |
+| 6 | 压力测试 | 8 个实例、4 种动画、交替翻转 | 5 s |
+
+### 实测结果
+
+| 场景 | 结果 |
+|---|---|
+| 场景切换与动画 | ✅ 正常工作（4 秒内 113,857 像素变化） |
+| 双实例 / 变换 / 重力 | ✅ 画面正确 |
+| 帧率（半分辨率，角色 200 px 高） | ≈ 50 fps |
+
+### 已知问题：屏幕 HUD 指示器不显示
+
+设计上在屏幕顶部画 6 个场景指示格、底部画进度条（纯 CPU 矩形填充），
+**实测这些像素没有出现**。已经排除的方向：
+
+* `fb_mpu_set(2)` 写穿模式下 CPU 写入应直达 SDRAM ✓
+* 三块缓冲都写了一遍 ✓
+* `demo_hud_flush()` 确认被调用（每 30 帧 + 场景切换）✓
+
+**未定位的原因**：可能是 API 的 `spine_draw_begin/draw_end` 在内部对缓冲做了
+整体操作（初始化时全清），或是 HUD 写入与光栅写入的次序问题。
+
+**当前方案**：场景名、fps、实例数等信息**全部走串口 printf**，
+屏幕只显示角色本身。这是可用的（不影响演示内容），但不是最初设计的样子。
+
+### 附带发现的两个板级坑
+
+1. **`lcd_fill()` 走 DMA2D**，与 CPU 的 D-Cache 不是同一视图，
+   在自定义帧缓冲上填充会"看起来没生效"。
+2. **`lcd_show_string()` 用 `mode=0`**（同时画背景），背景色取自全局
+   `g_back_color`（默认**白色**）→ 白字白底，等于看不见。
+   用前必须 `g_back_color = 0x00000000`。
+
+## 覆盖层 API（overlay）
+
+### 设计
+
+HUD / UI / 调试信息必须和 spine 层走**同一条渲染管线**，否则会出现：
+* `lcd_fill()` 走 DMA2D，与 CPU 绘制的 D-Cache 视图不一致
+* `lcd_show_string()` 用 `mode=0`，背景色取自全局 `g_back_color`（默认白色）
+* 板级函数不知道我们有 3 块缓冲和半分辨率缩放
+
+### 接口
+
+```c
+/* 屏幕像素坐标，闭区间；在 spine_draw_begin() 与 spine_draw_end() 之间调用 */
+void spine_overlay_rect (int x0, int y0, int x1, int y1, uint16_t color565);
+void spine_overlay_frame(int x0, int y0, int x1, int y1, int thick, uint16_t color565);
+void spine_overlay_text (int x, int y, const char *ascii, uint16_t color565);
+int  spine_overlay_count(void);     /* 诊断：本帧排队的操作数 */
+```
+
+### 三条硬性规则（都是踩坑换来的）
+
+| 规则 | 原因 |
+|---|---|
+| **画进全部帧缓冲**，不能只画当前 dst | 三缓冲下每块缓冲 3 帧才轮到一次，只画 dst 会让三块显示不同内容 → 闪烁 |
+| **文字用全分辨率坐标**，不跟随 divisor | 画进半分辨率缓冲再放大会糊 |
+| **矩形必须真的填满** | 曾经有个 `if (n == 1) { 画一个像素; return; }` 的早退分支，导致清屏带只清了一个点，旧文字永远擦不掉 → 重影/混叠 |
+
+### 字库
+
+自带 5×7 点阵（`User/spine_font.h`，由 `DSH/middleware/gen_font.py` 生成并逐字验证），
+默认放大 2 倍（10×14 像素，字符步进 12）。不依赖板级 `asc2_1608`。
+
+生成器自带校验：
+
+```bash
+python DSH/middleware/gen_font.py --check     # 用 ASCII art 打印样例字符串
+```
+
+### 实测
+
+| 项 | 结果 |
+|---|---|
+| 文字清晰度 | ✅ 全分辨率，边缘锐利 |
+| 三缓冲一致性 | ✅ 顶栏/底栏内容完全一致（不像素级比对通过） |
+| 闪烁 | ✅ 无 |
+| 重影/混叠 | ✅ 修复后无 |
+| 帧率影响 | 约 −0.3 ms/帧（三缓冲各画一次 HUD） |
+
+### 用法示例
+
+```c
+spine_draw_begin(2);
+
+for (i...) spine_instance_draw(list[i]);
+
+/* 覆盖层 */
+spine_overlay_rect(0, 0, 799, 23, 0x0000);
+spine_overlay_text(180, 4, "3/6 GRAVITY ROTATE", 0xFFFF);
+spine_overlay_rect(4, 476, 4 + prog, 478, 0x001F);
+
+spine_draw_end();
+```
+
+### 实现位置
+
+* 声明：`User/spine_api.h`
+* 实现：`User/spine_api.cpp`（`ov_rect_scaled` / `ov_text_at` / `spine_overlay_flush`）
+* 字库：`User/spine_font.h`
+* 挂钩点：`spine_draw_end()` 在实例绘制、放大之后，逐个缓冲绘制覆盖层
+
+## 测试组织（宏开关 + 模块拆分）
+
+### 开关文件：`User/test_cfg.h`
+
+所有测试由宏控制，**默认只跑当前关心的项目**：
+
+| 宏 | 默认 | 内容 | 耗时 |
+|---|---|---|---|
+| `TEST_DRIVERS` | **1** | SDRAM / LCD / QSPI / SD / FATFS 自检 | ~5 s |
+| `TEST_RASTER` | 0 | raster2d 回归 | ~2 s |
+| `TEST_FBBENCH` | 0 | 帧缓冲写带宽基准 | ~5 s |
+| `TEST_SHEET` | 0 | 素材总览 | ~10 s |
+| `TEST_GRAVITY` | 0 | 物理重力方向 | ~20 s |
+| `TEST_DUO` | 0 | 双角色压力（全/半分辨率各 2 轮） | ~60 s |
+| `TEST_API_DEMO` | 0 | spine_api 最小示例 | ~20 s |
+| **`TEST_IK`** | **1** | **IK 目标驱动（spineboy）** | ~6 s |
+| `TEST_DEMO` | 0 | 6 场景循环展示（不返回） | ∞ |
+| `TEST_HEARTBEAT` | 1 | 心跳打印 | — |
+
+> `TEST_DRIVERS` 必须为 1：`test_lcd()` 内部执行 `lcd_init()`，关掉就没有显示初始化。
+
+### 效果
+
+| 配置 | 上电到出结果 |
+|---|---|
+| 全开（旧） | ~4 分钟 |
+| 默认（只 IK） | **~15 秒** |
+
+### 模块拆分
+
+| 文件 | 内容 |
+|---|---|
+| `User/selftest.c` | 启动流程 + 驱动自检 + 按宏调度各测试 |
+| `User/spine_test.cpp` | 素材总览 / 双角色 / 重力 / 帧缓冲基准 |
+| `User/spine_ik_test.c` | **IK 目标驱动测试（独立模块）** |
+| `User/spine_demo.c` | 6 场景循环展示 |
+| `User/test_cfg.h` | 所有开关 |
+
+IK 测试的签名（可直接复用）：
+
+```c
+int spine_ik_test(const char *skel, const char *atlas,
+                  const char *anim, int hold_frames, int visual);
+/* 1 = PASS，0 = FAIL，-1 = 素材里没有 IK */
+```
+
+---
+
+## IK 目标驱动（实测）
+
+### API
+
+```c
+int         spine_instance_ik_count(spine_instance_t *in);
+const char *spine_instance_ik_name(spine_instance_t *in, int index);
+int         spine_instance_ik_bone_count(spine_instance_t *in, const char *ik_name);
+float       spine_instance_ik_mix(spine_instance_t *in, const char *ik_name);
+int         spine_instance_set_ik_mix(spine_instance_t *in, const char *ik_name, float mix);
+
+int  spine_instance_set_ik_target(spine_instance_t *in, const char *ik_name,
+                                  float world_x, float world_y);
+int  spine_instance_get_ik_target(spine_instance_t *in, const char *ik_name,
+                                  float *wx, float *wy);
+int  spine_instance_get_ik_tip(spine_instance_t *in, const char *ik_name,
+                               float *wx, float *wy);
+void spine_instance_clear_ik(spine_instance_t *in);
+```
+
+坐标一律是**骨架世界坐标**（spine 单位），不是屏幕像素。
+
+### 实现要点
+
+1. 覆盖值在 `AnimationState::apply()` **之后**、`updateWorldTransform()` **之前**写入目标骨骼的
+   applied pose（`BonePose::setX/setY`，配合 `worldToParent()` 做世界→父空间换算）。
+   放早了会被动画轨道覆盖。
+2. `IkConstraint::getBones()` 返回的是 `_constrainedPose` 子对象，**不能 static_cast 回 Bone**；
+   要拿 `Bone*` 必须经 `IkConstraintData::getBones()[i]->getIndex()` 查 `Skeleton::getBones()`。
+3. `IkConstraint::update()` 第一句是 `if (mix == 0) return;` —— mix 为 0 的约束完全不动。
+
+### spineboy 素材实测
+
+7 个 IK 约束：
+
+| # | 名字 | 链长 | mix | 末端残差 |
+|---|---|---|---|---|
+| 0 | board-ik | 1 | 1.00 | 197.9 |
+| 1 | front-leg-ik | 2 | 1.00 | 0.5 |
+| 2 | rear-leg-ik | 2 | 1.00 | **0.0** |
+| 3 | front-foot-ik | 1 | 1.00 | 0.2 |
+| 4 | rear-foot-ik | 1 | 1.00 | 0.3 |
+| 5 | aim-torso-ik | 1 | 1.00 | 411.1 |
+| 6 | aim-ik | 1 | 0.00 | 393.9 |
+
+> 残差 = |末端位置 − 目标位置|。2 骨 IK（腿）残差接近 0 说明在正常跟随；
+> 1 骨 IK（board/aim）目标超出骨长时够不到，残差大是正常的。
+> `aim-ik` 的 mix 是 0，所以完全不动。
+
+驱动 `rear-leg-ik` 的目标 +40 世界单位后：
+
+```
+target (-145.7,-76.8) -> (-105.7,-76.8), set=1
+tip moved 46.05, residual 40.00 -> 7.52
+RESULT PASS
+```
+
+## 触摸交互 IK（实机可用）
+
+### 硬件
+
+| 项 | 值 |
+|---|---|
+| 触摸 IC | **GT1158**（驱动白名单原本没有，需把 `"1158"` 加进 `gt9xxx_init` 的 ID 判断） |
+| 软 IIC | PB12(SCL) / PB13(SDA) |
+| RST | PB14 |
+| INT | PH7 —— **被 SDRAM 占用**，不可用（从 SDRAM 引脚掩码里去掉会直接 SDRAM 自检失败） |
+
+> 因为 INT 拿不到，`tp_scan()` 的按键门控（`T_PEN == 0`）不可靠；
+> 交互测试改为**直接轮询 GT1158 的 I2C 寄存器**：
+> `0x814E`（bit7 = 有新数据，低 4 位 = 触摸点数）、`0x8150`（第一个点的 x/y 低高字节），
+> 读完后写 0 到 `0x814E` 清标志。
+
+### 坐标换算
+
+```c
+world_x = (screen_x - instance_x) / instance_scale;
+world_y = (screen_y - instance_y) / instance_scale;
+```
+
+实例的 `position/scale` 是屏幕像素，所以反算就是一次平移 + 缩放。
+
+### 交互模块
+
+`User/spine_ik_interactive.c`
+
+```c
+int spine_ik_interactive(const char *skel, const char *atlas,
+                         const char *ik_name, int max_seconds);
+/* max_seconds = 0 -> 永久运行；1 = 收到过触摸，-1 = 没触摸，0 = 失败 */
+```
+
+每帧：
+1. 轮询触摸 → 换算世界坐标 → `spine_instance_set_ik_target()`
+2. 目标锁住最后一次点击位置（防止动画轨道把目标拉走）
+3. `update(dt)` 用**真实帧间隔**（不是固定 1/60，否则慢帧时动画变慢动作）
+4. 渲染 + 顶栏显示 `IK 名 / 剩余时间 / 帧率 / 末端位置`
+
+### 实测
+
+```
+[IK]  IK constraints: 7
+[IK]  subject: #2 rear-leg-ik (residual 0.0)
+[IK]  tip moved 46.05, residual 40.00 -> 7.52   => PASS
+[IKT] rear-leg-ik t=0s 63.7fps tip=(-90,-50) waiting
+[IKT] first touch (412,268) -> world (74.2,-385.3)
+```
+
+- 帧率 **63.7 fps**（半分辨率 + 覆盖层）
+- 点击屏幕后角色右腿跟随点击点，串口打印首次触摸的坐标换算
+
+### 触摸驱动 IK 的三种状态（常态播放 / 按下跟随 / 松开恢复）
+
+```
+        ┌───────────── 按下 ─────────────┐
+        │                                ▼
+     [IDLE] ◄── 混合结束/clear_ik ── [ACTIVE]
+        ▲                                │
+        └────────── [BLEND] ◄──── 抬手 ───┘
+```
+
+| 状态 | 行为 |
+|---|---|
+| **IDLE** | **完全不覆盖** IK 目标，动画全权驱动（常态播放） |
+| **ACTIVE** | 每帧用触点覆盖目标；动画其余部分照常播放 |
+| **BLEND** | 松开后 8 帧内把覆盖点插值回动画目标，然后 `clear_ik()` 回到 IDLE |
+
+实现要点：
+
+1. `gt_poll()` 改为**三态**：`1`=按下、`0`=无新报文、`-1`=抬手
+   （原来 `0` 同时表示"无数据"和"抬手"，无法区分）
+2. 报文间隔抖动用 **120 ms 超时**兜底，避免把间隔误判成抬手
+3. 松开瞬间多调一次 `spine_instance_update()`，让动画把目标写回去，
+   再用 `get_ik_target()` 取"动画此刻的目标"作为插值终点
+4. 混合帧数由 `TEST_IK_RELEASE_BLEND` 控制（0 = 立即恢复）
+
+实测串口：
+
+```
+[IKT] ACTIVE  touch (618,281) -> world (473.8,-367.4)
+[IKT] BLEND   8 frames -> back to animation
+[IKT] IDLE    animation resumed
+[IKT] rear-leg-ik t=24s 63.6fps state=IDLE tip=(205,-301)
+[IKT] rear-leg-ik t=25s 63.6fps state=IDLE tip=(182,-355)
+```
+
+`state=IDLE` 时 `tip` 随走路动画变化 ✓；`state=BLEND` 出现在松开后的 8 帧内 ✓。
+
+### 踩坑：松开后运动范围整体平移
+
+**现象**：触摸松开后，腿没有回到原来 0°–20° 的摆动范围，而是在 40°–60° 之间摆动 —— 像是加了一个常量偏移。
+
+**原因**：`spine_instance_set_ik_target()` 把目标写进了目标骨骼的 **applied pose**；
+而 `spine_instance_clear_ik()` 原先只清空覆盖表，**没有把那根骨骼还回去**。
+spineboy 的 IK 目标骨骼不被动画驱动（没有 timeline 写它），
+所以最后一次写入的局部坐标永久留在骨架上 → 整段运动范围被平移。
+
+**修复**（`spine_api.cpp`）：
+
+1. 覆盖槽新增 `base_lx / base_ly / captured`：**首次**覆盖前记录目标骨骼的局部姿态
+2. `clear_ik()` 先把 `base_lx/base_ly` 写回目标骨骼，再清空覆盖表
+
+```c
+/* clear_ik 里 */
+for (i...) {
+    if (slot->ik && slot->captured) {
+        BonePose &p = slot->ik->getTarget().getAppliedPose();
+        p.setX(slot->base_lx);
+        p.setY(slot->base_ly);
+    }
+}
+memset(in->ik, 0, sizeof(in->ik));
+```
+
+**回归检查**（`spine_ik_test.c` 自动跑）：
+
+```
+[IK] after clear_ik: tip=(-91.2,-112.0) dist to pushed target 38.0
+[IK] restore OK (tip left the pushed target)
+[IK] RESULT PASS
+```
+
+判定：`clear_ik()` 之后末端到"被推过去的目标"的距离必须明显变大
+（保持时 4.32 → 还原后 38.0），否则说明偏移泄漏。
+
+## 动画衔接 API（过渡 / 进度接回）
+
+### 背景
+
+spine-cpp 的 `AnimationStateData` 默认 `defaultMix = 0`，所以 `spine_instance_play()`
+切动画是**硬切**。要平滑过渡必须显式设置 mix。
+
+### 接口
+
+```c
+void  spine_instance_set_default_mix(spine_instance_t *in, float seconds);
+int   spine_instance_set_mix(spine_instance_t *in, const char *from, const char *to, float seconds);
+float spine_instance_get_time(spine_instance_t *in, int track);
+const char *spine_instance_current_anim(spine_instance_t *in, int track);
+int   spine_instance_seek(spine_instance_t *in, float seconds, int track);
+```
+
+### 关键实现细节
+
+1. **`set_mix` 先查存在性**：`AnimationStateData::setMix(name, name, d)` 内部是
+   `assert(from != NULL)`，名字写错会直接断言死机。所以先 `findAnimation()` 判空，
+   再调用 `Animation&` 重载；名字不存在返回 0。
+2. **`seek` 与 `set_time` 的区别**：`set_time()` 会把 `timeScale` 置 0（定格），
+   接回播放进度时不能用它；`seek()` 保留原 timeScale。
+3. **TrackEntry 生命周期**：`AnimationState` 默认会在动画播完时
+   `disposeTrackEntry()`，而我们缓存了 `TrackEntry*`（get_time/seek 需要）。
+   直接缓存会**悬空指针 → HardFault**。所以：
+   - `create()` 里 `state->setManualTrackEntryDisposal(true)`
+   - `play()` 把上一代条目放进 `retire[]`，且**只有确认它不在任何混合链里**
+     （沿 `getMixingFrom()` 走一遍）才回收
+   - `stop()` / `destroy()` 显式 `disposeTrackEntry()`
+
+### 典型用法：触摸切动画再切回
+
+```c
+float saved = spine_instance_get_time(in, 0);
+
+spine_instance_set_default_mix(in, 0.20f);      /* 200 ms 过渡 */
+spine_instance_play(in, "touch_idle", 0, 0);    /* 触摸时 */
+
+/* 松开 */
+spine_instance_play(in, "walk", 1, 0);
+spine_instance_seek(in, saved, 0);              /* 接回原进度，不从头开始 */
+```
+
+### 实机验证（`spine_anim_test.c`，上电自动跑）
+
+```
+[ANIM] A=walk  B=idle
+[ANIM] set_mix(walk->idle)=1  set_mix(bad)=0 (expect 1 / 0)
+[ANIM] playing walk  time=0.500
+[ANIM] switched to idle (expect idle)
+[ANIM] seek back to 0.500 -> 0.500
+[ANIM] RESULT PASS
+```
+
+### 没做的：`add_anim`（排队下一段）
+
+底层能用，但实机验证时发现：排队动画接管后 spine 会 `setTrack(i, next)`，
+旧条目从 `next` 链上被摘掉，而我们缓存的指针看不到这次切换
+（`current_anim()`/`get_time()` 会一直报旧动画，时间冻结在切换点）。
+spine-cpp 没有公开"取某轨当前条目"的接口，没法干净地跟上，
+所以**没有把它放进公开 API**。需要排队功能时，建议改用动画事件或自己管理时间轴。
+
+## 脚本动画序列测试（walk → idle → aim → death）
+
+`User/spine_anim_seq.c`，上电自动跑，四段串联：
+
+| 阶段 | 动画 | 时长 | 循环 | 交互 |
+|---|---|---|---|---|
+| 1 | walk | 5 s | 是 | — |
+| 2 | idle | 5 s | 是 | — |
+| 3 | **aim** | 10 s | 是 | **触摸驱动 `aim-ik`** |
+| 4 | death | 5 s | **否（单次）** | — |
+
+段间过渡 0.30 s（`set_default_mix`）。
+
+### 实测数据（spineboy 素材）
+
+```
+[SEQ] phase 1/4  walk  loop=1  5 s  dur=1.00
+[SEQ] phase 2/4  idle  loop=1  5 s  dur=1.67
+[SEQ] phase 3/4  aim   loop=1 10 s  dur=0.00  touch->aim-ik
+[SEQ] phase 4/4  death loop=0  5 s  dur=4.93
+[SEQ]   t=1s  anim=death  track=1.00  applied=1.00
+[SEQ]   t=4s  anim=death  track=4.01  applied=4.01
+[SEQ] RESULT DONE
+```
+
+关键点：
+
+1. **aim 的动画时长是 0**（单帧姿态动画）—— 这段的"动作"完全靠触摸驱动 `aim-ik`（该约束在素材里 `mix=0`，进入该段时临时设为 1，离开时还原）。
+2. **death 时长 4.93 s**，`loop=0` 时 `applied` 单调涨到 4.93 后停住（不会回到 0），证明**只播一次**。
+3. `track`（trackTime）会一直涨，`applied`（getAnimationTime）才是真正的动画时间 —— 判定"是否循环"要看后者。
+
+### 新增的小 API
+
+```c
+float spine_instance_anim_time(in, int track);      /* 实际动画时间（循环会回绕） */
+float spine_instance_anim_duration(in, int track);  /* 动画总时长 */
+```
+
+用于区分"播放进度"和"动画时长"，也是判定单次播放的依据。
+
+### 松手抽搐的成因与修复
+
+**现象**：松开手指时姿态会抖一下。
+
+**成因**（测试模块原来的实现）：
+
+```
+松手那一帧：
+  clear_ik()             → 腿瞬间回到动画姿态
+  update()               → 一次没有覆盖的更新
+  get_ik_target()        → 读出动画目标
+  ...同一帧继续 draw      → 按"动画姿态"画了一次
+下一帧：
+  BLEND 从触点重新开始    → 又跳回触点
+```
+
+两次跳变就是抽搐。
+
+**修复**（`spine_ik_interactive.c` / `spine_anim_seq.c`）：
+
+1. 捕获动画目标后**立刻恢复覆盖**，并 `continue` **跳过本帧渲染** ——
+   丢 1 帧（约 16 ms）不可见，但消除了双跳变；
+2. 固定 8 帧线性插值改为**指数平滑**（时间常数 `TEST_IK_RELEASE_TAU_MS`，默认 120 ms）：
+   `target += (anim - target) * (1 - e^(-dt/τ))`；
+3. 残差 < 2 个世界单位（或超过 0.6 s）时再 `clear_ik()`，
+   此时切换已看不出来。
+
+`TEST_IK_RELEASE_TAU_MS` 调小 = 回得更快，调大 = 更黏。
+
+> 说明：Spine 里的物理约束（PhysicsConstraint 的 inertia/strength/damping）
+> 无法用来平滑这种运行时覆盖 —— 覆盖写在 `apply()` 之后、`updateWorldTransform()` 之前，
+> 而物理约束在 `Skeleton::update(dt)` 推进、`updateWorldTransform()` 应用，
+> 两者作用在同一根骨骼上会互相覆盖。
+
+### IK 覆盖的两种释放方式
+
+| API | 行为 | 用在什么时候 |
+|---|---|---|
+| `spine_instance_clear_ik(in)` | 还原目标骨骼到首次覆盖前的姿态，再清覆盖表 | 交互彻底结束、不再回动画 |
+| `spine_instance_release_ik_keep_pose(in)` | **只清覆盖表，不动骨骼姿态** | 交给"两段动画 + 过渡"的方案接管 |
+
+#### 为什么需要 keep_pose
+
+`clear_ik()` 会把目标骨骼瞬间弹回旧值 —— 如果紧接着启动动画过渡，这一下就是可见的抽搐。
+
+用 `release_ik_keep_pose()` 时，目标骨骼停在手指最后的位置，随后播正常动画并设 mix：
+
+```c
+/* 按下：交互动画（腿与目标骨骼都没有时间轴） */
+spine_instance_play(in, "aim_noleg", 1, 0);
+spine_instance_set_ik_mix(in, "leg-ik", 1.0f);
+/* 每帧 */
+spine_instance_set_ik_target(in, "leg-ik", wx, wy);
+
+/* 松开：交给动画混合，不需要手写插值 */
+spine_instance_release_ik_keep_pose(in);
+spine_instance_set_default_mix(in, 0.25f);
+spine_instance_play(in, "walk", 1, 0);
+```
+
+正常动画里目标骨骼的 timeline 会把目标从"手指最后的位置"平滑拉回正常目标，
+腿自然回位。
+
+#### 前提
+
+正常动画必须**驱动目标骨骼**（walk 里腿的 IK target 要有 timeline）。
+如果它不驱动，目标会停在手指位置 → 腿一直偏着（这种情况要用 `clear_ik()`）。
+
+> 该 API 已实现并通过编译，**尚未在硬件上验证**（需要一份"腿无时间轴"的交互动画素材）。
+
+### 触摸作为"额外动作"：mix 淡入淡出（`spine_anim_seq.c` 的 aim 段）
+
+与"接管现有 IK"（腿跟手）不同，这类交互的 IK **平时不参与**（`mix = 0`），
+只在触摸时启用，松手再淡出 —— 部位自然回到动画姿态，不需要目标插值。
+
+```
+IDLE --按下--> FADE_IN --mix=1--> ACTIVE --松手--> FADE_OUT --mix=0--> IDLE
+```
+
+| 参数 | 默认 | 说明 |
+|---|---|---|
+| `SEQ_IK_FADE_IN_MS` | **150 ms** | 按下时 mix 0→1 |
+| `SEQ_IK_FADE_OUT_MS` | **250 ms** | 松手时 mix 1→0 |
+
+实现要点：
+
+1. 阶段开始时 `set_ik_mix(name, 0.0f)` —— 保证平时不参与
+2. 按下：每帧 `set_ik_target(手指)` 并按时间把 mix 升到 1
+3. 松手：目标**保持不变**，只把 mix 降下来；
+   mix 到 0 时 `clear_ik()`，此时目标已无影响，所以不会跳变
+4. mix 由我们自己累加（不从引擎读回），避免每帧查询开销
+
+### 两种交互的对照
+
+| | 额外动作（aim 段） | 接管现有 IK（腿） |
+|---|---|---|
+| IK 平时 mix | 0 | 1（走路需要它） |
+| 按下 | mix 淡入 + 驱动目标 | 直接驱动目标 |
+| 松手 | **mix 淡出** | **目标指数平滑**回动画目标 |
+| 素材要求 | 额外 IK，无时间轴 | 复用现有 IK |
+
+### 重要坑：动画的 IK Mix 时间轴会覆盖运行时设置
+
+**现象**：触摸时 IK 瞬间全量生效（没有渐变），松手也不复位。
+
+**诊断**（串口同时打印"我们写的"和"求解器读的"）。`spine_instance_ik_mix_applied()`
+读的是 `IkConstraint::getAppliedPose().getMix()`，也就是 `IkConstraint::update()` 用的那个：
+
+```
+mix=0.00/1.00     ← 我们写 0，求解器读到 1
+```
+
+**原因**：`aim` 动画带 **IK Mix 时间轴**，每帧 `AnimationState::apply()` 都会把
+`aim-ik` 的 mix 写回 1。应用层在 `update()` 之外设置的值，下一帧就被覆盖。
+
+**修复**（`spine_api.cpp`）：
+
+1. `set_ik_mix()` 不再直接写 pose，而是**存进实例的 `mix[]` 表**
+2. `apply_ik_overrides()`（运行在 `apply()` 之后、`updateWorldTransform()` 之前）
+   每帧把表里的值写进 **pose 和 applied pose 两边**
+3. `ik_mix()` 优先返回表里的值（与求解器一致）
+
+修复后：
+
+```
+mix=0.00/0.00     ← 两边一致
+```
+
+> 教训：凡是"运行时想覆盖动画驱动的属性"，都必须写在 `AnimationState::apply()`
+> **之后**。IK 目标如此，IK 混入也如此。之前 IK 目标没问题，是因为目标骨骼没有时间轴；
+> 而 `aim-ik` 的 mix 有时间轴。
+
+### 第二个坑：共用目标骨骼的约束必须一起淡入淡出
+
+诊断时发现 `aim-ik` 与 `aim-torso-ik` 的 **target 是同一根骨骼**（都是 `(302.4,-569.7)`）。
+
+只淡出 `aim-ik` 时，`aim-torso-ik`（mix 恒为 1）会**立刻**跟随新的目标点 →
+看起来仍然是"瞬间跳变"。
+
+修法：把共用目标的约束放进同一个淡入淡出组：
+
+```c
+{ "aim", 1, 10, "aim-ik", "aim-torso-ik" },   /* 两个一起淡 */
+```
+
+### 模拟触摸（便于验证）
+
+`SEQ_SIM_TOUCH`（默认 1）：aim 段第 2~6 秒自动模拟一次按压，目标点绕圈。
+不触摸也能验证渐变链路：
+
+```
+t=1s  mix=0.00/0.00  st=0  tip=(56,-338)   ← 休息
+t=2s  mix=0.01/0.01  st=1                  ← 淡入开始
+t=3s  mix=0.51/0.51  st=1  tip=(35,-361)   ← 一半
+t=4s  mix=1.00/1.00  st=2  tip=(-96,-364)  ← 满
+t=7s  mix=0.54/0.54  st=3  tip=(40,-366)   ← 淡出
+t=9s  mix=0.00/0.00  st=0  tip=(56,-338)   ← 完全复位
+```
+
+验证完把 `SEQ_SIM_TOUCH` 改成 0 即可用真实触摸。

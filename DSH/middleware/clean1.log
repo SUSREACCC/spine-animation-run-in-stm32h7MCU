@@ -1,0 +1,91 @@
+﻿
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 17 2026 14:54:46
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 17 2026 14:54:46
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 17 2026 14:54:46
+==============================================
+[1/5] MPU + SDRAM
+  addr scan : 2048 checkpoints over 32768 KB, 0 error(s)
+  pattern   : 64 KB x 5 patterns, total error(s) = 0
+[2/5] LCD (LTDC + DMA2D + SDRAM framebuffer)
+LCD ID:4384
+  panel id  : 4384, 800x480
+  pixel rb  : F800 OK (framebuffer @ 0xC0000000)
+[3/5] QSPI NOR flash
+ID:ef17
+  flash id  : EF17
+  rw verify : 4096 bytes @ 0x800000, 0 mismatch(es)
+[4/5] SD card (SDMMC1, 4-bit)
+  card      : 15801 MB, type=1, block=512 B
+  bus       : 4-bit, sweep 6/15/30 MHz
+  div=20 ( 6 MHz): OK   2765 KB/s  
+  div=8  (15 MHz): OK   6487 KB/s  
+  div=4  (30 MHz): OK   11748 KB/s  
+  stress    : 32 x 8 KB over the card, 0 error(s), 10266 KB/s
+  using     : 30 MHz, MBR sig=55AA
+[5/5] FATFS on SD volume 0:
+  volume    : FAT32, total 15784 MB, free 15782 MB
+   System Volume Information/  0 B
+   spineboy-pma.atlas   1652 B
+  read      : 0:/spineboy-pma.atlas -> 16 B, 73 70 69 6E ...
+   spineboy-pma.raw   524304 B
+   spineboy-pro.skel   65335 B
+   celestial-circus-pro.skel   53305 B
+   celestial-circus-pro.atlas   2249 B
+   celestial-circus-pro.raw   1048592 B
+  entries   : 7 listed, file read OK
+  write     : 512 B -> readback match, delete ok
+----------------------------------------------
+RESULT SDRAM=PASS LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+RESULT SDRAM=PASS LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+----------------------------------------------
+[TGX] starting 2D render test
+----------------------------------------------
+
+[IK] asset: /spine/spineboy-pro.skel
+[SPN] texture /spine/spineboy-pma.raw : 1024x256 ARGB4444
+[API] asset loaded: /spine/spineboy-pro.skel | 11 animations | 1 textures
+[IK] IK constraints: 7
+[IK]   #0 board-ik         bones=1 mix=1.00 tip=(-329.7,-69.5) res=197.9
+[IK]   #1 front-leg-ik     bones=2 mix=1.00 tip=(-41.9,-29.6) res=0.5
+[IK]   #2 rear-leg-ik      bones=2 mix=1.00 tip=(28.0,-37.8) res=0.0
+[IK]   #3 front-foot-ik    bones=1 mix=1.00 tip=(-13.7,-0.2) res=0.2
+[IK]   #4 rear-foot-ik     bones=1 mix=1.00 tip=(62.1,-0.2) res=0.3
+[IK]   #5 aim-torso-ik     bones=1 mix=1.00 tip=(18.9,-271.9) res=411.1
+[IK]   #6 aim-ik           bones=1 mix=0.00 tip=(16.1,-299.1) res=393.9
+[IK] subject: #2 rear-leg-ik (residual 0.0)
+[IK] target (-145.7,-76.8) -> (-105.7,-76.8), set=1
+[IK] tip moved 46.05, residual 40.00 -> 7.52
+[IK] RESULT PASS
+CTP ID:1158
+
+[IKT] tp_init() = 0
+
+[IKT] loading /spine/spineboy-pro.skel
+[SPN] texture /spine/spineboy-pma.raw : 1024x256 ARGB4444
+[API] asset loaded: /spine/spineboy-pro.skel | 11 animations | 1 textures
+[IKT] animations: aim death hoverboard idle idle-turn jump portal run run-to-idle shoot walk
+[IKT] playing: walk
+[IKT] ik=rear-leg-ik  scale=0.5315  origin=(366.2,476.2)
+[IKT] touch the screen to move the IK target (0 s)
+[IKT] rear-leg-ik t=0s 63.7fps tip=(-90,-50) waiting
+[IKT] rear-leg-ik t=1s 63.7fps tip=(-69,-48) waiting
+[IKT] rear-leg-ik t=2s 63.7fps tip=(-46,-44) waiting
+[IKT] rear-leg-ik t=3s 63.7fps tip=(-21,-40) waiting
+[IKT] rear-leg-ik t=4s 63.7fps tip=(6,-39) waiting
+[IKT] rear-leg-ik t=5s 63.7fps tip=(34,-39) waiting
+[IKT] rear-leg-ik t=6s 63.7fps tip=(61,-40) waiting
+[IKT] rear-leg-ik t=7s 63.7fps tip=(82,-43) waiting
+

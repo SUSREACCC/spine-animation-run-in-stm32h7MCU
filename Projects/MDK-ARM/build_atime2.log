@@ -1,0 +1,13 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_anim_seq.c(287): error: expected ')'
+                printf(SEQ_TAG "  t=%ds  anim=%s  track=%.2f  applied=%.2f" SEQ_NL,
+                                                                            ^
+../../User/spine_anim_seq.c(287): note: to match this '('
+                printf(SEQ_TAG "  t=%ds  anim=%s  track=%.2f  applied=%.2f" SEQ_NL,
+                      ^
+1 error generated.
+compiling spine_anim_seq.c...
+"..\..\Output\STM32H743.axf" - 1 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

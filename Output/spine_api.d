@@ -161,6 +161,14 @@
   ../../Middlewares/SPINE/include\spine/Constraint.h \
   ../../Middlewares/SPINE/include\spine/PosedActive.h \
   ../../Middlewares/SPINE/include\spine/DrawOrder.h \
+  ../../Middlewares/SPINE/include\spine/IkConstraint.h \
+  ../../Middlewares/SPINE/include\spine/IkConstraintData.h \
+  ../../Middlewares/SPINE/include\spine/IkConstraintPose.h \
+  ../../Middlewares/SPINE/include\spine/Pose.h \
+  ../../Middlewares/SPINE/include\spine/Bone.h \
+  ../../Middlewares/SPINE/include\spine/BoneData.h \
+  ../../Middlewares/SPINE/include\spine/BonePose.h \
+  ../../Middlewares/SPINE/include\spine/BoneLocal.h \
   ../../Middlewares/SPINE/include\spine/Animation.h \
   ../../Middlewares/SPINE/include\spine/Map.h \
   ../../Middlewares/SPINE/include\spine/AnimationState.h \
@@ -170,17 +178,13 @@
   ../../Middlewares/SPINE/include\spine/Slot.h \
   ../../Middlewares/SPINE/include\spine/SlotData.h \
   ../../Middlewares/SPINE/include\spine/SlotPose.h \
-  ../../Middlewares/SPINE/include\spine/Pose.h \
   ../../Middlewares/SPINE/include\spine/AnimationStateData.h \
   ../../Middlewares/SPINE/include\spine/SkeletonRenderer.h \
   ../../Middlewares/SPINE/include\spine/BlockAllocator.h \
   D:\MDK5\ARM\ARMCLANG\Bin\..\include\libcxx\cstdint \
   ../../Middlewares/SPINE/include\spine/SkeletonClipping.h \
   ../../Middlewares/SPINE/include\spine/Triangulator.h \
-  ../../Middlewares/SPINE/include\spine/Bone.h \
-  ../../Middlewares/SPINE/include\spine/BoneData.h \
-  ../../Middlewares/SPINE/include\spine/BonePose.h \
-  ../../Middlewares/SPINE/include\spine/BoneLocal.h \
   ../../Middlewares/SPINE/include\spine/PhysicsConstraint.h \
   ../../Middlewares/SPINE/include\spine/PhysicsConstraintData.h \
-  ../../Middlewares/SPINE/include\spine/PhysicsConstraintPose.h
+  ../../Middlewares/SPINE/include\spine/PhysicsConstraintPose.h \
+  ../../User/spine_font.h

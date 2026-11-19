@@ -1,0 +1,78 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+compiling spine_demo.c...
+../../User/spine_api.cpp(404): error: incomplete type 'spine::IkConstraint' named in nested name specifier
+        if (cs[i]->getRTTI().instanceOf(spine::IkConstraint::rtti))
+                                        ~~~~~~~^~~~~~~~~~~~~~
+../../Middlewares/SPINE/include\spine/Posed.h(66): note: forward declaration of 'spine::IkConstraint'
+                friend class IkConstraint;
+                             ^
+../../User/spine_api.cpp(425): error: incomplete type 'spine::IkConstraint' named in nested name specifier
+        if (cs[i]->getRTTI().instanceOf(spine::IkConstraint::rtti))
+                                        ~~~~~~~^~~~~~~~~~~~~~
+../../Middlewares/SPINE/include\spine/Posed.h(66): note: forward declaration of 'spine::IkConstraint'
+                friend class IkConstraint;
+                             ^
+../../User/spine_api.cpp(442): error: member access into incomplete type 'spine::IkConstraint'
+    return (ik == nullptr) ? nullptr : ik->getData().getName().buffer();
+                                         ^
+../../Middlewares/SPINE/include\spine/Posed.h(66): note: forward declaration of 'spine::IkConstraint'
+                friend class IkConstraint;
+                             ^
+../../User/spine_api.cpp(459): error: member access into incomplete type 'spine::IkConstraint'
+    return (ik == nullptr) ? 0 : (int)ik->getBones().size();
+                                        ^
+../../Middlewares/SPINE/include\spine/Posed.h(66): note: forward declaration of 'spine::IkConstraint'
+                friend class IkConstraint;
+                             ^
+../../User/spine_api.cpp(472): error: unknown type name 'ik_override_t'
+    ik_override_t *slot = nullptr;
+    ^
+../../User/spine_api.cpp(510): error: member access into incomplete type 'spine::IkConstraint'
+    spine::BonePose *p = &ik->getTarget().getAppliedPose();
+                            ^
+../../Middlewares/SPINE/include\spine/Posed.h(66): note: forward declaration of 'spine::IkConstraint'
+                friend class IkConstraint;
+                             ^
+../../User/spine_api.cpp(523): error: member access into incomplete type 'spine::IkConstraint'
+    if ((ik == nullptr) || (ik->getBones().size() == 0))
+                              ^
+../../Middlewares/SPINE/include\spine/Posed.h(66): note: forward declaration of 'spine::IkConstraint'
+                friend class IkConstraint;
+                             ^
+../../User/spine_api.cpp(529): error: member access into incomplete type 'spine::IkConstraint'
+    spine::IkConstraintData &d = (spine::IkConstraintData &)ik->getData();
+                                                              ^
+../../Middlewares/SPINE/include\spine/Posed.h(66): note: forward declaration of 'spine::IkConstraint'
+                friend class IkConstraint;
+                             ^
+../../User/spine_api.cpp(530): error: member access into incomplete type 'spine::IkConstraintData'
+    spine::Array<spine::BoneData *> &bds = d.getBones();
+                                            ^
+../../Middlewares/SPINE/include\spine/SkeletonData.h(48): note: forward declaration of 'spine::IkConstraintData'
+        class IkConstraintData;
+              ^
+../../User/spine_api.cpp(568): error: member access into incomplete type 'spine::IkConstraint'
+        spine::Bone &target = in->ik[i].ik->getTarget();
+                                          ^
+../../Middlewares/SPINE/include\spine/Posed.h(66): note: forward declaration of 'spine::IkConstraint'
+                friend class IkConstraint;
+                             ^
+../../User/spine_api.cpp(29): warning: In file included from...../../Middlewares/SPINE/include\spine/Skeleton.h(260): error: incomplete type 'spine::IkConstraint' named in nested name specifier
+                                if (constraint->getRTTI().isExactly(T::rtti)) {
+                                                                    ^~~
+../../User/spine_api.cpp(452): note: in instantiation of function template specialization 'spine::Skeleton::findConstraint<spine::IkConstraint>' requested here
+    return in->skel->findConstraint<spine::IkConstraint>(spine::String(name));
+                     ^
+../../Middlewares/SPINE/include\spine/Posed.h(66): note: forward declaration of 'spine::IkConstraint'
+                friend class IkConstraint;
+                             ^
+../../User/spine_api.cpp(29): warning: In file included from...../../Middlewares/SPINE/include\spine/Skeleton.h(260): error: incomplete definition of type 'spine::IkConstraint'
+                                if (constraint->getRTTI().isExactly(T::rtti)) {
+                                                                    ~^~
+12 errors generated.
+compiling spine_api.cpp...
+compiling selftest.c...
+"..\..\Output\STM32H743.axf" - 12 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:05

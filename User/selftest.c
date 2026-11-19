@@ -22,8 +22,18 @@
 #include <string.h>
 #include "spine_test.h"
 #include "spine_api.h"
+#include "spine_demo.h"
 #include "plat/plat.h"
 #include "selftest.h"
+#include "test_cfg.h"
+
+#if TEST_TOUCH
+#include "./BSP/TOUCH/touch.h"
+#endif
+#include "spine_ik_test.h"
+#include "spine_anim_test.h"
+#include "spine_anim_seq.h"
+#include "spine_ik_interactive.h"
 
 /*--------------------------------------------------------------- constants */
 #define SDRAM_BASE          ((uint32_t)0xC0000000u)
@@ -748,7 +758,6 @@ void selftest_run(void)
     printf("%s\r\n", line);
     printf("----------------------------------------------\r\n");
 
-    /* ---- TGX 2D render self-test + throughput benchmark (keeps boot test above) ---- */
     delay_ms(1500);
     printf("[TGX] starting 2D render test\r\n");
     printf("----------------------------------------------\r\n");
@@ -756,28 +765,88 @@ void selftest_run(void)
     /* ---- Spine 集成测试（素材需放在 SD 卡 /spine/ 下）---- */
     /* ---- walk 动画实时播放（双缓冲，60fps，15 秒）---- */
     /* 帧缓冲写带宽基准（MPU 三种属性） */
+#if TEST_FBBENCH
     fb_bench();
+#endif
 
     /* 基准显示 64 位存储下写穿最快（170 vs 150 MB/s），正式启用 */
     fb_mpu_set(2);
 
-    /* 新素材：先打印动画列表并渲染总览 */
+    /* ---- 以下测试由 User/test_cfg.h 的宏逐个开关 ---- */
+
+#if TEST_SHEET
+    /* 素材总览：打印动画列表 + 渲染全部角色 */
     (void)spine_anim_sheet("/spine/celestial-circus-pro.skel",
                            "/spine/celestial-circus-pro.atlas", 0.5f);
+#endif
 
-    /* 重力方向演示：给 hair-back 注入物理约束，重力绕圈 */
+#if TEST_GRAVITY
+    /* 重力方向：给 hair-back 注入物理约束，重力绕圈 */
     (void)spine_gravity_test("/spine/celestial-circus-pro.skel",
                              "/spine/celestial-circus-pro.atlas",
                              NULL, 60, 10, 1, "hair-back");
+#endif
 
-    /* 双角色实测（你的素材）：swing + wing-flap，全分辨率 2 轮 */
-    (void)spine_play_duo("/spine/celestial-circus-pro.skel", "/spine/celestial-circus-pro.atlas",
+#if TEST_DUO
+    /* 双角色：全分辨率 2 轮 + 半分辨率 2 轮 */
+    (void)spine_play_duo("/spine/celestial-circus-pro.skel",
+                         "/spine/celestial-circus-pro.atlas",
                          "swing", "wing-flap", 60, 4, 1, 2);
-    /* 半分辨率 2 轮 */
-    (void)spine_play_duo("/spine/celestial-circus-pro.skel", "/spine/celestial-circus-pro.atlas",
+    (void)spine_play_duo("/spine/celestial-circus-pro.skel",
+                         "/spine/celestial-circus-pro.atlas",
                          "swing", "wing-flap", 60, 4, 2, 2);
+#endif
 
+#if TEST_API_DEMO
     api_demo();
+#endif
+
+#if TEST_IK
+    /* IK 目标驱动：spineboy 素材（7 个 IK 约束），画 3 秒让效果可见 */
+    (void)spine_ik_test("/spine/spineboy-pro.skel",
+                        "/spine/spineboy-pma.atlas",
+                        "walk", 5, 1);
+#endif
+
+#if TEST_ANIM_MIX
+    /* 动画衔接：默认过渡 / 当前动画名 / 进度接回 / 排队下一段 */
+    (void)spine_anim_test("/spine/spineboy-pro.skel",
+                          "/spine/spineboy-pma.atlas", 30);
+#endif
+
+#if TEST_ANIM_SEQ
+    /* 4 段动画序列；aim 段触摸驱动 aim-ik */
+    (void)spine_anim_seq("/spine/spineboy-pro.skel", "/spine/spineboy-pma.atlas");
+#endif
+
+#if TEST_IK_INTERACTIVE
+    /* 交互：点击屏幕把 IK 目标挪到点击处 */
+#if TEST_TOUCH
+    printf("\r\n[IKT] tp_init() = %u\r\n", (unsigned)tp_init());
+#else
+    printf("\r\n[IKT] TEST_TOUCH=0，触摸未初始化\r\n");
+#endif
+    (void)spine_ik_interactive("/spine/spineboy-pro.skel",
+                               "/spine/spineboy-pma.atlas",
+                               "rear-leg-ik", TEST_IK_TOUCH_SECONDS);
+#endif
+
+#if TEST_DEMO
+    /* 6 场景循环展示（不返回） */
+    spine_demo_run();
+#endif
+
+#if TEST_HEARTBEAT
+    printf("heartbeat start\r\n");
+
+    while (1)
+    {
+        LED0_TOGGLE();
+        delay_ms(1000);
+        beat++;
+        printf("alive %lu\r\n", (unsigned long)beat);
+    }
+#endif
 
     printf("heartbeat start\r\n");
 

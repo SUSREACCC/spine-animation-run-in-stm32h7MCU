@@ -1,0 +1,43 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_anim_seq.c(25): error: expected identifier or '('
+"
+^
+../../User/spine_anim_seq.c(65): error: use of undeclared identifier 'SEQ_IK_IDLE'
+    c->state = SEQ_IK_IDLE;
+               ^
+../../User/spine_anim_seq.c(214): error: use of undeclared identifier 'SEQ_IK_ACTIVE'
+                            if (ik.state != SEQ_IK_ACTIVE)
+                                            ^
+../../User/spine_anim_seq.c(216): error: use of undeclared identifier 'SEQ_IK_ACTIVE'
+                                ik.state = SEQ_IK_ACTIVE;
+                                           ^
+../../User/spine_anim_seq.c(226): error: use of undeclared identifier 'SEQ_IK_ACTIVE'
+                else if (ik.state == SEQ_IK_ACTIVE)
+                                     ^
+../../User/spine_anim_seq.c(236): error: use of undeclared identifier 'SEQ_IK_BLEND'
+                    ik.state = SEQ_IK_BLEND;
+                               ^
+../../User/spine_anim_seq.c(240): error: use of undeclared identifier 'SEQ_IK_BLEND'
+                if (ik.state == SEQ_IK_BLEND)
+                                ^
+../../User/spine_anim_seq.c(256): error: use of undeclared identifier 'SEQ_IK_IDLE'
+                        ik.state = SEQ_IK_IDLE;
+                                   ^
+../../User/spine_anim_seq.c(273): error: use of undeclared identifier 'SEQ_IK_ACTIVE'
+                         (ph->ik != 0) ? ((ik.state == SEQ_IK_ACTIVE) ? " TOUCH" : " TAP") : "");
+                                                       ^
+../../User/spine_anim_seq.c(289): error: expected ')'
+                printf(SEQ_TAG "  t=%ds  anim=%s  track=%.2f  applied=%.2f" SEQ_NL,
+                                                                            ^
+../../User/spine_anim_seq.c(24): note: expanded from macro 'SEQ_NL'
+#define SEQ_NL  "
+                ^
+../../User/spine_anim_seq.c(289): note: to match this '('
+                printf(SEQ_TAG "  t=%ds  anim=%s  track=%.2f  applied=%.2f" SEQ_NL,
+                      ^
+10 errors generated.
+compiling spine_anim_seq.c...
+"..\..\Output\STM32H743.axf" - 10 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:02

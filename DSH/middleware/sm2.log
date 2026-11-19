@@ -1,0 +1,78 @@
+﻿[IKT] ACTIVE  touch (618,281) -> world (473.8,-367.4)
+[IKT] BLEND   8 frames -> back to animation
+[IKT] ACTIVE  touch (618,281) -> world (473.8,-367.4)
+[IKT] BLEND   8 frames -> back to animation
+[IKT] IDLE    animation resumed
+[IKT] rear-leg-ik t=24s 63.6fps state=IDLE tip=(205,-301)
+[IKT] rear-leg-ik t=25s 63.6fps state=IDLE tip=(182,-355)
+[IKT] rear-leg-ik t=26s 63.6fps state=IDLE tip=(186,-353)
+[IKT] rear-leg-ik t=27s 63.6fps state=IDLE tip=(193,-338)
+[IKT] ACTIVE  touch (187,219) -> world (-337.1,-484.0)
+[IKT] BLEND   8 frames -> back to animation
+[IKT] ACTIVE  touch (187,219) -> world (-337.1,-484.0)
+[IKT] BLEND   8 frames -> back to animation
+[IKT] IDLE    animation resumed
+[IKT] rear-leg-ik t=28s 63.5fps state=IDLE tip=(-188,-181)
+[IKT] rear-leg-ik t=29s 63.5fps state=IDLE tip=(-201,-237)
+[IKT] rear-leg-ik t=30s 63.5fps state=IDLE tip=(-185,-326)
+[IKT] rear-leg-ik t=31s 63.5fps state=IDLE tip=(-154,-369)
+[IKT] rear-leg-ik t=32s 63.5fps state=IDLE tip=(-128,-388)
+[IKT] ACTIVE  touch (618,143) -> world (473.8,-627.0)
+[IKT] BLEND   8 frames -> back to animation
+[IKT] ACTIVE  touch (618,143) -> world (473.8,-627.0)
+[IKT] BLEND   8 frames -> back to animation
+[IKT] IDLE    animation resumed
+[IKT] rear-leg-ik t=33s 63.4fps state=IDLE tip=(196,-176)
+[IKT] rear-leg-ik t=34s 63.4fps state=IDLE tip=(176,-127)
+[IKT] ACTIVE  touch (277,449) -> world (-167.8,-51.3)
+[IKT] BLEND   8 frames -> back to animation
+[IKT] ACTIVE  touch (277,449) -> world (-167.8,-51.3)
+[IKT] BLEND   8 frames -> back to animation
+[IKT] IDLE    animation resumed
+[IKT] rear-leg-ik t=35s 63.3fps state=IDLE tip=(-192,-210)
+[IKT] rear-leg-ik t=36s 63.3fps state=IDLE tip=(-195,-206)
+[IKT] ACTIVE  touch (627,230) -> world (490.7,-463.3)
+[IKT] BLEND   8 frames -> back to animation
+[IKT] ACTIVE  touch (627,230) -> world (490.7,-463.3)
+[IKT] BLEND   8 frames -> back to animation
+[IKT] IDLE    animation resumed
+[IKT] rear-leg-ik t=37s 63.2fps state=IDLE tip=(193,-246)
+[IKT] rear-leg-ik t=37s 63.2fps state=IDLE tip=(192,-223)
+[IKT] rear-leg-ik t=38s 63.3fps state=IDLE tip=(173,-307)
+[IKT] rear-leg-ik t=39s 63.3fps state=IDLE tip=(115,-393)
+[IKT] rear-leg-ik t=40s 63.3fps state=IDLE tip=(79,-427)
+[IKT] rear-leg-ik t=41s 63.3fps state=IDLE tip=(51,-442)
+[IKT] rear-leg-ik t=42s 63.3fps state=IDLE tip=(34,-442)
+[IKT] rear-leg-ik t=43s 63.3fps state=IDLE tip=(32,-434)
+[IKT] rear-leg-ik t=44s 63.3fps state=IDLE tip=(43,-425)
+[IKT] rear-leg-ik t=45s 63.3fps state=IDLE tip=(55,-419)
+[IKT] rear-leg-ik t=46s 63.3fps state=IDLE tip=(67,-417)
+[IKT] rear-leg-ik t=47s 63.3fps state=IDLE tip=(16,-434)
+[IKT] rear-leg-ik t=48s 63.4fps state=IDLE tip=(22,-444)
+[IKT] rear-leg-ik t=49s 63.4fps state=IDLE tip=(44,-446)
+[IKT] rear-leg-ik t=50s 63.4fps state=IDLE tip=(99,-424)
+[IKT] ACTIVE  touch (575,285) -> world (392.9,-359.8)
+[IKT] rear-leg-ik t=51s 63.4fps state=ACTIVE tip=(189,-321)
+[IKT] BLEND   8 frames -> back to animation
+[IKT] rear-leg-ik t=52s 63.3fps state=BLEND tip=(205,-210)
+[IKT] ACTIVE  touch (534,411) -> world (315.8,-122.8)
+[IKT] BLEND   8 frames -> back to animation
+[IKT] IDLE    animation resumed
+[IKT] rear-leg-ik t=53s 63.3fps state=IDLE tip=(123,-61)
+[IKT] rear-leg-ik t=54s 63.3fps state=IDLE tip=(63,-24)
+[IKT] rear-leg-ik t=54s 63.3fps state=IDLE tip=(28,-9)
+[IKT] rear-leg-ik t=55s 63.3fps state=IDLE tip=(32,-10)
+[IKT] rear-leg-ik t=56s 63.3fps state=IDLE tip=(105,-50)
+[IKT] rear-leg-ik t=57s 63.4fps state=IDLE tip=(143,-91)
+[IKT] rear-leg-ik t=58s 63.4fps state=IDLE tip=(165,-122)
+[IKT] rear-leg-ik t=59s 63.4fps state=IDLE tip=(182,-145)
+[IKT] rear-leg-ik t=60s 63.4fps state=IDLE tip=(196,-160)
+[IKT] rear-leg-ik t=61s 63.4fps state=IDLE tip=(205,-167)
+[IKT] rear-leg-ik t=62s 63.4fps state=IDLE tip=(211,-168)
+[IKT] rear-leg-ik t=63s 63.4fps state=IDLE tip=(216,-171)
+[IKT] rear-leg-ik t=64s 63.4fps state=IDLE tip=(219,-177)
+[IKT] rear-leg-ik t=65s 63.4fps state=IDLE tip=(224,-223)
+[IKT] rear-leg-ik t=66s 63.4fps state=IDLE tip=(221,-224)
+[IKT] rear-leg-ik t=67s 63.4fps state=IDLE tip=(214,-209)
+[IKT] rear-leg-ik t=68s 63.4fps state=IDLE tip=(186,-138)
+

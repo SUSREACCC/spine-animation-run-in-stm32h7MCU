@@ -1,0 +1,299 @@
+﻿
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 16 2026 16:55:37
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 16 2026 16:55:37
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 16 2026 16:55:37
+==============================================
+[1/5] MPU + SDRAM
+  addr scan : 2048 checkpoints over 32768 KB, 0 error(s)
+  pattern   : 64 KB x 5 patterns, total error(s) = 0
+[2/5] LCD (LTDC + DMA2D + SDRAM framebuffer)
+LCD ID:4384
+  panel id  : 4384, 800x480
+  pixel rb  : F800 OK (framebuffer @ 0xC0000000)
+[3/5] QSPI NOR flash
+ID:ef17
+  flash id  : EF17
+  rw verify : 4096 bytes @ 0x800000, 0 mismatch(es)
+[4/5] SD card (SDMMC1, 4-bit)
+  card      : 15801 MB, type=1, block=512 B
+  bus       : 4-bit, sweep 6/15/30 MHz
+  div=20 ( 6 MHz): OK   2766 KB/s  
+  div=8  (15 MHz): OK   6493 KB/s  
+  div=4  (30 MHz): OK   11768 KB/s  
+  stress    : 32 x 8 KB over the card, 0 error(s), 10193 KB/s
+  using     : 30 MHz, MBR sig=55AA
+[5/5] FATFS on SD volume 0:
+  volume    : FAT32, total 15784 MB, free 15782 MB
+   System Volume Information/  0 B
+   spineboy-pma.atlas   1652 B
+  read      : 0:/spineboy-pma.atlas -> 16 B, 73 70 69 6E ...
+   spineboy-pma.raw   524304 B
+   spineboy-pro.skel   65335 B
+   celestial-circus-pro.skel   53305 B
+   celestial-circus-pro.atlas   2249 B
+   celestial-circus-pro.raw   1048592 B
+  entries   : 7 listed, file read OK
+  write     : 512 B -> readback match, delete ok
+----------------------------------------------
+RESULT SDRAM=PASS LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+RESULT SDRAM=PASS LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+----------------------------------------------
+[TGX] starting 2D render test
+----------------------------------------------
+
+[FB] framebuffer write benchmark (600 KB)
+[FB] write-back    32bit   4.16 ms (  144 MB/s) | 64bit   4.16 ms (  144 MB/s) | clean  0.28 ms
+[FB] non-cacheable 32bit   4.16 ms (  144 MB/s) | 64bit   3.91 ms (  153 MB/s) | clean  0.28 ms
+[FB] write-through 32bit   4.16 ms (  144 MB/s) | 64bit   3.52 ms (  170 MB/s) | clean  0.28 ms
+
+[SPN] animation contact sheet
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x512 ARGB1555
+[SPN] 7 animations:
+        [ 0] eyeblink
+        [ 1] eyeblink-long
+        [ 2] stars
+        [ 3] swing
+        [ 4] wind-idle
+        [ 5] wing-flap
+        [ 6] wings-and-feet
+[SPN] probe: uv=(498.9,403.0)px texel=0000 a=0 rgb555=(0,0,0) tint=FFFFFFFF
+[SPN] rt.fmt=1 w=1024 h=512 px=c0a2800c
+[SPN] sheet: 7 cells rendered in 76.52 ms (13.1 fps for whole sheet)
+[SPN] RESULT PASS
+
+[GRAV] gravity demo: (no animation) | 60 fps x 10 s | render 800x480
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x512 ARGB1555
+[GRAV] physics bone: hair-back (children 0)
+[GRAV] physics constraints in skeleton: 30
+[GRAV] constraint0 gravity=1.00 mix=1.00 x=1.00
+[GRAV] probe bone: ok
+[GRAV] no animation: static pose, gravity is the only motion
+[GRAV] sweeping gravity direction (2 turns over 10 s)
+[GRAV] t=0.00s gravity=(1.00, 0.00) dir=0 deg bone=(-79.3, -851.4) rot=90.0
+[GRAV] t=1.00s gravity=(0.31, 0.95) dir=72 deg bone=(-161.0, -776.4) rot=90.0
+[GRAV] t=2.00s gravity=(-0.81, 0.59) dir=144 deg bone=(-162.1, -775.8) rot=90.0
+[GRAV] t=3.00s gravity=(-0.81, -0.59) dir=216 deg bone=(-162.1, -775.8) rot=90.0
+[GRAV] t=4.00s gravity=(0.31, -0.95) dir=288 deg bone=(-162.1, -775.8) rot=90.0
+[GRAV] t=5.00s gravity=(1.00, 0.00) dir=0 deg bone=(-167.5, -774.2) rot=90.1
+[GRAV] t=6.00s gravity=(0.31, 0.95) dir=72 deg bone=(-167.8, -774.1) rot=90.0
+[GRAV] t=7.00s gravity=(-0.81, 0.59) dir=144 deg bone=(-167.8, -774.1) rot=90.0
+[GRAV] t=8.00s gravity=(-0.81, -0.59) dir=216 deg bone=(-167.8, -774.1) rot=90.0
+[GRAV] t=9.00s gravity=(0.31, -0.95) dir=288 deg bone=(-167.8, -774.1) rot=90.0
+[GRAV] 26.85 ms/frame (37.2 fps)
+[GRAV] RESULT PASS
+
+[DUO] 2 characters, render 800x480, 60 fps, 4 s x 2 iters
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x512 ARGB1555
+[DUO] it1 load 320.0 ms | 57.77 ms/frame (17.3 fps) | anim 1.01 build 4.12 clear 4.01 draw 48.28 present 0.35 wait 0.00 setfb 0.00 | sum 57.77 wall 57.77 | heap 930752 fails 0
+[DUO] it1 after delete: heap used 610752 (delta after load -134320)
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x512 ARGB1555
+[DUO] it2 load 263.8 ms | 57.79 ms/frame (17.3 fps) | anim 1.01 build 4.14 clear 4.03 draw 48.26 present 0.35 wait 0.00 setfb 0.00 | sum 57.79 wall 57.79 | heap 930952 fails 0
+[DUO] it2 after delete: heap used 610736 (delta after load -134536)
+[DUO] ================================
+[DUO] fps per iteration:
+[DUO]   it1: 17.3 fps (57.77 ms)
+[DUO]   it2: 17.3 fps (57.79 ms)
+[DUO] RESULT PASS
+
+[DUO] 2 characters, render 400x240, 60 fps, 4 s x 2 iters
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x512 ARGB1555
+[DUO] it1 load 263.7 ms | 33.44 ms/frame (29.9 fps) | anim 1.01 build 4.13 clear 0.94 draw 21.91 present 5.46 wait 0.00 setfb 0.00 | sum 33.44 wall 33.45 | heap 930952 fails 0
+[DUO] it1 after delete: heap used 610736 (delta after load -134536)
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x512 ARGB1555
+[DUO] it2 load 263.3 ms | 33.44 ms/frame (29.9 fps) | anim 1.01 build 4.12 clear 0.94 draw 21.92 present 5.45 wait 0.00 setfb 0.00 | sum 33.44 wall 33.44 | heap 930952 fails 0
+[DUO] it2 after delete: heap used 610736 (delta after load -134536)
+[DUO] ================================
+[DUO] fps per iteration:
+[DUO]   it1: 29.9 fps (33.44 ms)
+[DUO]   it2: 29.9 fps (33.44 ms)
+[DUO] RESULT PASS
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x512 ARGB1555
+[API] asset loaded: /spine/celestial-circus-pro.skel | 7 animations | 1 textures
+[API] animations: eyeblink eyeblink-long stars swing wind-idle wing-flap wings-and-feet
+[API] texture bytes: 1048576
+[API] bounds=(-755,-1809)-(577,556) scale=0.093
+[API] 300 frames | 30.92 ms/frame (32.3 fps) | instances=2 queue=2
+[API] after free: instances=0
+[API] RESULT PASS
+
+[DEMO] spine runtime showcase
+[SPN] texture /spine/celestial-circus-pro.raw : 1024x512 ARGB1555
+[API] asset loaded: /spine/celestial-circus-pro.skel | 7 animations | 1 textures
+[DEMO] asset loaded, 0 textures, 1048576 bytes
+[DEMO] fit scale=0.085 center=(-89.0, -626.5)
+[DEMO] 1/6  ......... + ............ + tint | loading...
+[DEMO] 1/6  ......... + ............ + tint | HALF 27.0FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.2FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.3FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.3FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.3FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 32.4FPS 2INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 22.7FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | 400x240(2x) | 21.6 fps | 4 inst
+[DEMO] 3/6  .................................... | 400x240(2x) | 21.6 fps | 4 inst
+[DEMO] 3/6  .................................... | HALF 25.6FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.1FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 31.9FPS 2INST
+[DEMO] 3/6  .................................... | HALF 31.9FPS 2INST
+[DEMO] 3/6  .................................... | HALF 31.9FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | 400x240(2x) | 32.0 fps | gravity 358 deg
+[DEMO] 4/6  ............ [1/6] eyeblink | 400x240(2x) | 32.0 fps | gravity 358 deg
+[DEMO] 4/6  ............ [1/6] eyeblink | HALF 37.0FPS 1INST
+[DEMO] 4/6  ............ [1/6] eyeblink | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [1/6] eyeblink | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [1/6] eyeblink | HALF 32.4FPS 1INST
+[DEMO] 4/6  ............ [1/6] eyeblink | HALF 32.4FPS 1INST
+[DEMO] 4/6  ............ [1/6] eyeblink | HALF 32.4FPS 1INST
+[DEMO] 4/6  ............ [2/6] eyeblink-long | HALF 32.4FPS 1INST
+[DEMO] 4/6  ............ [2/6] eyeblink-long | HALF 45.5FPS 1INST
+[DEMO] 4/6  ............ [2/6] eyeblink-long | HALF 32.7FPS 1INST
+[DEMO] 4/6  ............ [2/6] eyeblink-long | HALF 32.6FPS 1INST
+[DEMO] 4/6  ............ [2/6] eyeblink-long | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [2/6] eyeblink-long | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [2/6] eyeblink-long | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [3/6] stars | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [3/6] stars | HALF 43.5FPS 1INST
+[DEMO] 4/6  ............ [3/6] stars | HALF 32.7FPS 1INST
+[DEMO] 4/6  ............ [3/6] stars | HALF 32.6FPS 1INST
+[DEMO] 4/6  ............ [3/6] stars | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [3/6] stars | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [3/6] stars | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [4/6] swing | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [4/6] swing | HALF 43.5FPS 1INST
+[DEMO] 4/6  ............ [4/6] swing | HALF 32.7FPS 1INST
+[DEMO] 4/6  ............ [4/6] swing | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [4/6] swing | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [4/6] swing | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [4/6] swing | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [5/6] wind-idle | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [5/6] wind-idle | HALF 43.5FPS 1INST
+[DEMO] 4/6  ............ [5/6] wind-idle | HALF 32.7FPS 1INST
+[DEMO] 4/6  ............ [5/6] wind-idle | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [5/6] wind-idle | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [5/6] wind-idle | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [5/6] wind-idle | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [6/6] wing-flap | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [6/6] wing-flap | HALF 45.5FPS 1INST
+[DEMO] 4/6  ............ [6/6] wing-flap | HALF 32.7FPS 1INST
+[DEMO] 4/6  ............ [6/6] wing-flap | HALF 32.6FPS 1INST
+[DEMO] 4/6  ............ [6/6] wing-flap | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [6/6] wing-flap | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [6/6] wing-flap | HALF 32.5FPS 1INST
+[DEMO] 5/6  ................................................... | HALF 32.5FPS 1INST
+[DEMO] 5/6  ................................................... | 800x480 full-res ...
+[DEMO] 5/6  ................................................... | 800X480 10.1FPS 4INST
+[DEMO] 5/6  ................................................... | 800X480 16.1FPS 4INST
+[DEMO] 5/6  ................................................... | 800X480 16.2FPS 4INST
+[DEMO] 5/6  ................................................... | 800X480 16.2FPS 4INST
+[DEMO] 5/6  ................................................... | 800X480 16.2FPS 4INST
+[DEMO] 5/6  ................................................... | 800X480 16.2FPS 4INST
+[DEMO] 5/6  ................................................... | 400x240 half-res ...
+[DEMO] 5/6  ................................................... | HALF 14.3FPS 4INST
+[DEMO] 5/6  ................................................... | HALF 21.2FPS 4INST
+[DEMO] 5/6  ................................................... | HALF 21.4FPS 4INST
+[DEMO] 5/6  ................................................... | HALF 21.5FPS 4INST
+[DEMO] 5/6  ................................................... | HALF 21.5FPS 4INST
+[DEMO] 5/6  ................................................... | HALF 21.5FPS 4INST
+[DEMO] 5/6  ................................................... | full 16.2 fps | half 21.5 fps | 1.33x
+[DEMO] 6/6  ...............8 ......... | full 16.2 fps | half 21.5 fps | 1.33x
+[DEMO] 6/6  ...............8 ......... | HALF 14.3FPS 8INST
+[DEMO] 6/6  ...............8 ......... | HALF 16.1FPS 8INST
+[DEMO] 6/6  ...............8 ......... | HALF 16.2FPS 8INST
+[DEMO] 6/6  ...............8 ......... | HALF 16.2FPS 8INST
+[DEMO] 6/6  ...............8 ......... | HALF 16.2FPS 8INST
+[DEMO] 6/6  ...............8 ......... | HALF 16.2FPS 8INST
+[DEMO] 6/6  ...............8 ......... | HALF 16.2FPS 8INST
+[DEMO] 6/6  ...............8 ......... | HALF 16.2FPS 8INST
+[DEMO] 6/6  ...............8 ......... | HALF 16.2FPS 8INST
+[DEMO] 6/6  ...............8 ......... | HALF 16.2FPS 8INST
+[DEMO] 6/6  ...............8 ......... | 400x240(2x) | 16.2 fps | 8 inst
+[DEMO] === LOOP END / RESTART === | 2S
+[DEMO] 1/6  ......... + ............ + tint | loading...
+[DEMO] 1/6  ......... + ............ + tint | HALF 34.5FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.5FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 1/6  ......... + ............ + tint | HALF 32.4FPS 2INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 32.4FPS 2INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 22.7FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | HALF 21.6FPS 4INST
+[DEMO] 2/6  ............... / ...... / ......... / ...... | 400x240(2x) | 21.6 fps | 4 inst
+[DEMO] 3/6  .................................... | 400x240(2x) | 21.6 fps | 4 inst
+[DEMO] 3/6  .................................... | HALF 25.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.1FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 31.9FPS 2INST
+[DEMO] 3/6  .................................... | HALF 31.9FPS 2INST
+[DEMO] 3/6  .................................... | HALF 31.9FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | HALF 32.0FPS 2INST
+[DEMO] 3/6  .................................... | 400x240(2x) | 32.0 fps | gravity 358 deg
+[DEMO] 4/6  ............ [1/6] eyeblink | 400x240(2x) | 32.0 fps | gravity 358 deg
+[DEMO] 4/6  ............ [1/6] eyeblink | HALF 35.7FPS 1INST
+[DEMO] 4/6  ............ [1/6] eyeblink | HALF 32.5FPS 1INST
+[DEMO] 4/6  ............ [1/6] eyeblink | HALF 32.4FPS 1INST
+[DEMO] 4/6  ............ [1/6] eyeblink | HALF 32.4FPS 1INST
+[DEMO] 4/6  ............ [1/6] eyeblink | HALF 32.4FPS 1INST
+[DEMO] 4/6  ............ [1/6] eyeblink | HALF 32.4FPS 1INST
+[DEMO] 4/6  ............ [2/6] eyeblink-long | HALF 32.4FPS 1INST
+[DEMO] 4/6  ............ [2/6] eyeblink-long | HALF 45.5FPS 1INST
+

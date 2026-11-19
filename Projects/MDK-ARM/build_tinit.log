@@ -1,0 +1,15 @@
+*** Using Compiler 'V6.7', folder: 'D:\MDK5\ARM\ARMCLANG\Bin'
+Build target 'Template'
+../../User/spine_anim_seq.c(110): error: expected ')'
+    printf(SEQ_TAG "touch init: %s
+                   ^
+../../User/spine_anim_seq.c(110): note: to match this '('
+    printf(SEQ_TAG "touch init: %s
+          ^
+1 error generated.
+compiling spine_anim_seq.c...
+compiling spine_touch.c...
+compiling spine_ik_interactive.c...
+"..\..\Output\STM32H743.axf" - 1 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

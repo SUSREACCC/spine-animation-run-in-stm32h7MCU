@@ -1,0 +1,58 @@
+﻿
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 17 2026 14:54:46
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 17 2026 14:54:46
+==============================================
+
+
+==============================================
+ STM32H743 DRIVER SELFTEST
+ build: Nov 17 2026 14:54:46
+==============================================
+[1/5] MPU + SDRAM
+  addr scan : 2048 checkpoints over 32768 KB, 1538 error(s)
+  pattern   : 64 KB x 5 patterns, total error(s) = 40186
+[2/5] LCD (LTDC + DMA2D + SDRAM framebuffer)
+LCD ID:4384
+  panel id  : 4384, 800x480
+  pixel rb  : F800 OK (framebuffer @ 0xC0000000)
+[3/5] QSPI NOR flash
+ID:ef17
+  flash id  : EF17
+  rw verify : 4096 bytes @ 0x800000, 0 mismatch(es)
+[4/5] SD card (SDMMC1, 4-bit)
+  card      : 15801 MB, type=1, block=512 B
+  bus       : 4-bit, sweep 6/15/30 MHz
+  div=20 ( 6 MHz): OK   2767 KB/s  
+  div=8  (15 MHz): OK   6486 KB/s  
+  div=4  (30 MHz): OK   11738 KB/s  
+  stress    : 32 x 8 KB over the card, 0 error(s), 10232 KB/s
+  using     : 30 MHz, MBR sig=55AA
+[5/5] FATFS on SD volume 0:
+  volume    : FAT32, total 15784 MB, free 15782 MB
+   System Volume Information/  0 B
+   spineboy-pma.atlas   1652 B
+  read      : 0:/spineboy-pma.atlas -> 16 B, 73 70 69 6E ...
+   spineboy-pma.raw   524304 B
+   spineboy-pro.skel   65335 B
+   celestial-circus-pro.skel   53305 B
+   celestial-circus-pro.atlas   2249 B
+   celestial-circus-pro.raw   1048592 B
+  entries   : 7 listed, file read OK
+  write     : 512 B -> readback match, delete ok
+----------------------------------------------
+RESULT SDRAM=FAIL LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+RESULT SDRAM=FAIL LCD=PASS QSPI=PASS SD=PASS FATFS=PASS
+----------------------------------------------
+[TGX] starting 2D render test
+----------------------------------------------
+
+[IK] asset: /spine/spineboy-pro.skel
+
